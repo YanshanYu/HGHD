@@ -12,14 +12,19 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.yu.zehnit.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_control"
+        android:name="com.yu.zehnit.ui.control.ControlFragment"
+        android:label="@string/title_control"
+        tools:layout="@layout/fragment_control" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.yu.zehnit.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_rehabilitation"
+        android:name="com.yu.zehnit.ui.rehabilitation.RehabilitationFragment"
+        android:label="@string/title_rehabilitation"
+        tools:layout="@layout/fragment_rehabilitation" />
+    <fragment
+        android:id="@+id/navigation_info"
+        android:name="com.yu.zehnit.ui.info.InfoFragment"
+        android:label="@string/title_info"
+        tools:layout="@layout/fragment_info" />
 </navigation>
