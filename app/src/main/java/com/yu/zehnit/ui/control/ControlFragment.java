@@ -30,6 +30,7 @@ public class ControlFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
         return root;
     }
 }
