@@ -6,17 +6,95 @@
     android:layout_height="match_parent"
     tools:context=".ui.control.ControlFragment">
 
-    <TextView
-        android:id="@+id/text_control"
-        android:layout_width="match_parent"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
+        android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="103dp"
+        android:layout_height="165dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="110dp"
+        android:text="跟随头动"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/button5"
+        app:layout_constraintEnd_toStartOf="@+id/button3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.271" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="97dp"
+        android:layout_height="166dp"
+        android:layout_marginTop="110dp"
+        android:layout_marginBottom="37dp"
+        android:text="跟随头动"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/button5"
+        app:layout_constraintEnd_toStartOf="@+id/button4"
+        app:layout_constraintStart_toEndOf="@+id/button2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="103dp"
+        android:layout_height="165dp"
+        android:layout_marginTop="110dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="37dp"
+        android:text="跟随头动"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/button5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button3"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="353dp"
+        android:layout_height="171dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="正弦波"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/button6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/button3" />
+
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="353dp"
+        android:layout_height="171dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:text="方波"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/nav_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button5" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar3"
+        android:layout_width="385dp"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:navigationIcon="@drawable/back"
+        app:title="控制中心"
+        tools:layout_editor_absoluteX="3dp" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

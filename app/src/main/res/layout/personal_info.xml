@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.control.ControlFragment">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        tools:layout_editor_absoluteX="132dp"
+        tools:layout_editor_absoluteY="77dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="323dp"
+        android:layout_height="84dp"
+        android:layout_weight="1"
+        android:text="训练目标"
+        android:textSize="28dp"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="355dp" />
+
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="323dp"
+        android:layout_height="84dp"
+        android:layout_weight="1"
+        android:text="训练次数"
+        android:textSize="28dp"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="464dp" />
+
+    <Button
+        android:id="@+id/button9"
+        android:layout_width="323dp"
+        android:layout_height="84dp"
+        android:layout_weight="1"
+        android:text="商城链接"
+        android:textSize="28dp"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="579dp" />
+
+    <Button
+        android:id="@+id/button10"
+        android:layout_width="323dp"
+        android:layout_height="84dp"
+        android:layout_weight="1"
+        android:text="设置"
+        android:textSize="28dp"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="687dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:clickable="true"
+        app:backgroundTint="#FFFFFF"
+        app:srcCompat="@drawable/forward"
+        tools:layout_editor_absoluteX="285dp"
+        tools:layout_editor_absoluteY="369dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:backgroundTint="#FFFFFF"
+        app:srcCompat="@drawable/forward"
+        tools:layout_editor_absoluteX="285dp"
+        tools:layout_editor_absoluteY="479dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:backgroundTint="#FFFFFF"
+        app:srcCompat="@drawable/forward"
+        tools:layout_editor_absoluteX="285dp"
+        tools:layout_editor_absoluteY="596dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:backgroundTint="#FFFFFF"
+        app:srcCompat="@drawable/forward"
+        tools:layout_editor_absoluteX="285dp"
+        tools:layout_editor_absoluteY="699dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
