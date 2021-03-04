@@ -92,9 +92,10 @@
         android:background="@color/white"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/back"
-        app:title="控制中心"
-        tools:layout_editor_absoluteX="3dp" />
+        app:title="控制中心" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
