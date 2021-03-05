@@ -18,24 +18,26 @@
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="103dp"
-        android:layout_height="165dp"
+        android:layout_width="109dp"
+        android:layout_height="161dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="110dp"
+        android:layout_marginBottom="35dp"
         android:text="跟随头动"
         android:textSize="25dp"
         app:layout_constraintBottom_toTopOf="@+id/button5"
         app:layout_constraintEnd_toStartOf="@+id/button3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.271" />
+        app:layout_constraintVertical_bias="0.52" />
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="97dp"
-        android:layout_height="166dp"
+        android:layout_width="109dp"
+        android:layout_height="161dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="110dp"
-        android:layout_marginBottom="37dp"
+        android:layout_marginBottom="35dp"
         android:text="跟随头动"
         android:textSize="25dp"
         app:layout_constraintBottom_toTopOf="@+id/button5"
@@ -46,11 +48,12 @@
 
     <Button
         android:id="@+id/button4"
-        android:layout_width="103dp"
-        android:layout_height="165dp"
+        android:layout_width="109dp"
+        android:layout_height="161dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="110dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="37dp"
+        android:layout_marginBottom="35dp"
         android:text="跟随头动"
         android:textSize="25dp"
         app:layout_constraintBottom_toTopOf="@+id/button5"
@@ -64,7 +67,7 @@
         android:layout_height="171dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="正弦波"
+        android:text="视追踪实验"
         android:textSize="25dp"
         app:layout_constraintBottom_toTopOf="@+id/button6"
         app:layout_constraintEnd_toEndOf="parent"
@@ -78,7 +81,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="32dp"
-        android:text="方波"
+        android:text="扫视实验"
         android:textSize="25dp"
         app:layout_constraintBottom_toTopOf="@+id/nav_view"
         app:layout_constraintEnd_toEndOf="parent"
@@ -87,8 +90,8 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar3"
-        android:layout_width="385dp"
-        android:layout_height="60dp"
+        android:layout_width="411dp"
+        android:layout_height="57dp"
         android:background="@color/white"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"

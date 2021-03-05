@@ -6,4 +6,33 @@
     <string name="title_info">个人中心</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="company_name">上海志听</string>
+    <string name="version_number">v1.0</string>
+    <string name="service_agreement">服务协议</string>
+    <string name="privacy_policy">隐私政策</string>
+    <string name="contact_us">联系我们</string>
+    <string name="add_equipment">添加设备</string>
+    <string name="control_design">控制设置</string>
+    <string name="about_us">关于我们</string>】
+    <string name="unhitch_equipment">解绑设备</string>
+    <string name="message">消息通知</string>
+    <string name="logout">退出登录</string>
+    <string name="frequency">频率</string>
+    <string name="range">幅度</string>
+    <string name="experiment1">视追踪实验</string>
+    <string name="experiment2">扫视实验</string>
+    <string name="login">登录</string>
+    <string name="enter_phone_number">请输入您的手机号码...</string>
+    <string name="enter_code">请输入验证码...</string>
+    <string name="get_code">获取验证码</string>
+    <string name="policy">登录代表您已阅读和同意《志听隐私政策》</string>
+    <string name="training_target">训练目标</string>
+    <string name="train_time">训练次数</string>
+    <string name="shopping_link">商城链接</string>
+    <string name="setting">设置</string>
+    <string name="equipment_name">设备名称</string>
+    <string name="equipment_state">设备状态</string>
+    <string name="enter_sn">请输入您的SN号...</string>
+    <string name="verify">验证</string>
+    <string name="video_message">视频简介</string>
 </resources>
