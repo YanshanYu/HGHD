@@ -10,7 +10,7 @@ public class ControlViewModel extends ViewModel {
 
     public ControlViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is control fragment");
+        mText.setValue("This is nav_control fragment");
     }
 
     public LiveData<String> getText() {
