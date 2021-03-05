@@ -19,7 +19,9 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/edit_phone_number"
+        android:id="@+id/editTextPhone"
+        android:ems="11"
+        android:inputType="phone"
         android:layout_width="309dp"
         android:layout_height="45dp"
         android:layout_marginStart="36dp"
@@ -44,7 +46,7 @@
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/edit__number"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_phone_number" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
 
     <EditText
         android:id="@+id/edit__number"
@@ -79,4 +81,24 @@
         android:text="@string/policy"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button11" />
+
+    <EditText
+        android:id="@+id/editTextPhone2"
+        tools:layout_editor_absoluteX="46dp"
+        tools:layout_editor_absoluteY="494dp"
+        android:ems="11"
+        android:inputType="phone"
+        android:layout_width="309dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="88dp"
+        android:layout_marginBottom="10dp"
+        android:hint="@string/enter_phone_number"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/button7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_login"
+        app:layout_constraintVertical_bias="0.0"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
