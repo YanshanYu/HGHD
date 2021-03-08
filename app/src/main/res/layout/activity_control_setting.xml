@@ -7,66 +7,95 @@
     android:visibility="visible"
     tools:context=".ui.control.ControlFragment">
 
-    <SeekBar
-        android:id="@+id/sinfrequency"
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="80dp"
+        android:text="正弦波"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.yu.zehnit.tools.IndicatorSeekBar
+        android:id="@+id/sin_frequency"
         android:layout_width="242dp"
         android:layout_height="37dp"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="376dp"
+        android:layout_marginTop="208dp"
         android:layout_marginEnd="50dp"
+        android:background="@null"
         android:max="100"
-        android:thumb="@drawable/ic_sb_24dp"
-        android:thumbTintMode="add"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        android:maxHeight="25dp"
+        android:minHeight="25dp"
+        android:progress="50"
+        android:progressDrawable="@drawable/seekbar_progress_drawable"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:splitTrack="false"
+        android:thumb="@drawable/ic_sb_24dp" />
 
-    <SeekBar
-        android:id="@+id/sinamplitude"
-        style="@style/Widget.AppCompat.SeekBar"
+
+
+
+
+    <com.yu.zehnit.tools.IndicatorSeekBar
+        android:id="@+id/sin_amplitude"
         android:layout_width="242dp"
-        android:layout_height="38dp"
+        android:layout_height="37dp"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="308dp"
+        android:layout_marginTop="276dp"
         android:layout_marginEnd="50dp"
+        android:background="@null"
         android:max="100"
-        android:thumb="@drawable/ic_sb_24dp"
-        android:thumbTintMode="add"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:maxHeight="25dp"
+        android:minHeight="25dp"
+        android:progress="50"
+        android:progressDrawable="@drawable/seekbar_progress_drawable"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:splitTrack="false"
+        android:thumb="@drawable/ic_sb_24dp" />
 
-    <SeekBar
-        android:id="@+id/fangfrequency"
-        android:layout_width="240dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="528dp"
-        android:layout_marginEnd="50dp"
-        android:max="100"
-        android:thumb="@drawable/ic_sb_24dp"
-        android:thumbTintMode="add"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <SeekBar
-        android:id="@+id/fangamplitude"
-        android:layout_width="245dp"
-        android:layout_height="35dp"
+    <com.yu.zehnit.tools.IndicatorSeekBar
+        android:id="@+id/fang_frequency"
+        android:layout_width="242dp"
+        android:layout_height="37dp"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="612dp"
+        android:layout_marginTop="428dp"
         android:layout_marginEnd="50dp"
+        android:background="@null"
         android:max="100"
-        android:thumb="@drawable/ic_sb_24dp"
-        android:thumbTintMode="add"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:maxHeight="25dp"
+        android:minHeight="25dp"
+        android:progress="50"
+        android:progressDrawable="@drawable/seekbar_progress_drawable"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:splitTrack="false"
+        android:thumb="@drawable/ic_sb_24dp" />
+
+    <com.yu.zehnit.tools.IndicatorSeekBar
+        android:id="@+id/fang_amplitude"
+        android:layout_width="242dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="512dp"
+        android:layout_marginEnd="50dp"
+        android:background="@null"
+        android:max="100"
+        android:maxHeight="25dp"
+        android:minHeight="25dp"
+        android:progress="50"
+        android:progressDrawable="@drawable/seekbar_progress_drawable"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:splitTrack="false"
+        android:thumb="@drawable/ic_sb_24dp" />
+
+
 
     <TextView
         android:id="@+id/textView"
@@ -112,39 +141,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="204dp"
-        android:text="正弦波"
-        android:textSize="30sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="18dp"
         android:text="方波"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar3"
-        android:layout_width="385dp"
-        android:layout_height="60dp"
-        android:background="@color/white"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/back"
-        app:title="控制设置" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
