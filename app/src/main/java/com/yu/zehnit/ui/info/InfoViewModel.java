@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class InfoViewModel extends ViewModel {
+
     private MutableLiveData<String> mText;
 
     public InfoViewModel() {
@@ -15,5 +16,4 @@ public class InfoViewModel extends ViewModel {
     public LiveData<String> getText() {
         return mText;
     }
-
 }
