@@ -13,8 +13,8 @@ public class SMS {
     private static final String product = "Dysmsapi";
     private static final String domain = "dysmsapi.aliyuncs.com";
 
-    private static final String accessKeyId = "LTAI4G5U6Rh5js2mzSnSUCqX";
-    private static final String accessKeySecret = "aps3axjsBRQ6sYLsjeqPyWXaVxZeif";
+    private static final String accessKeyId = "1111";
+    private static final String accessKeySecret = "2222";
 
     private static String msgCode_check;
 
