@@ -22,14 +22,14 @@ public class InfoFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         infoViewModel =
                 new ViewModelProvider(this).get(InfoViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_home, container, false);
-        final TextView textView = root.findViewById(R.id.text_home);
-        infoViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        View root = inflater.inflate(R.layout.fragment_info, container, false);
+//        final TextView textView = root.findViewById(R.id.text_home);
+//        infoViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+//            @Override
+//            public void onChanged(@Nullable String s) {
+//                textView.setText(s);
+//            }
+//        });
         return root;
     }
 }
