@@ -19,18 +19,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-
     <Button
         android:id="@+id/buttonGetCheckNum"
         android:layout_width="165dp"
         android:layout_height="42dp"
         android:layout_marginStart="40dp"
+        android:layout_marginEnd="206dp"
         android:layout_marginBottom="12dp"
         android:background="@color/purple_200"
         android:text="@string/get_code"
-        android:textSize="20sp"
         android:textColor="@color/white"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/edit_numberEnterCheckNum"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
 
@@ -40,8 +41,10 @@
         android:layout_height="45dp"
         android:layout_marginStart="36dp"
         android:layout_marginTop="12dp"
+        android:layout_marginEnd="71dp"
         android:hint="@string/enter_code"
         android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonGetCheckNum" />
 
@@ -51,10 +54,12 @@
         android:layout_height="67dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="12dp"
+        android:layout_marginEnd="65dp"
         android:background="@color/purple_200"
         android:text="@string/login"
-        android:textSize="30sp"
         android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_numberEnterCheckNum" />
 
@@ -64,7 +69,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="11dp"
+        android:layout_marginEnd="73dp"
         android:text="@string/policy"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonLogin" />
 
@@ -74,12 +81,14 @@
         android:layout_height="56dp"
         android:layout_marginStart="36dp"
         android:layout_marginTop="88dp"
+        android:layout_marginEnd="71dp"
         android:layout_marginBottom="10dp"
         android:ems="11"
         android:hint="@string/enter_phone_number"
         android:inputType="phone"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/buttonGetCheckNum"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/userLogin"
         app:layout_constraintVertical_bias="0.0" />
