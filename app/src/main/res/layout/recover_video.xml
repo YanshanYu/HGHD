@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/back"
-        app:title="康复视频" />
+        app:title="@string/title_rehabilitation" />
 
     <VideoView
         android:id="@+id/videoView"

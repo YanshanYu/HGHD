@@ -118,7 +118,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="204dp"
-        android:text="@string/experiment1"
+        android:text="@string/eye_tracking_experiment"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -129,7 +129,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="28dp"
-        android:text="@string/experiment2"
+        android:text="@string/scanner_experiment"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -145,7 +145,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/back"
-        app:title="控制设置" />
+        app:title="@string/control_design" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

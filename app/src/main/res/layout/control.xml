@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/back"
-        app:title="设置" />
+        app:title="@string/setting" />
 
 
 <!--    <Switch-->
@@ -41,7 +41,7 @@
         android:text="@string/control_design"
         android:textSize="20sp"
         android:textColor="@color/white"
-        android:backgroundTint="@color/purple_200"
+        android:backgroundTint="@color/babyblue"
         android:drawableEnd="@drawable/forward"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button18" />
@@ -67,7 +67,7 @@
         android:drawableRight="@drawable/forward"
         android:textColor="@color/white"
         android:textSize="20sp"
-        android:backgroundTint="@color/purple_200"
+        android:backgroundTint="@color/babyblue"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button13" />
 
@@ -81,7 +81,7 @@
         android:drawableRight="@drawable/forward"
         android:textColor="@color/white"
         android:textSize="20sp"
-        android:backgroundTint="@color/purple_200"
+        android:backgroundTint="@color/babyblue"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button14" />
 
@@ -94,7 +94,7 @@
         android:text="@string/logout"
         android:textSize="25sp"
         android:textColor="@color/white"
-        android:backgroundTint="@color/purple_200"
+        android:backgroundTint="@color/babyblue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

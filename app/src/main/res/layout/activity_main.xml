@@ -45,6 +45,7 @@
         tools:ignore="UnknownIdInLayout" />
 
     <Button
+        android:id="@+id/btn"
         android:layout_width="360dp"
         android:layout_height="204dp"
         android:layout_marginStart="25dp"
