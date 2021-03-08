@@ -18,12 +18,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/sin_requency_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:gravity="center"
+        android:textColor="@color/teal_700"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="123dp"
+        android:layout_marginEnd="50dp" />
+
     <com.yu.zehnit.tools.IndicatorSeekBar
         android:id="@+id/sin_frequency"
         android:layout_width="242dp"
         android:layout_height="37dp"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="208dp"
+        android:layout_marginTop="140dp"
         android:layout_marginEnd="50dp"
         android:background="@null"
         android:max="100"
@@ -37,15 +51,12 @@
         android:thumb="@drawable/ic_sb_24dp" />
 
 
-
-
-
     <com.yu.zehnit.tools.IndicatorSeekBar
         android:id="@+id/sin_amplitude"
         android:layout_width="242dp"
         android:layout_height="37dp"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="276dp"
+        android:layout_marginTop="220dp"
         android:layout_marginEnd="50dp"
         android:background="@null"
         android:max="100"
@@ -64,7 +75,7 @@
         android:layout_width="242dp"
         android:layout_height="37dp"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="428dp"
+        android:layout_marginTop="394dp"
         android:layout_marginEnd="50dp"
         android:background="@null"
         android:max="100"
@@ -82,7 +93,7 @@
         android:layout_width="242dp"
         android:layout_height="37dp"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="512dp"
+        android:layout_marginTop="483dp"
         android:layout_marginEnd="50dp"
         android:background="@null"
         android:max="100"
@@ -96,35 +107,12 @@
         android:thumb="@drawable/ic_sb_24dp" />
 
 
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="308dp"
-        android:text="频率"
-        android:textSize="25sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="35dp"
-        android:text="幅度"
-        android:textSize="25sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="140dp"
         android:text="频率"
         android:textSize="25sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -141,6 +129,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="140dp"
+        android:text="频率"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="50dp"
+        android:text="幅度"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 
     <TextView
@@ -148,7 +157,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="40dp"
         android:text="方波"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
