@@ -7,7 +7,7 @@
     tools:context=".ui.control.ControlFragment">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageViewPhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="140dp"
@@ -15,7 +15,7 @@
         android:layout_marginEnd="140dp"
         android:layout_marginBottom="147dp"
         android:layout_weight="1"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/buttonTrainingTarget"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,7 +23,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonTrainingTarget"
         android:layout_width="323dp"
         android:layout_height="84dp"
         android:layout_marginStart="50dp"
@@ -35,13 +35,13 @@
         android:textSize="28sp"
         android:textColor="@color/white"
         android:backgroundTint="@color/babyblue"
-        app:layout_constraintBottom_toTopOf="@+id/button8"
+        app:layout_constraintBottom_toTopOf="@+id/buttonTrainingTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button8"
+        android:id="@+id/buttonTrainingTime"
         android:layout_width="323dp"
         android:layout_height="84dp"
         android:layout_marginStart="50dp"
@@ -55,10 +55,10 @@
         android:backgroundTint="@color/babyblue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonTrainingTarget" />
 
     <Button
-        android:id="@+id/button9"
+        android:id="@+id/buttonShopping"
         android:layout_width="323dp"
         android:layout_height="84dp"
         android:layout_marginStart="50dp"
@@ -70,13 +70,13 @@
         android:textSize="28sp"
         android:textColor="@color/white"
         android:backgroundTint="@color/babyblue"
-        app:layout_constraintBottom_toTopOf="@+id/button10"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSetting"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button8" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonTrainingTime" />
 
     <Button
-        android:id="@+id/button10"
+        android:id="@+id/buttonSetting"
         android:layout_width="323dp"
         android:layout_height="84dp"
         android:layout_marginStart="50dp"
@@ -92,6 +92,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button9" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonShopping" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

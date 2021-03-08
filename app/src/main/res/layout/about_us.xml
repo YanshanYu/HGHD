@@ -7,7 +7,7 @@
     tools:context=".ui.control.ControlFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar3"
+        android:id="@+id/toolbarAboutus"
         android:layout_width="match_parent"
         android:layout_height="69dp"
         android:background="@color/white"
@@ -20,19 +20,19 @@
         app:title="@string/about_us" />
 
     <ImageView
-        android:id="@+id/logo"
+        android:id="@+id/logoAboutUs"
         android:layout_width="345dp"
         android:layout_height="184dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="31dp"
+        android:layout_marginTop="120dp"
         android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar3"
+        app:layout_constraintTop_toTopOf="@+id/toolbarAboutus"
         app:srcCompat="@drawable/logo" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/materialTextView"
+        android:id="@+id/materialTextViewName"
         android:layout_width="242dp"
         android:layout_height="33dp"
         android:layout_marginStart="84dp"
@@ -42,10 +42,10 @@
         android:textColor="#1C1C1C"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo" />
+        app:layout_constraintTop_toBottomOf="@+id/logoAboutUs" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/materialTextView2"
+        android:id="@+id/materialTextViewVersion"
         android:layout_width="242dp"
         android:layout_height="33dp"
         android:layout_marginStart="84dp"
@@ -54,10 +54,10 @@
         android:textColor="#1C1C1C"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/materialTextViewName" />
 
     <Button
-        android:id="@+id/button12"
+        android:id="@+id/buttonService"
         android:layout_width="240dp"
         android:layout_height="55dp"
         android:layout_marginStart="100dp"
@@ -84,13 +84,13 @@
         android:text="@string/privacy_policy"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/button16"
+        app:layout_constraintBottom_toTopOf="@+id/buttonContactUs"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button12" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonService" />
 
     <Button
-        android:id="@+id/button16"
+        android:id="@+id/buttonContactUs"
         android:layout_width="240dp"
         android:layout_height="55dp"
         android:layout_marginStart="100dp"

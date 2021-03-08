@@ -32,7 +32,7 @@
         app:navGraph="@navigation/mobile_navigation" />
 
     <ImageView
-        android:id="@+id/logo"
+        android:id="@+id/logoHome"
         android:layout_width="345dp"
         android:layout_height="184dp"
         android:layout_marginStart="10dp"
@@ -45,7 +45,7 @@
         tools:ignore="UnknownIdInLayout" />
 
     <Button
-        android:id="@+id/btn"
+        android:id="@+id/btnAddExperiment"
         android:layout_width="360dp"
         android:layout_height="204dp"
         android:layout_marginStart="25dp"
@@ -57,7 +57,7 @@
         android:textSize="35sp"
         app:layout_constraintEnd_toStartOf="@+id/nav_host_fragment"
         app:layout_constraintStart_toEndOf="@+id/nav_host_fragment"
-        app:layout_constraintTop_toBottomOf="@+id/logo" />
+        app:layout_constraintTop_toBottomOf="@+id/logoHome" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
