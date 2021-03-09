@@ -6,88 +6,92 @@
     android:layout_height="match_parent"
     tools:context=".ui.control.ControlFragment">
 
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="345dp"
-        android:layout_height="184dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="52dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.652"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/logo" />
-
     <TextView
-        android:id="@+id/user_login"
-        android:layout_width="144dp"
-        android:layout_height="72dp"
+        android:id="@+id/userLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="登录"
+        android:text="@string/login"
         android:textColor="#1C1C1C"
-        android:textSize="50dp"
+        android:textSize="50sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/edit_phone_number"
-        android:layout_width="309dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="88dp"
-        android:layout_marginBottom="10dp"
-        android:hint="请输入您的手机号码..."
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/button7"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_login"
-        app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/btnGetCode"
+        android:id="@+id/buttonGetCheckNum"
         android:layout_width="wrap_content"
-        android:layout_height="42dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginBottom="12dp"
-        android:background="#9003A9F4"
-        android:text="获取验证码"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/edit_code"
+        android:layout_marginBottom="20dp"
+        android:background="@color/purple_200"
+        android:text="@string/get_code"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/edit_numberEnterCheckNum"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_phone_number" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
 
     <EditText
-        android:id="@+id/edit_code"
-        android:layout_width="309dp"
-        android:layout_height="45dp"
+        android:id="@+id/edit_numberEnterCheckNum"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="6:1"
         android:layout_marginStart="36dp"
         android:layout_marginTop="12dp"
-        android:hint="请输入验证码..."
-        android:textSize="20dp"
+        android:layout_marginEnd="71dp"
+        android:hint="@string/enter_code"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnGetCode" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonGetCheckNum" />
 
     <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="306dp"
-        android:layout_height="67dp"
+        android:id="@+id/buttonLogin"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="3:1"
         android:layout_marginStart="40dp"
         android:layout_marginTop="12dp"
-        android:background="#9003A9F4"
-        android:text="登录"
-        android:textSize="30dp"
+        android:layout_marginEnd="65dp"
+        android:background="@color/purple_200"
+        android:text="@string/login"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_code" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_numberEnterCheckNum" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/checkBoxTextPolicy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="11dp"
-        android:text="登录代表您已阅读和同意《志听隐私政策》"
+        android:layout_marginEnd="73dp"
+        android:text="@string/policy"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonLogin" />
+
+    <EditText
+        android:id="@+id/editTextPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="88dp"
+        android:layout_marginEnd="71dp"
+        android:layout_marginBottom="10dp"
+        android:ems="11"
+        android:hint="@string/enter_phone_number"
+        android:inputType="phone"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonGetCheckNum"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userLogin"
+        app:layout_constraintVertical_bias="0.0" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
