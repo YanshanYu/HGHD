@@ -9,31 +9,25 @@
         android:roundIcon="@drawable/back"
         android:supportsRtl="true"
         android:theme="@style/Theme.HGHD">
-        <activity android:name=".SettingActivity"></activity>
-        <activity android:name=".AboutActivity" />
-        <activity android:name=".ParamSettingActivity" />
-        <activity android:name=".GenerateData">
+        <activity android:name=".LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".ControlSettingActivity" >
-                         <intent-filter>
-                         <action android:name="android.intent.action.MAIN" />
-
-
-                         <category android:name="android.intent.category.LAUNCHER" />
-                         </intent-filter>
-
-        </activity>
-
+        <activity android:name=".SettingActivity"/>
+        <activity android:name=".ParamSettingActivity"/>
+        <activity android:name=".ControlSettingActivity"/>
+        <activity android:name=".GenerateData"/>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--             <intent-filter>-->
-<!--             <action android:name="android.intent.action.MAIN" />-->
-
-
-<!--             <category android:name="android.intent.category.LAUNCHER" />-->
-<!--             </intent-filter>-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
     </application>
 
