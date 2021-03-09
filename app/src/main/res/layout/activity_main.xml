@@ -17,12 +17,12 @@
         app:layout_constraintRight_toRightOf="parent"
         app:menu="@menu/bottom_nav_menu" />
 
-    <androidx.fragment.app.FragmentContainerView
+    <fragment
         android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:defaultNavHost="true"
+        app:defaultNavHost="false"
         app:layout_constraintBottom_toTopOf="@id/nav_view"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -31,33 +31,6 @@
         app:layout_constraintVertical_bias="1.0"
         app:navGraph="@navigation/mobile_navigation" />
 
-    <ImageView
-        android:id="@+id/logoHome"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="56dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo"
-        tools:ignore="UnknownIdInLayout" />
-
-    <Button
-        android:id="@+id/btnAddExperiment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="120dp"
-        android:layout_marginEnd="25dp"
-        android:background="@color/white"
-        android:drawableTop="@drawable/add_course"
-        android:text="@string/add_equipment"
-        android:textSize="35sp"
-        app:layout_constraintEnd_toStartOf="@+id/nav_host_fragment"
-        app:layout_constraintStart_toEndOf="@+id/nav_host_fragment"
-        app:layout_constraintTop_toBottomOf="@+id/logoHome" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
