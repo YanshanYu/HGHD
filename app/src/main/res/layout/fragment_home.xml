@@ -39,15 +39,14 @@
     <Button
         android:layout_width="360dp"
         android:layout_height="204dp"
-        android:layout_marginStart="25dp"
         android:layout_marginTop="120dp"
-        android:layout_marginEnd="25dp"
         android:background="@color/white"
         android:drawableTop="@drawable/add_course"
         android:text="@string/add_equipment"
         android:textSize="35sp"
         app:layout_constraintTop_toBottomOf="@+id/logo"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="33dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
