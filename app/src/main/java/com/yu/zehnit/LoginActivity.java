@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 public class LoginActivity extends BaseActivity {
 
-    public static final String REGEX_MOBILE = "^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(17[013678])|(18[0,5-9]))\\d{8}$";
+    public static final String REGEX_MOBILE = "^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\\d{8}$";
 
     private EditText editPhoneNumber;
     private EditText editCode;
