@@ -9,8 +9,8 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarSetting"
-        android:layout_width="410dp"
-        android:layout_height="54dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
@@ -45,8 +45,9 @@
 
     <Button
         android:id="@+id/buttonControlSetting"
-        android:layout_width="274dp"
-        android:layout_height="76dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="16:4"
         android:layout_marginStart="68dp"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="68dp"
@@ -61,8 +62,9 @@
 
     <Button
         android:id="@+id/buttonAboutUs"
-        android:layout_width="274dp"
-        android:layout_height="76dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="16:4"
         android:layout_marginStart="68dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="68dp"
@@ -77,8 +79,9 @@
 
     <Button
         android:id="@+id/buttonRelish"
-        android:layout_width="274dp"
-        android:layout_height="76dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="16:4"
         android:layout_marginStart="68dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="68dp"
@@ -93,8 +96,9 @@
 
     <Button
         android:id="@+id/buttonLogOut"
-        android:layout_width="274dp"
-        android:layout_height="76dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="18:5"
         android:layout_marginStart="68dp"
         android:layout_marginEnd="68dp"
         android:layout_marginBottom="30dp"

@@ -9,7 +9,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarAboutus"
         android:layout_width="match_parent"
-        android:layout_height="69dp"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
@@ -21,8 +21,8 @@
 
     <ImageView
         android:id="@+id/logoAboutUs"
-        android:layout_width="345dp"
-        android:layout_height="184dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="120dp"
         android:layout_marginEnd="10dp"
@@ -33,8 +33,8 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/materialTextViewName"
-        android:layout_width="242dp"
-        android:layout_height="33dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="84dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="85dp"
@@ -48,8 +48,8 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/materialTextViewVersion"
-        android:layout_width="242dp"
-        android:layout_height="33dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="84dp"
         android:layout_marginEnd="85dp"
         android:text="@string/version_number"
@@ -62,8 +62,8 @@
 
     <Button
         android:id="@+id/buttonService"
-        android:layout_width="240dp"
-        android:layout_height="55dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
         android:layout_marginTop="500dp"
         android:layout_marginEnd="100dp"
@@ -75,12 +75,13 @@
         app:layout_constraintBottom_toTopOf="@+id/button15"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread" />
 
     <Button
         android:id="@+id/button15"
-        android:layout_width="240dp"
-        android:layout_height="55dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
         android:layout_marginEnd="100dp"
         android:backgroundTint="@color/babyblue"
@@ -90,13 +91,14 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/buttonContactUs"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonService" />
 
     <Button
         android:id="@+id/buttonContactUs"
-        android:layout_width="240dp"
-        android:layout_height="55dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
         android:layout_marginEnd="100dp"
         android:layout_marginBottom="104dp"
