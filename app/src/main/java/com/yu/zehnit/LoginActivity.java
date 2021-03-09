@@ -12,6 +12,7 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ public class LoginActivity extends BaseActivity {
     private EditText editCode;
     private Button btnLogin;
     private Button btnGetCode;
+    private CheckBox checkBox;
     private Intent intent;
     private TimeCount timeCount;
 
@@ -32,10 +34,10 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
         intent = new Intent(LoginActivity.this, MainActivity.class);
 
-        // 若已登录，直接进入主页
-        SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
-        Boolean isLogin = pref.getBoolean("isLogin", false);
-        if (isLogin) startActivity(intent);
+//        // 若已登录，直接进入主页
+//        SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+//        Boolean isLogin = pref.getBoolean("isLogin", false);
+//        if (isLogin) startActivity(intent);
 
         editPhoneNumber = findViewById(R.id.edit_phone_number);
         editCode = findViewById(R.id.edit_code);
@@ -46,6 +48,8 @@ public class LoginActivity extends BaseActivity {
         btnGetCode = findViewById(R.id.btnGetCode);
         btnLogin.setEnabled(false);
         btnGetCode.setEnabled(false);
+
+        checkBox = findViewById(R.id.checkBox);
 
         editPhoneNumber.addTextChangedListener(new TextWatcher() {
             @Override
@@ -102,13 +106,17 @@ public class LoginActivity extends BaseActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (editCode.getText().toString().equals("123456")) {
-                    SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
-                    editor.putBoolean("isLogin", true);
-                    editor.apply();
-                    startActivity(intent);
+                if (checkBox.isChecked()) {
+                    if (editCode.getText().toString().equals("123456")) {
+                        SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+                        editor.putBoolean("isLogin", true);
+                        editor.apply();
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(LoginActivity.this, "验证码输入错误，请重试", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(LoginActivity.this, "验证码输入错误，请重试", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "请阅读并勾选隐私协议后再登录", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -134,5 +142,11 @@ public class LoginActivity extends BaseActivity {
             btnGetCode.setBackgroundColor(Color.parseColor("#008577"));
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        ActivityController.finishAll();
     }
 }
