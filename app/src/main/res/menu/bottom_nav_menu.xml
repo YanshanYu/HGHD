@@ -16,7 +16,7 @@
         android:icon="@drawable/course_dration"
         android:title="@string/title_rehabilitation" />
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_info"
         android:icon="@drawable/user_sexual"
         android:title="@string/title_info" />
 

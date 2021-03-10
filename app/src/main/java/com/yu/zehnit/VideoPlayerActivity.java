@@ -11,7 +11,6 @@ import android.widget.VideoView;
 
 public class VideoPlayerActivity extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
