@@ -25,7 +25,6 @@
         </activity>
         <activity android:name=".SettingActivity" />
         <activity android:name=".ParamSettingActivity" />
-        <activity android:name=".ControlSettingActivity" />
         <activity android:name=".GenerateData" />
         <activity
             android:name=".MainActivity"
