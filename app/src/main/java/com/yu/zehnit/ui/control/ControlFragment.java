@@ -23,13 +23,15 @@ public class ControlFragment extends Fragment {
         controlViewModel =
                 new ViewModelProvider(this).get(ControlViewModel.class);
         View root = inflater.inflate(R.layout.fragment_control, container, false);
-        final TextView textView = root.findViewById(R.id.text_control);
+//        final TextView textView = root.findViewById(R.id.text_control);
         controlViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
+
+//                textView.setText(s);
             }
         });
+
         return root;
     }
 }
