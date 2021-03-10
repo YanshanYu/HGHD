@@ -31,7 +31,7 @@
         app:navGraph="@navigation/mobile_navigation" />
 
     <ImageView
-        android:id="@+id/logoSn"
+        android:id="@+id/logo_sn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -43,7 +43,7 @@
         app:srcCompat="@drawable/logo" />
 
     <TextView
-        android:id="@+id/textViewExpName"
+        android:id="@+id/textView_expname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -54,20 +54,20 @@
         android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/textViewExpState"
         app:layout_constraintStart_toEndOf="@+id/imageViewExperiment"
-        app:layout_constraintTop_toBottomOf="@+id/logoSn" />
+        app:layout_constraintTop_toBottomOf="@+id/logo_sn" />
 
     <ImageView
-        android:id="@+id/imageViewExperiment"
+        android:id="@+id/imageView_experiment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="35dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logoSn"
+        app:layout_constraintTop_toBottomOf="@+id/logo_sn"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/textViewExpState"
+        android:id="@+id/textView_expstate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -75,8 +75,8 @@
         android:text="@string/equipment_state"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/imageViewExperiment"
-        app:layout_constraintTop_toBottomOf="@+id/textViewExpName" />
+        app:layout_constraintStart_toEndOf="@+id/imageView_experiment"
+        app:layout_constraintTop_toBottomOf="@+id/textView_expname" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

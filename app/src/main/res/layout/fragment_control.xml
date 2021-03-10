@@ -7,55 +7,47 @@
     tools:context=".ui.control.ControlFragment">
 
     <Button
-        android:id="@+id/buttonFollowHead1"
+        android:id="@+id/button_followhead1"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="3:4"
         android:layout_marginStart="16dp"
         android:layout_marginTop="110dp"
-        android:layout_marginBottom="35dp"
         android:text="@string/follow_head"
         android:textSize="25dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonControlSetting"
-        app:layout_constraintEnd_toStartOf="@+id/buttonFolloeHead2"
+        app:layout_constraintDimensionRatio="3:4"
+        app:layout_constraintEnd_toStartOf="@+id/button_followhead2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.52" />
-
-    <Button
-        android:id="@+id/buttonFolloeHead2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="3:4"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="110dp"
-        android:layout_marginBottom="35dp"
-        android:text="@string/follow_head"
-        android:textSize="25dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonControlSetting"
-        app:layout_constraintEnd_toStartOf="@+id/buttonFolloeHead3"
-        app:layout_constraintStart_toEndOf="@+id/buttonFollowHead1"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/buttonFolloeHead3"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="3:4"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="110dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="35dp"
-        android:text="@string/follow_head"
-        android:textSize="25dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonControlSetting"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/buttonFolloeHead2"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttonEyeExperiment"
+        android:id="@+id/button_followhead2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="110dp"
+        android:text="@string/follow_head"
+        android:textSize="25dp"
+        app:layout_constraintDimensionRatio="3:4"
+        app:layout_constraintEnd_toStartOf="@+id/button_followhead3"
+        app:layout_constraintStart_toEndOf="@+id/button_followhead1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_followhead3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="110dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/follow_head"
+        android:textSize="25dp"
+        app:layout_constraintDimensionRatio="3:4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_followhead2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_eye_experiment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintDimensionRatio="8:4"
@@ -63,13 +55,13 @@
         android:layout_marginEnd="16dp"
         android:text="@string/eye_tracking_experiment"
         android:textSize="25dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonScaExperiment"
+        app:layout_constraintBottom_toTopOf="@+id/button_sca_experiment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonFolloeHead2" />
+        app:layout_constraintTop_toBottomOf="@+id/button_followhead2" />
 
     <Button
-        android:id="@+id/buttonScaExperiment"
+        android:id="@+id/button_sca_experiment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -82,7 +74,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonEyeExperiment" />
+        app:layout_constraintTop_toBottomOf="@+id/button_eye_experiment" />
 
 <!--    <androidx.appcompat.widget.Toolbar-->
 <!--        android:id="@+id/toolbarControlCentre"-->

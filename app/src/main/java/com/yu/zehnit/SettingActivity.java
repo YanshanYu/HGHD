@@ -14,7 +14,7 @@ public class SettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        Button btnParamSetting = findViewById(R.id.buttonControlSetting);
+        Button btnParamSetting = findViewById(R.id.button_controlsetting);
         btnParamSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -37,13 +37,13 @@ public class LoginActivity extends BaseActivity {
         Boolean isLogin = pref.getBoolean("isLogin", false);
         if (isLogin) startActivity(intent);
 
-        editPhoneNumber = findViewById(R.id.editTextPhone);
-        editCode = findViewById(R.id.edit_numberEnterCheckNum);
+        editPhoneNumber = findViewById(R.id.editText_phone);
+        editCode = findViewById(R.id.edit_number_enter_checknum);
         editPhoneNumber.setInputType(InputType.TYPE_CLASS_NUMBER);
         editCode.setInputType(InputType.TYPE_CLASS_NUMBER);
 
-        btnLogin = findViewById(R.id.buttonLogin);
-        btnGetCode = findViewById(R.id.buttonGetCheckNum);
+        btnLogin = findViewById(R.id.button_login);
+        btnGetCode = findViewById(R.id.button_get_checknum);
         btnLogin.setEnabled(false);
         btnGetCode.setEnabled(false);
 
