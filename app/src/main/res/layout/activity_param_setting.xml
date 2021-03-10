@@ -65,6 +65,21 @@
         app:layout_constraintStart_toStartOf="@+id/sin_frequency_img"
         app:layout_constraintTop_toTopOf="@+id/sin_frequency_img" />
 
+
+    <TextView
+        android:id="@+id/sin_amplitude_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/propm"
+        android:gravity="center"
+        android:textColor="#3270F9"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/sin_amplitude_text"
+        app:layout_constraintTop_toTopOf="@+id/sin_amplitude_text"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="50dp" />
+
     <com.yu.zehnit.tools.IndicatorSeekBar
         android:id="@+id/sin_amplitude"
         android:layout_width="match_parent"
@@ -84,6 +99,20 @@
         android:thumb="@drawable/ic_sb_24dp" />
 
 
+    <TextView
+        android:id="@+id/fang_frequency_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/propm"
+        android:gravity="center"
+        android:textColor="#3270F9"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/fang_frequency_text"
+        app:layout_constraintTop_toTopOf="@+id/fang_frequency_text"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="50dp" />
+
     <com.yu.zehnit.tools.IndicatorSeekBar
         android:id="@+id/fang_frequency"
         android:layout_width="match_parent"
@@ -101,6 +130,21 @@
         app:layout_constraintTop_toTopOf="@id/fang_frequency_img"
         android:splitTrack="false"
         android:thumb="@drawable/ic_sb_24dp" />
+
+
+    <TextView
+        android:id="@+id/fang_amplitude_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/propm"
+        android:gravity="center"
+        android:textColor="#3270F9"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/fang_amplitude_text"
+        app:layout_constraintTop_toTopOf="@+id/fang_amplitude_text"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="50dp" />
 
     <com.yu.zehnit.tools.IndicatorSeekBar
         android:id="@+id/fang_amplitude"
