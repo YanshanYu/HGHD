@@ -44,8 +44,9 @@ public class IndicatorSeekBar extends AppCompatSeekBar {
         mPaint = new TextPaint();
 
         mPaint.setAntiAlias(true);
-        mPaint.setColor(Color.parseColor("#00574B"));
+//        mPaint.set(Color.parseColor("#FFFFFF"));
         mPaint.setTextSize(sp2px(16));
+        mPaint.setColor(Color.parseColor("#FFFFFF"));
 
         // 如果不设置padding，当滑动到最左边或最右边时，滑块会显示不全
         setPadding(mThumbWidth/4, 0, mThumbWidth/4, 0);
