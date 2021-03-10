@@ -44,7 +44,7 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo_aboutUs" />
+        app:layout_constraintTop_toBottomOf="@+id/logo_aboutus" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/materialTextView_version"
