@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible"
+    tools:context=".ui.control.ControlFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar3"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/boder_bottom"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/back"
+        app:titleTextColor="#000"
+        app:title="控制设置"
+        />
+
+    <TextView
+        android:id="@+id/class_sin_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="108dp"
+        android:text="视追踪实验"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/sin_frequency_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/propm"
+        android:gravity="center"
+        android:textColor="#3270F9"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/sin_frequency_text"
+        app:layout_constraintTop_toTopOf="@+id/sin_frequency_text"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="50dp" />
+
+
+    <com.yu.zehnit.tools.IndicatorSeekBar
+        android:id="@+id/sin_frequency"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="24dp"
+        android:background="@null"
+        android:max="100"
+        android:maxHeight="20dp"
+        android:minHeight="20dp"
+        android:progress="50"
+        android:progressDrawable="@drawable/seekbar_progress_drawable"
+        android:splitTrack="false"
+        android:thumb="@drawable/ic_sb_24dp"
+        app:layout_constraintStart_toStartOf="@+id/sin_frequency_img"
+        app:layout_constraintTop_toTopOf="@+id/sin_frequency_img" />
+
+    <com.yu.zehnit.tools.IndicatorSeekBar
+        android:id="@+id/sin_amplitude"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@null"
+        android:max="100"
+        android:maxHeight="20dp"
+        android:minHeight="20dp"
+        android:progress="50"
+        android:progressDrawable="@drawable/seekbar_progress_drawable"
+        app:layout_constraintStart_toStartOf="@id/sin_amplitude_img"
+        app:layout_constraintTop_toTopOf="@id/sin_amplitude_img"
+        android:splitTrack="false"
+        android:thumb="@drawable/ic_sb_24dp" />
+
+
+    <com.yu.zehnit.tools.IndicatorSeekBar
+        android:id="@+id/fang_frequency"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="10dp"
+        android:background="@null"
+        android:max="100"
+        android:maxHeight="20dp"
+        android:minHeight="20dp"
+        android:progress="50"
+        android:progressDrawable="@drawable/seekbar_progress_drawable"
+        app:layout_constraintStart_toStartOf="@id/fang_frequency_img"
+        app:layout_constraintTop_toTopOf="@id/fang_frequency_img"
+        android:splitTrack="false"
+        android:thumb="@drawable/ic_sb_24dp" />
+
+    <com.yu.zehnit.tools.IndicatorSeekBar
+        android:id="@+id/fang_amplitude"
+        android:layout_width="match_parent"
+        android:layout_height="37dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="10dp"
+        android:background="@null"
+        android:max="100"
+        android:maxHeight="20dp"
+        android:minHeight="20dp"
+        android:progress="50"
+        android:progressDrawable="@drawable/seekbar_progress_drawable"
+        app:layout_constraintStart_toStartOf="@id/fang_amplitude_img"
+        app:layout_constraintTop_toTopOf="@id/fang_amplitude_img"
+        android:splitTrack="false"
+        android:thumb="@drawable/ic_sb_24dp" />
+
+
+    <TextView
+        android:id="@+id/sin_frequency_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="频率"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/sin_frequency_img"
+        app:layout_constraintTop_toTopOf="@+id/sin_frequency_img" />
+
+    <TextView
+        android:id="@+id/sin_amplitude_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="幅度"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@+id/sin_amplitude_img"
+        app:layout_constraintTop_toTopOf="@+id/sin_amplitude_img" />
+
+    <TextView
+        android:id="@+id/fang_frequency_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="频率"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@id/fang_frequency_img"
+        app:layout_constraintTop_toTopOf="@id/fang_frequency_img" />
+
+    <TextView
+        android:id="@+id/fang_amplitude_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="幅度"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@id/fang_amplitude_img"
+        app:layout_constraintTop_toTopOf="@+id/fang_amplitude_img" />
+
+
+    <TextView
+        android:id="@+id/class_fang_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="390dp"
+        android:text="扫视实验"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/sin_frequency_img"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/frequency"
+        app:layout_constraintStart_toStartOf="@id/class_sin_text"
+        app:layout_constraintTop_toTopOf="@id/class_sin_text" />
+
+    <ImageView
+        android:id="@+id/sin_amplitude_img"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/frequency"
+        app:layout_constraintStart_toStartOf="@id/sin_frequency_img"
+        app:layout_constraintTop_toTopOf="@id/sin_frequency_img" />
+
+
+    <ImageView
+        android:id="@+id/fang_frequency_img"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/frequency"
+        app:layout_constraintStart_toStartOf="@id/class_fang_text"
+        app:layout_constraintTop_toTopOf="@id/class_fang_text" />
+
+    <ImageView
+        android:id="@+id/fang_amplitude_img"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/frequency"
+        app:layout_constraintStart_toStartOf="@id/fang_frequency_img"
+        app:layout_constraintTop_toTopOf="@id/fang_frequency_img" />
+</androidx.constraintlayout.widget.ConstraintLayout>

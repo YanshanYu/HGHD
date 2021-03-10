@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval"
+
     android:useLevel="false">
-    <solid android:color="#836FFF" />  <!-- 颜色-->
+    <solid android:color="#3873FD"/>  <!-- 颜色-->
     <stroke
         android:width="0.5dp"
-        android:color="#836FFF" />
+        android:color="#3873FD" />
     <size
-        android:width="30dp"
-        android:height="30dp" />
+        android:width="20dp"
+        android:height="20dp" />
 </shape>
