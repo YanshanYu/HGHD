@@ -11,6 +11,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityController.addActivity(this);
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
