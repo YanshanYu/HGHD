@@ -49,7 +49,7 @@ public class LoginActivity extends BaseActivity {
         btnLogin.setEnabled(false);
         btnGetCode.setEnabled(false);
 
-        checkBox = findViewById(R.id.checkBoxTextPolicy);
+        checkBox = findViewById(R.id.checkBox_textpolicy);
 
         editPhoneNumber.addTextChangedListener(new TextWatcher() {
             @Override
