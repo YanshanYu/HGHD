@@ -20,7 +20,7 @@
         app:title="@string/about_us" />
 
     <ImageView
-        android:id="@+id/logo_aboutUs"
+        android:id="@+id/logo_aboutus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
