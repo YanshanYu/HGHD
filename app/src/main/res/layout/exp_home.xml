@@ -52,8 +52,8 @@
         android:text="@string/equipment_name"
         android:textColor="@color/black"
         android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/textViewExpState"
-        app:layout_constraintStart_toEndOf="@+id/imageViewExperiment"
+        app:layout_constraintBottom_toTopOf="@+id/textView_expstate"
+        app:layout_constraintStart_toEndOf="@+id/imageView_experiment"
         app:layout_constraintTop_toBottomOf="@+id/logo_sn" />
 
     <ImageView

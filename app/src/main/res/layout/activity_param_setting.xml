@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
         android:layout_marginTop="108dp"
-        android:text="视追踪实验"
+        android:text="@string/eye_tracking_experiment"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -126,7 +126,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:text="频率"
+        android:text="@string/frequency"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@+id/sin_frequency_img"
         app:layout_constraintTop_toTopOf="@+id/sin_frequency_img" />
@@ -136,7 +136,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:text="幅度"
+        android:text="@string/range"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@+id/sin_amplitude_img"
         app:layout_constraintTop_toTopOf="@+id/sin_amplitude_img" />
@@ -146,7 +146,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:text="频率"
+        android:text="@string/frequency"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@id/fang_frequency_img"
         app:layout_constraintTop_toTopOf="@id/fang_frequency_img" />
@@ -156,7 +156,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:text="幅度"
+        android:text="@string/range"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@id/fang_amplitude_img"
         app:layout_constraintTop_toTopOf="@+id/fang_amplitude_img" />
@@ -168,7 +168,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="390dp"
-        android:text="扫视实验"
+        android:text="@string/scanner_experiment"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
