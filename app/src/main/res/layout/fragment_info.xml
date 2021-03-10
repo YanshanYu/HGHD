@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.info.InfoFragment">
+    tools:context=".ui.control.ControlFragment">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageViewPhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="140dp"
@@ -15,7 +15,7 @@
         android:layout_marginEnd="140dp"
         android:layout_marginBottom="147dp"
         android:layout_weight="1"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@+id/buttonTrainingTarget"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,27 +23,28 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="323dp"
-        android:layout_height="84dp"
+        android:id="@+id/buttonTrainingTarget"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="7:2"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="25dp"
         android:layout_weight="1"
+        android:backgroundTint="@color/babyblue"
         android:drawableEnd="@drawable/forward"
         android:text="@string/training_target"
-        android:textSize="28sp"
         android:textColor="@color/white"
-        android:backgroundTint="@color/purple_200"
-        app:layout_constraintBottom_toTopOf="@+id/button8"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonTrainingTime"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button8"
-        android:layout_width="323dp"
-        android:layout_height="84dp"
+        android:id="@+id/buttonTrainingTime"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="7:2"
         android:layout_marginStart="50dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="50dp"
@@ -52,15 +53,16 @@
         android:text="@string/train_time"
         android:textSize="28sp"
         android:textColor="@color/white"
-        android:backgroundTint="@color/purple_200"
+        android:backgroundTint="@color/babyblue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonTrainingTarget" />
 
     <Button
-        android:id="@+id/button9"
-        android:layout_width="323dp"
-        android:layout_height="84dp"
+        android:id="@+id/buttonShopping"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="7:2"
         android:layout_marginStart="50dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="50dp"
@@ -69,30 +71,30 @@
         android:text="@string/shopping_link"
         android:textSize="28sp"
         android:textColor="@color/white"
-        android:backgroundTint="@color/purple_200"
-        app:layout_constraintBottom_toTopOf="@+id/button10"
+        android:backgroundTint="@color/babyblue"
+        app:layout_constraintBottom_toTopOf="@+id/buttonSetting"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button8" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonTrainingTime" />
 
     <Button
-        android:id="@+id/button_info"
-        android:layout_width="323dp"
-        android:layout_height="84dp"
+        android:id="@+id/buttonSetting"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="50dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="100dp"
         android:layout_weight="1"
+        android:backgroundTint="@color/babyblue"
         android:drawableEnd="@drawable/forward"
         android:text="@string/setting"
-        android:textSize="28sp"
         android:textColor="@color/white"
-        android:backgroundTint="@color/purple_200"
+        android:textSize="28sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="7:2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button9" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonShopping" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-

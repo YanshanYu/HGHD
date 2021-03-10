@@ -19,8 +19,6 @@
     <string name="logout">退出登录</string>
     <string name="frequency">频率</string>
     <string name="range">幅度</string>
-    <string name="experiment1">视追踪实验</string>
-    <string name="experiment2">扫视实验</string>
     <string name="login">登录</string>
     <string name="enter_phone_number">请输入您的手机号码...</string>
     <string name="enter_code">请输入验证码...</string>
@@ -35,4 +33,7 @@
     <string name="enter_sn">请输入您的SN号...</string>
     <string name="verify">验证</string>
     <string name="video_message">视频简介</string>
+    <string name="eye_tracking_experiment">视追踪实验</string>
+    <string name="scanner_experiment">扫视实验</string>
+    <string name="follow_head">跟随头动</string>
 </resources>
