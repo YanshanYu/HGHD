@@ -36,4 +36,7 @@
     <string name="eye_tracking_experiment">视追踪实验</string>
     <string name="scanner_experiment">扫视实验</string>
     <string name="follow_head">跟随头动</string>
+    <string name="gaze_holding1">凝视稳定性训练1</string>
+    <string name="gaze_holding2">凝视稳定性训练2</string>
+    <string name="gaze_holding3">凝视稳定性训练3</string>
 </resources>

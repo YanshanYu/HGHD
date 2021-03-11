@@ -9,8 +9,8 @@ public class RehabilitationViewModel extends ViewModel {
     private MutableLiveData<String> mText;
 
     public RehabilitationViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is rehabilitation fragment");
+        //mText = new MutableLiveData<>();
+       // mText.setValue("This is rehabilitation fragment");
     }
 
     public LiveData<String> getText() {
