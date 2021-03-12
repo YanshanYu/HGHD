@@ -7,7 +7,7 @@
     tools:context=".ui.control.ControlFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarAboutus"
+        android:id="@+id/toolbar_aboutus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -20,7 +20,7 @@
         app:title="@string/about_us" />
 
     <ImageView
-        android:id="@+id/logoAboutUs"
+        android:id="@+id/logo_aboutus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -28,11 +28,11 @@
         android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/toolbarAboutus"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_aboutus"
         app:srcCompat="@drawable/logo" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/materialTextViewName"
+        android:id="@+id/materialTextView_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="84dp"
@@ -44,10 +44,10 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logoAboutUs" />
+        app:layout_constraintTop_toBottomOf="@+id/logo_aboutus" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/materialTextViewVersion"
+        android:id="@+id/materialTextView_version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="84dp"
@@ -58,10 +58,10 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialTextViewName" />
+        app:layout_constraintTop_toBottomOf="@+id/materialTextView_name" />
 
     <Button
-        android:id="@+id/buttonService"
+        android:id="@+id/button_service"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
@@ -72,14 +72,14 @@
         android:text="@string/service_agreement"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/button15"
+        app:layout_constraintBottom_toTopOf="@+id/button_privatepolicy"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread" />
 
     <Button
-        android:id="@+id/button15"
+        android:id="@+id/button_privatepolicy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
@@ -89,14 +89,14 @@
         android:text="@string/privacy_policy"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonContactUs"
+        app:layout_constraintBottom_toTopOf="@+id/button_contactus"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonService" />
+        app:layout_constraintTop_toBottomOf="@+id/button_service" />
 
     <Button
-        android:id="@+id/buttonContactUs"
+        android:id="@+id/button_contactus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
@@ -110,6 +110,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button15" />
+        app:layout_constraintTop_toBottomOf="@+id/button_privatepolicy" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
