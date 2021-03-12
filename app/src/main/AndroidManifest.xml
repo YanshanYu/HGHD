@@ -9,33 +9,32 @@
         android:roundIcon="@drawable/back"
         android:supportsRtl="true"
         android:theme="@style/Theme.HGHD">
-        <activity android:name=".WelcomeActivity">
+        <activity android:name=".WelcomeActivity" />
+
+        <activity android:name=".LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity">
+
+        <activity android:name=".SettingActivity" />
+        <activity android:name=".ParamSettingActivity">
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
+
 
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
 <!--            </intent-filter>-->
         </activity>
-        <activity android:name=".SettingActivity" />
-        <activity android:name=".ParamSettingActivity" />
-        <activity android:name=".GenerateData" />
+        <activity android:name=".GenerateData" >
+
+        </activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
     </application>
 

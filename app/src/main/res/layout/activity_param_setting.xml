@@ -2,25 +2,38 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:custom="http://schemas.android.com/apk/res/com.yu.zehnit"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="visible"
     tools:context=".ui.control.ControlFragment">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar3"
+<!--    <com.yu.zehnit.tools.NavBar-->
+<!--        android:id="@+id/topbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="60dp"-->
+
+<!--        custom:leftTextColor="#000000"-->
+<!--        custom:leftText="控制设置"-->
+<!--        custom:allBackground="@drawable/border_bottom"-->
+<!--        tools:ignore="MissingConstraints" />-->
+
+
+        <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@drawable/boder_bottom"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/border_bottom"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/back"
-        app:titleTextColor="#000"
         app:title="控制设置"
-        />
+        app:titleTextColor="#000" />
 
     <TextView
         android:id="@+id/class_sin_text"
@@ -253,4 +266,7 @@
         android:src="@drawable/frequency"
         app:layout_constraintStart_toStartOf="@id/fang_frequency_img"
         app:layout_constraintTop_toTopOf="@id/fang_frequency_img" />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
