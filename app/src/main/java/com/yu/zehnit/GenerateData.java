@@ -16,20 +16,21 @@ public class GenerateData extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_generate_data);
         SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
-        String sinFrequencyValue = pref.getString("sin_frequency", "");
-        String sinAmplitudeValue = pref.getString("sin_amplitude", "");
-        String fangFrequencyValue = pref.getString("fang_frequency", "");
-        String fangAmplitudeValue = pref.getString("fang_amplitude", "");
+        int sinFrequencyValue = pref.getInt("sin_frequency", 0);
+        int sinAmplitudeValue = pref.getInt("sin_amplitude", 0);
+        int fangFrequencyValue = pref.getInt("fang_frequency", 0);
+        int fangAmplitudeValue = pref.getInt("fang_amplitude", 0);
 
         ArrayList<double[]> data = new ArrayList<double[]>();
         Log.d(TestApp, String.valueOf(sinFrequencyValue));
         for(int i=0; i<=100; i++) {
-            double x = Math.PI / 50  * i  * Integer.parseInt(sinFrequencyValue) / 60;
-            double y = Integer.parseInt(sinAmplitudeValue) * Math.sin(x*60/Integer.parseInt(sinFrequencyValue));
+            double x = Math.PI / 50  * i  * sinFrequencyValue / 60;
+            double y = sinAmplitudeValue * Math.sin(x*60/sinFrequencyValue);
             double[] value = {x, y};
             data.add(value);
-            Log.d(TestApp, String.valueOf(data.get(i)[0]) +  "    " +  String.valueOf(data.get(i)[1]));
+            Log.d(TestApp, String.valueOf(data.get(i)[0]) +  "    " +  String.valueOf(data.get(i)[1]) + "\n");
         }
+        
 
     }
 }
