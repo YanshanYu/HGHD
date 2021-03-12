@@ -31,7 +31,7 @@
                 android:layout_weight="1"
                 android:textAlignment="center"
                 android:background="@animator/flat_button"
-                android:text="@string/gaze_holding1" />
+                android:text="@string/gaze_holding2" />
 
             <Button
                 android:id="@+id/gaze_holding3"
@@ -41,7 +41,7 @@
                 android:layout_weight="1"
                 android:textAlignment="center"
                 android:background="@animator/flat_button"
-                android:text="@string/gaze_holding1" />
+                android:text="@string/gaze_holding3" />
         </TableRow>
     </TableLayout>
     <TableLayout
@@ -59,7 +59,7 @@
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:background="@animator/flat_button"
-                android:text="@string/gaze_holding1"
+                android:text="@string/eye_tracking_experiment"
                 android:textAlignment="center"/>
 
             <Button
@@ -70,7 +70,7 @@
                 android:layout_weight="1"
                 android:textAlignment="center"
                 android:background="@animator/flat_button"
-                android:text="@string/gaze_holding1" />
+                android:text="@string/scanner_experiment" />
 
 
         </TableRow>
