@@ -7,7 +7,7 @@
         android:icon="@drawable/back"
         android:label="@string/app_name"
         android:roundIcon="@drawable/back"
-        android:supportsRtl="true"
+        android:supportsRtl="true">
         android:theme="@style/Theme.HGHD">
         <activity android:name=".WelcomeActivity">
             <intent-filter>
@@ -29,7 +29,8 @@
         <activity android:name=".VideoPlayerActivity"/>
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            >
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
