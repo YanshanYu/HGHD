@@ -9,4 +9,16 @@
     <color name="white">#FFFFFFFF</color>
     <color name="MediumPurple1">#AB82FF</color>
     <color name="babyblue">#4F94CD</color>
+    <color name="colorPrimary">#74b9ff</color>
+    <color name="colorAccent">#0984e3</color>
+    <color name="darkColorPrimary">#74b9ff</color>
+    <color name="darkColorAccent">#0984e3</color>
+
+    <color name="colorPrimaryTextBlack">#FF000000</color>
+    <color name="colorSubTextBlack">#FF000000</color>
+    <color name="colorSubTextWhite">#FFFFFFFF</color>
+    <color name="dark_bg">#FFFFFFFF</color>
+
+    <color name="testGreen">#008000</color>
+    <color name="testRed">#FF0000</color>
 </resources>

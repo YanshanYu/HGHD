@@ -1,3 +1,5 @@
+package com.yu.zehnit.tools;
+
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
@@ -13,8 +15,8 @@ public class SMS {
     private static final String product = "Dysmsapi";
     private static final String domain = "dysmsapi.aliyuncs.com";
 
-    private static final String accessKeyId = "1111";
-    private static final String accessKeySecret = "2222";
+    private static final String accessKeyId = "1111111111111";
+    private static final String accessKeySecret = "2222222222222222";
 
     private static String msgCode_check;
 
@@ -34,11 +36,11 @@ public class SMS {
         String msgCode = getMsgCode();
         msgCode_check  = msgCode;
         SendSmsRequest request = new SendSmsRequest();
-        //request.setMethod(MethodType.POST);
+        request.setMethod(MethodType.POST);
 
         request.setPhoneNumbers(phone);
         //request.setPhoneNumbers("13008726533");
-        request.setSignName("上海志听");
+        request.setSignName("VertiQuest");
         request.setTemplateCode("SMS_175480501");
         request.setTemplateParam("{\"code\":\"" + msgCode + "\"}");
         request.setOutId("123321");

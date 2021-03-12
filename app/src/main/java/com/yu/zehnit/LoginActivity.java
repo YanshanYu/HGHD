@@ -16,6 +16,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.yu.zehnit.tools.SMS;
+
 public class LoginActivity extends BaseActivity {
 
     public static final String REGEX_MOBILE = "^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\\d{8}$";
@@ -28,16 +30,15 @@ public class LoginActivity extends BaseActivity {
     private Intent intent;
     private TimeCount timeCount;
 
+    private String telPhone;
+    private String code;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         intent = new Intent(LoginActivity.this, MainActivity.class);
 
-//        // 若已登录，直接进入主页
-//        SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
-//        Boolean isLogin = pref.getBoolean("isLogin", false);
-//        if (isLogin) startActivity(intent);
 
         editPhoneNumber = findViewById(R.id.editText_phone);
         editCode = findViewById(R.id.edit_number_enter_checknum);
@@ -59,8 +60,8 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String phoneNumber = editPhoneNumber.getText().toString();
-                if (phoneNumber.matches(REGEX_MOBILE)) {
+                telPhone = editPhoneNumber.getText().toString();
+                if (telPhone.matches(REGEX_MOBILE)) {
                     btnGetCode.setEnabled(true);
                 } else {
                     btnGetCode.setEnabled(false);
@@ -81,7 +82,8 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (editCode.getText().length() == 6) {
+                code = editCode.getText().toString();
+                if (code.length() == 6 && btnGetCode.isEnabled()) {
                     btnLogin.setEnabled(true);
                 } else {
                     btnLogin.setEnabled(false);
@@ -94,26 +96,46 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
+        Runnable runnable = new Runnable() {
+            //String telPhone = mPhone.getText().toString();
+            @Override
+            public void run() {
+                try{
+                    SMS.SMSTest(telPhone);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        };
+
         btnGetCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 timeCount = new TimeCount(60000,1000);
                 timeCount.start();
+                // new Thread(runnable).start();
             }
         });
+
+
 
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (checkBox.isChecked()) {
-                    if (editCode.getText().toString().equals("123456")) {
-                        SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
-                        editor.putBoolean("isLogin", true);
-                        editor.apply();
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(LoginActivity.this, "验证码输入错误，请重试", Toast.LENGTH_SHORT).show();
+                    try {
+                        if (code.equals("123456")) {
+                        //if (SMS.checkCode(code)) {
+                            SharedPreferences.Editor editor = getSharedPreferences("loginStatus", MODE_PRIVATE).edit();
+                            editor.putBoolean("isLogin", true);
+                            editor.apply();
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(LoginActivity.this, "验证码输入错误，请重试", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 } else {
                     Toast.makeText(LoginActivity.this, "请阅读并勾选隐私协议后再登录", Toast.LENGTH_SHORT).show();
