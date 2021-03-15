@@ -16,14 +16,14 @@ import com.yu.zehnit.R;
 
 public class IndicatorSeekBar extends AppCompatSeekBar {
 
-    // 画笔
+    // 画笔 进度条里面的数字
     private Paint mPaint;
     // 进度文字位置信息
     private Rect mProgressTextRect = new Rect();
     // 滑块按钮宽度
-    private int mThumbWidth = dp2px(50);
+    private int mThumbWidth = dp2px(40);
     // 进度指示器宽度
-    private int mIndicatorWidth = dp2px(50);
+    private int mIndicatorWidth = dp2px(40);
     // 进度监听
     private OnIndicatorSeekBarChangeListener mIndicatorSeekBarChangeListener;
 
@@ -49,12 +49,20 @@ public class IndicatorSeekBar extends AppCompatSeekBar {
         mPaint.setColor(Color.parseColor("#FFFFFF"));
 
         // 如果不设置padding，当滑动到最左边或最右边时，滑块会显示不全
-        setPadding(mThumbWidth/4, 0, mThumbWidth/4, 0);
+//        setPadding(mThumbWidth/4, 0, mThumbWidth/4, 0);
 
         // 设置滑动监听
         this.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(progress == 0) {
+                    mPaint.setColor(Color.parseColor("#000000"));
+                }else {
+                    mPaint.setColor(Color.parseColor("#FFFFFF"));
+                }
+                if(progress == 100) {
+//                    mPaint.setColor(Color.parseColor("#000000"));
+                }
                 // NO OP
             }
 

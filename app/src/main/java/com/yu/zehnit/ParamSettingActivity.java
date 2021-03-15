@@ -100,7 +100,6 @@ public class ParamSettingActivity extends BaseActivity {
                 String indicatorText = Integer.toString(progress);
                 sinFrequencyIndicator.setText(indicatorText);
                 params.leftMargin = (int) indicatorOffset;
-                Log.d(TestApp, String.valueOf(indicatorOffset));
                 sinFrequencyIndicator.setLayoutParams(params);
             }
 
