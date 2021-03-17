@@ -34,7 +34,7 @@ public class InfoFragment extends Fragment {
 //                textView.setText(s);
 //            }
 //        });
-        Button btnSetting  = root.findViewById(R.id.buttonSetting);
+        Button btnSetting  = root.findViewById(R.id.button_setting);
         btnSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

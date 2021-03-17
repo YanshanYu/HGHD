@@ -8,7 +8,7 @@
     tools:context=".ui.control.ControlFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarSetting"
+        android:id="@+id/toolbar_setting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -44,7 +44,7 @@
 <!--        app:layout_constraintTop_toBottomOf="@+id/toolbarSetting" />-->
 
     <Button
-        android:id="@+id/buttonControlSetting"
+        android:id="@+id/button_controlsetting"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintDimensionRatio="16:4"
@@ -58,10 +58,10 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarSetting" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_setting" />
 
     <Button
-        android:id="@+id/buttonAboutUs"
+        android:id="@+id/button_aboutus"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintDimensionRatio="16:4"
@@ -75,10 +75,10 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonRelish" />
+        app:layout_constraintTop_toBottomOf="@+id/button_relish" />
 
     <Button
-        android:id="@+id/buttonRelish"
+        android:id="@+id/button_relish"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintDimensionRatio="16:4"
@@ -92,10 +92,10 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonControlSetting" />
+        app:layout_constraintTop_toBottomOf="@+id/button_controlsetting" />
 
     <Button
-        android:id="@+id/buttonLogOut"
+        android:id="@+id/button_logout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintDimensionRatio="18:5"

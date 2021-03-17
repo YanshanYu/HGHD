@@ -7,7 +7,7 @@
     tools:context=".ui.control.ControlFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarRecoverVideo"
+        android:id="@+id/toolbar_recover_video"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
@@ -28,7 +28,7 @@
         android:layout_marginTop="50dp"
         app:layout_constraintEnd_toStartOf="@+id/videoView2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarRecoverVideo" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_recover_video" />
 
     <VideoView
         android:id="@+id/videoView2"
@@ -40,7 +40,7 @@
         android:layout_marginEnd="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/videoView1"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarRecoverVideo" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_recover_video" />
 
     <VideoView
         android:id="@+id/videoView3"
@@ -78,7 +78,7 @@
         app:layout_constraintTop_toBottomOf="@+id/videoView3" />
 
     <TextView
-        android:id="@+id/textViewVideo1"
+        android:id="@+id/textView_video1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="61dp"
@@ -90,7 +90,7 @@
         app:layout_constraintTop_toBottomOf="@+id/videoView1" />
 
     <TextView
-        android:id="@+id/textViewVideo2"
+        android:id="@+id/textView_video2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -102,7 +102,7 @@
         app:layout_constraintTop_toBottomOf="@+id/videoView2" />
 
     <TextView
-        android:id="@+id/textViewVideo3"
+        android:id="@+id/textView_video3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="61dp"
@@ -114,7 +114,7 @@
         app:layout_constraintTop_toBottomOf="@+id/videoView3" />
 
     <TextView
-        android:id="@+id/textViewVideo4"
+        android:id="@+id/textView_video4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -126,7 +126,7 @@
         app:layout_constraintTop_toBottomOf="@+id/videoView4" />
 
     <TextView
-        android:id="@+id/textViewvideo5"
+        android:id="@+id/textView_video5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="61dp"

@@ -7,7 +7,7 @@
     tools:context=".ui.control.ControlFragment">
 
     <ImageView
-        android:id="@+id/imageViewPhoto"
+        android:id="@+id/imageView_photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="140dp"
@@ -15,15 +15,16 @@
         android:layout_marginEnd="140dp"
         android:layout_marginBottom="147dp"
         android:layout_weight="1"
-        app:layout_constraintBottom_toTopOf="@+id/buttonTrainingTarget"
+        app:layout_constraintBottom_toTopOf="@+id/button_training_target"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.238"
         tools:srcCompat="@tools:sample/avatars" />
 
     <Button
-        android:id="@+id/buttonTrainingTarget"
+        android:id="@+id/button_training_target"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintDimensionRatio="7:2"
@@ -56,10 +57,10 @@
         android:backgroundTint="@color/babyblue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonTrainingTarget" />
+        app:layout_constraintTop_toBottomOf="@+id/button_training_target" />
 
     <Button
-        android:id="@+id/buttonShopping"
+        android:id="@+id/button_shopping"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintDimensionRatio="7:2"
@@ -72,13 +73,13 @@
         android:textSize="28sp"
         android:textColor="@color/white"
         android:backgroundTint="@color/babyblue"
-        app:layout_constraintBottom_toTopOf="@+id/buttonSetting"
+        app:layout_constraintBottom_toTopOf="@+id/button_setting"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonTrainingTime" />
 
     <Button
-        android:id="@+id/buttonSetting"
+        android:id="@+id/button_setting"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="50dp"
@@ -95,6 +96,6 @@
         app:layout_constraintDimensionRatio="7:2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonShopping" />
+        app:layout_constraintTop_toBottomOf="@+id/button_shopping" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

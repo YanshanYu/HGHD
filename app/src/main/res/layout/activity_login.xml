@@ -7,7 +7,7 @@
     tools:context=".ui.control.ControlFragment">
 
     <TextView
-        android:id="@+id/userLogin"
+        android:id="@+id/user_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -20,21 +20,21 @@
 
 
     <Button
-        android:id="@+id/buttonGetCheckNum"
+        android:id="@+id/button_get_checknum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginBottom="20dp"
-        android:background="@color/purple_200"
+        android:background="@animator/flatbutton"
         android:text="@string/get_code"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/edit_numberEnterCheckNum"
+        app:layout_constraintBottom_toTopOf="@+id/edit_number_enter_checknum"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_phone" />
 
     <EditText
-        android:id="@+id/edit_numberEnterCheckNum"
+        android:id="@+id/edit_number_enter_checknum"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintDimensionRatio="6:1"
@@ -45,10 +45,10 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonGetCheckNum" />
+        app:layout_constraintTop_toBottomOf="@+id/button_get_checknum" />
 
     <Button
-        android:id="@+id/buttonLogin"
+        android:id="@+id/button_login"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintDimensionRatio="3:1"
@@ -61,10 +61,10 @@
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_numberEnterCheckNum" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_number_enter_checknum" />
 
     <CheckBox
-        android:id="@+id/checkBoxTextPolicy"
+        android:id="@+id/checkBox_textpolicy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -73,10 +73,10 @@
         android:text="@string/policy"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonLogin" />
+        app:layout_constraintTop_toBottomOf="@+id/button_login" />
 
     <EditText
-        android:id="@+id/editTextPhone"
+        android:id="@+id/editText_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
@@ -87,10 +87,10 @@
         android:hint="@string/enter_phone_number"
         android:inputType="phone"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonGetCheckNum"
+        app:layout_constraintBottom_toTopOf="@+id/button_get_checknum"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userLogin"
+        app:layout_constraintTop_toBottomOf="@+id/user_login"
         app:layout_constraintVertical_bias="0.0" />
 
 
