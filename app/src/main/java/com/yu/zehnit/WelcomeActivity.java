@@ -20,7 +20,7 @@ public class WelcomeActivity extends BaseActivity {
         intentToLogin = new Intent(WelcomeActivity.this, LoginActivity.class);
 
         // 若已登录，直接进入主页
-        SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences("loginStatus", MODE_PRIVATE);
         Boolean isLogin = pref.getBoolean("isLogin", false);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

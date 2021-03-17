@@ -18,7 +18,4 @@
     <color name="colorSubTextBlack">#FF000000</color>
     <color name="colorSubTextWhite">#FFFFFFFF</color>
     <color name="dark_bg">#FFFFFFFF</color>
-
-    <color name="testGreen">#008000</color>
-    <color name="testRed">#FF0000</color>
 </resources>
