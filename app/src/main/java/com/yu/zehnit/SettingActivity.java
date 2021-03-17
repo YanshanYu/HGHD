@@ -32,7 +32,7 @@ public class SettingActivity extends BaseActivity {
             public void onClick(View v) {
                 ActivityController.finishAll();
                 Intent intent = new Intent(SettingActivity.this, LoginActivity.class);
-                SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+                SharedPreferences.Editor editor = getSharedPreferences("loginStatus", MODE_PRIVATE).edit();
                 editor.putBoolean("isLogin", false);
                 editor.apply();
                 startActivity(intent);
