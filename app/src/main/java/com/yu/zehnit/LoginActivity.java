@@ -154,7 +154,7 @@ public class LoginActivity extends BaseActivity {
         public void onTick(long millisUntilFinished) {
             btnGetCode.setBackgroundColor(Color.parseColor("#B6B6D8"));
             btnGetCode.setClickable(false);
-            btnGetCode.setText("(" + millisUntilFinished / 1000 + ") 秒后可重新发送");
+            btnGetCode.setText(millisUntilFinished / 1000 + "秒后可重新发送");
         }
 
         @Override

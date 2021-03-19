@@ -8,28 +8,9 @@
     android:visibility="visible"
     tools:context=".ui.control.ControlFragment">
 
-<!--    <com.yu.zehnit.tools.NavBar-->
-<!--        android:id="@+id/topbar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="60dp"-->
-
-<!--        custom:leftTextColor="#000000"-->
-<!--        custom:leftText="控制设置"-->
-<!--        custom:allBackground="@drawable/border_bottom"-->
-<!--        tools:ignore="MissingConstraints" />-->
 
 
-<!--    <android.support.constraint.Guideline-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:orientation="horizontal"-->
-<!--        app:layout_constraintGuide_percent="0.9"-->
-<!--        android:id="@+id/horizontal_line_1"-->
-<!--        />-->
-
-
-
-        <androidx.appcompat.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -202,7 +183,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:text="@string/range"
+        android:text="幅度"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@+id/sin_amplitude_img"
         app:layout_constraintTop_toTopOf="@+id/sin_amplitude_img" />
@@ -212,7 +193,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:text="@string/frequency"
+        android:text="频率"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@id/fang_frequency_img"
         app:layout_constraintTop_toTopOf="@id/fang_frequency_img" />
@@ -222,7 +203,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:text="@string/range"
+        android:text="幅度"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@id/fang_amplitude_img"
         app:layout_constraintTop_toTopOf="@+id/fang_amplitude_img" />
