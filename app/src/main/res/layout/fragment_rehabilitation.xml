@@ -2,77 +2,83 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
          android:layout_width="match_parent"
          android:layout_height="match_parent"
-         android:orientation="vertical"
-         >
+         android:orientation="vertical">
 
-    <TableLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle_view"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="40dp">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="57dp"/>
 
-        <TableRow android:layout_width="wrap_content">
+<!--    <TableLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="182dp"-->
+<!--        android:layout_marginLeft="10dp"-->
+<!--        android:layout_marginTop="40dp">-->
 
-            <Button
-                android:id="@+id/gaze_holding1"
-                android:layout_height="150dp"
-                android:layout_alignParentTop="true"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:background="@animator/flat_button"
-                android:text="@string/gaze_holding1"
-                android:textAlignment="center"/>
+<!--        <TableRow android:layout_width="wrap_content">-->
 
-            <Button
-                android:id="@+id/gaze_holding2"
-                android:layout_height="150dp"
-                android:layout_alignParentTop="true"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:textAlignment="center"
-                android:background="@animator/flat_button"
-                android:text="@string/gaze_holding2" />
+<!--            <Button-->
+<!--                android:id="@+id/gaze_holding1"-->
+<!--                android:layout_height="150dp"-->
+<!--                android:layout_alignParentTop="true"-->
+<!--                android:layout_margin="10dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="@animator/flat_button"-->
+<!--                android:text="@string/gaze_holding1"-->
+<!--                android:textAlignment="center" />-->
 
-            <Button
-                android:id="@+id/gaze_holding3"
-                android:layout_height="150dp"
-                android:layout_alignParentTop="true"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:textAlignment="center"
-                android:background="@animator/flat_button"
-                android:text="@string/gaze_holding3" />
-        </TableRow>
-    </TableLayout>
-    <TableLayout
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="40dp">
+<!--            <Button-->
+<!--                android:id="@+id/gaze_holding2"-->
+<!--                android:layout_height="150dp"-->
+<!--                android:layout_alignParentTop="true"-->
+<!--                android:layout_margin="10dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="@animator/flat_button"-->
+<!--                android:text="@string/gaze_holding2"-->
+<!--                android:textAlignment="center" />-->
 
-        <TableRow android:layout_width="wrap_content">
+<!--            <Button-->
+<!--                android:id="@+id/gaze_holding3"-->
+<!--                android:layout_height="150dp"-->
+<!--                android:layout_alignParentTop="true"-->
+<!--                android:layout_margin="10dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="@animator/flat_button"-->
+<!--                android:text="@string/gaze_holding3"-->
+<!--                android:textAlignment="center" />-->
+<!--        </TableRow>-->
+<!--    </TableLayout>-->
 
-            <Button
-                android:id="@+id/eye_tracking_experiment"
-                android:layout_height="150dp"
-                android:layout_alignParentTop="true"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:background="@animator/flat_button"
-                android:text="@string/eye_tracking_experiment"
-                android:textAlignment="center"/>
+<!--    <TableLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="195dp"-->
+<!--        android:layout_marginLeft="10dp"-->
+<!--        android:layout_marginTop="40dp">-->
 
-            <Button
-                android:id="@+id/scanner_experiment"
-                android:layout_height="150dp"
-                android:layout_alignParentTop="true"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:textAlignment="center"
-                android:background="@animator/flat_button"
-                android:text="@string/scanner_experiment" />
+<!--        <TableRow android:layout_width="wrap_content">-->
+
+<!--            <Button-->
+<!--                android:id="@+id/eye_tracking_experiment"-->
+<!--                android:layout_height="150dp"-->
+<!--                android:layout_alignParentTop="true"-->
+<!--                android:layout_margin="10dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="@animator/flat_button"-->
+<!--                android:text="@string/eye_tracking_experiment"-->
+<!--                android:textAlignment="center" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/scanner_experiment"-->
+<!--                android:layout_height="150dp"-->
+<!--                android:layout_alignParentTop="true"-->
+<!--                android:layout_margin="10dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="@animator/flat_button"-->
+<!--                android:text="@string/scanner_experiment"-->
+<!--                android:textAlignment="center" />-->
 
 
-        </TableRow>
-    </TableLayout>
+<!--        </TableRow>-->
+<!--    </TableLayout>-->
 </LinearLayout>

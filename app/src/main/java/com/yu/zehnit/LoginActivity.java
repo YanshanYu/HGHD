@@ -1,6 +1,7 @@
 package com.yu.zehnit;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,6 +17,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.yu.zehnit.tools.CardUtils;
 import com.yu.zehnit.tools.SMS;
 
 public class LoginActivity extends BaseActivity {
@@ -27,6 +29,8 @@ public class LoginActivity extends BaseActivity {
     private Button btnLogin;
     private Button btnGetCode;
     private CheckBox checkBox;
+    private CardView cardView;
+
     private Intent intent;
     private TimeCount timeCount;
 
@@ -51,6 +55,10 @@ public class LoginActivity extends BaseActivity {
         btnGetCode.setEnabled(false);
 
         checkBox = findViewById(R.id.checkBox_textpolicy);
+
+        cardView = findViewById(R.id.card_view);
+//        CardUtils.setCardShadowColor(cardView, getResources().getColor(R.color.colorBlueShadow), getResources().getColor(R.color.white));
+
 
         editPhoneNumber.addTextChangedListener(new TextWatcher() {
             @Override
@@ -83,7 +91,7 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 code = editCode.getText().toString();
-                if (code.length() == 6 && btnGetCode.isEnabled()) {
+                if (code.length() == 6 && telPhone.length() == 11) {
                     btnLogin.setEnabled(true);
                 } else {
                     btnLogin.setEnabled(false);
@@ -152,16 +160,17 @@ public class LoginActivity extends BaseActivity {
 
         @Override
         public void onTick(long millisUntilFinished) {
-            btnGetCode.setBackgroundColor(Color.parseColor("#B6B6D8"));
-            btnGetCode.setClickable(false);
-            btnGetCode.setText(millisUntilFinished / 1000 + "秒后可重新发送");
+//            btnGetCode.setBackgroundColor(Color.parseColor("#B6B6D8"));
+            btnGetCode.setEnabled(false);
+
+            btnGetCode.setText("已发送(" + millisUntilFinished / 1000 + "s)");
         }
 
         @Override
         public void onFinish() {
-            btnGetCode.setText("重新获取验证码");
-            btnGetCode.setClickable(true);
-            btnGetCode.setBackgroundColor(Color.parseColor("#008577"));
+            btnGetCode.setText("获取验证码");
+            btnGetCode.setEnabled(true);
+            //btnGetCode.setBackgroundColor(Color.parseColor("#008577"));
 
         }
     }

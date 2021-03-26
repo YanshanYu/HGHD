@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/colorRecBackground">
 
 
     <androidx.appcompat.widget.Toolbar
@@ -32,31 +32,58 @@
     </androidx.appcompat.widget.Toolbar>
 
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="当前无设备,请点击按钮添加设备"
-        android:textSize="20dp"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
 
-    <ImageButton
-        android:id="@+id/button_add_experiment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:srcCompat="@drawable/add_menu"
-        android:text="@string/add_equipment"
-        android:background="@drawable/big_button_style"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        app:layout_constraintDimensionRatio="h,1:1.4"
+
+<!--    <ImageButton-->
+<!--        android:id="@+id/button_add_experiment"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:srcCompat="@drawable/add_menu"-->
+<!--        android:text="@string/add_equipment"-->
+<!--        android:background="@drawable/big_button_style"-->
+<!--        android:layout_marginStart="30dp"-->
+<!--        android:layout_marginEnd="30dp"-->
+<!--        app:layout_constraintDimensionRatio="h,1:1.4"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent" />-->
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="300dp"
+        android:layout_height="371.5dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="0dp"
+        app:cardElevation="5dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintVertical_bias="0.45"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/tj"
+            android:layout_marginTop="48.5dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginEnd="55dp" />
+
+        <Button
+            android:id="@+id/button_add_experiment"
+            android:layout_width="230dp"
+            android:layout_height="44dp"
+            android:background="@animator/round_button"
+            android:layout_marginTop="276.5dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginEnd="35dp"
+            android:text="@string/add_equipment"
+            android:textColor="@color/white"/>
+
+    </androidx.cardview.widget.CardView>
 
 
 <!--        <View-->

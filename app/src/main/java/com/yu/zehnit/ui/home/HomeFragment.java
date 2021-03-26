@@ -16,7 +16,7 @@ import com.yu.zehnit.R;
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
-    private ImageButton addEquipBtn;
+    private Button addEquipBtn;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

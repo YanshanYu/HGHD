@@ -111,8 +111,6 @@ public class VideoPlayerActivity extends BaseActivity {
 
 //        String url = "android.resource://" + getPackageName() + "/" + R.raw.gaze_holding2;
 
-        videoPlayer.setIfCurrentIsFullscreen(true);
-        videoPlayer.setLockLand(true);
 
 //        String source1 = "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4";
 //        videoPlayer.setUp(url, false, "测试视频");

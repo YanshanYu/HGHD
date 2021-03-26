@@ -9,100 +9,138 @@
 
 
 
-
     <ImageView
-        android:id="@+id/logo"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@drawable/small_logo"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/login_background"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+<!--    <ImageView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@drawable/big_button_style"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="330dp"
+        android:layout_height="410dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="0dp"
+        app:cardElevation="5dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="174dp"
+            android:layout_height="44dp"
+            android:src="@drawable/zehnit_logo"
+            android:layout_marginTop="37dp"
+            android:layout_marginStart="22.5dp"/>
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/phone"
+            android:layout_marginTop="140.5dp"
+            android:layout_marginStart="16.5dp"/>
+
+        <EditText
+            android:id="@+id/editText_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="130dp"
+            android:layout_marginEnd="20dp"
+            android:ems="11"
+            android:hint="@string/enter_phone_number"
+            android:textColorHint="#ff9fb2c7"
+            android:inputType="phone"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/code"
+            android:layout_marginTop="205.5dp"
+            android:layout_marginStart="16.5dp"/>
+
+        <EditText
+            android:id="@+id/edit_number_enter_checknum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="194dp"
+            android:layout_marginEnd="102dp"
+            android:hint="@string/enter_code"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/button_get_checknum"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="198dp"
+            android:layout_marginStart="226dp"
+            android:layout_marginEnd="20dp"
+            android:background="@animator/flat_button"
+            android:text="@string/get_code"
+            android:textSize="12sp"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/button_login"
+            android:layout_width="250dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="290dp"
+            android:layout_marginEnd="35dp"
+            android:background="@animator/round_button"
+            android:text="@string/login"
+            android:textSize="16sp"
+            android:textColor="@color/white"/>
+
+        <CheckBox
+            android:id="@+id/checkBox_textpolicy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="350dp"
+            android:layout_marginEnd="40dp"
+            android:text="@string/policy"
+            android:textSize="10sp"/>
+
+
+    </androidx.cardview.widget.CardView>
+
 
     <TextView
-        android:id="@+id/user_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="30dp"
-        android:text="@string/login"
-        android:textColor="#1C1C1C"
-        android:textSize="30sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo"/>
-
-
-    <EditText
-        android:id="@+id/editText_phone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="30dp"
-        android:ems="11"
-        android:hint="@string/enter_phone_number"
-        android:inputType="phone"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/button_get_checknum"
+        android:layout_width="173dp"
+        android:layout_height="40dp"
+        android:text="欢迎使用"
+        android:textColor="#ffffffff"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.163"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_login"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.187" />
 
-    <Button
-        android:id="@+id/button_get_checknum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:background="@animator/flatbutton"
-        android:text="@string/get_code"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_phone" />
-
-    <EditText
-        android:id="@+id/edit_number_enter_checknum"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="6:1"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="30dp"
-        android:hint="@string/enter_code"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_get_checknum" />
-
-    <Button
-        android:id="@+id/button_login"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="9:2"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="30dp"
-        android:background="@color/purple_200"
-        android:text="@string/login"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_number_enter_checknum" />
-
-    <CheckBox
-        android:id="@+id/checkBox_textpolicy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="11dp"
-        android:layout_marginEnd="40dp"
-        android:text="@string/policy"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_login" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
