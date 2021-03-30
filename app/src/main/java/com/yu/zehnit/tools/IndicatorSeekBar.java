@@ -41,12 +41,12 @@ public class IndicatorSeekBar extends AppCompatSeekBar {
     }
 
     private void init() {
-        mPaint = new TextPaint();
+   //     mPaint = new TextPaint();
 
-        mPaint.setAntiAlias(true);
+  //      mPaint.setAntiAlias(true);
 //        mPaint.set(Color.parseColor("#FFFFFF"));
-        mPaint.setTextSize(sp2px(16));
-        mPaint.setColor(Color.parseColor("#FFFFFF"));
+ //       mPaint.setTextSize(sp2px(16));
+//        mPaint.setColor(Color.parseColor("#FFFFFF"));
 
         // 如果不设置padding，当滑动到最左边或最右边时，滑块会显示不全
 //        setPadding(mThumbWidth/4, 0, mThumbWidth/4, 0);
@@ -55,15 +55,15 @@ public class IndicatorSeekBar extends AppCompatSeekBar {
         this.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if(progress == 0) {
-                    mPaint.setColor(Color.parseColor("#000000"));
-                }else {
-                    mPaint.setColor(Color.parseColor("#FFFFFF"));
-                }
-                if(progress == 100) {
+//                if(progress == 0) {
 //                    mPaint.setColor(Color.parseColor("#000000"));
-                }
-                // NO OP
+//                }else {
+//                    mPaint.setColor(Color.parseColor("#FFFFFF"));
+//                }
+//                if(progress == 100) {
+//                    mPaint.setColor(Color.parseColor("#000000"));
+//                }
+
             }
 
             @Override

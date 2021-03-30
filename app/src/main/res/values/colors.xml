@@ -1,21 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="MediumPurple1">#AB82FF</color>
-    <color name="babyblue">#4F94CD</color>
-    <color name="colorPrimary">#74b9ff</color>
+    <color name="colorPrimary">#00A3E5</color>
     <color name="colorAccent">#0984e3</color>
-    <color name="darkColorPrimary">#74b9ff</color>
+    <color name="darkColorPrimary">#00A3E5</color>
     <color name="darkColorAccent">#0984e3</color>
 
     <color name="colorPrimaryTextBlack">#FF000000</color>
     <color name="colorSubTextBlack">#FF000000</color>
     <color name="colorSubTextWhite">#FFFFFFFF</color>
-    <color name="dark_bg">#FFFFFFFF</color>
+    <color name="colorDark_bg">#FFFFFFFF</color>
+
+    <color name="colorGreen">#49C04B</color>
+    <color name="colorBlueGray">#9FB2C7</color>
+    <color name="colorShadow">#D6E7F4</color>
+
+    <color name="colorDarkGray">#333333</color>
+    <color name="colorGray">#666666</color>
+    <color name="colorLightGray">#999999</color>
+
+    <color name="colorRecBackground">#F3F5F7</color>
+    <color name="colorLine">#E3E7EB</color>
+    <color name="colorUnactivity">#E3E7EB</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <color name="colorBlueShadow">#4d34adf1</color>
+
+    <color name="colorLightBlue">#EDF5FC</color>
 </resources>
