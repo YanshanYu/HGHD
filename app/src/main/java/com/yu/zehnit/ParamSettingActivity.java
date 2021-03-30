@@ -11,6 +11,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gyf.immersionbar.ImmersionBar;
 import com.yu.zehnit.tools.IndicatorSeekBar;
 
 
@@ -36,6 +37,9 @@ public class ParamSettingActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_param_setting);
 
+        ImmersionBar.with(this).statusBarColor(R.color.white).statusBarDarkFont(true)
+                .fitsSystemWindows(true).init();
+
         sinFrequencySeekBar = findViewById(R.id.sin_frequency);
         sinAmplitudeSeekBar = findViewById(R.id.sin_amplitude);
         fangFrequencySeekBar = findViewById(R.id.fang_frequency);
@@ -60,12 +64,7 @@ public class ParamSettingActivity extends BaseActivity {
         sinAmplitudeSeekBar.setProgress(sinAmplitudeValue);
         fangFrequencySeekBar.setProgress(fangFrequencyValue);
         fangAmplitudeSeekBar.setProgress(fangAmplitudeValue);
-//        if (sinFrequencyValue != 0) {
-//            sinFrequencySeekBar.setProgress(sinFrequencyValue);
-//            sinAmplitudeSeekBar.setProgress(sinAmplitudeValue);
-//            fangFrequencySeekBar.setProgress(fangFrequencyValue);
-//            fangAmplitudeSeekBar.setProgress(fangAmplitudeValue);
-//        }
+
         // 监听返回按钮
         toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -100,6 +99,7 @@ public class ParamSettingActivity extends BaseActivity {
                 String indicatorText = Integer.toString(progress);
                 sinFrequencyIndicator.setText(indicatorText);
                 params.leftMargin = (int) indicatorOffset;
+
                 sinFrequencyIndicator.setLayoutParams(params);
             }
 
