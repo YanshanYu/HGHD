@@ -10,7 +10,7 @@
     <color name="colorSubTextWhite">#FFFFFFFF</color>
     <color name="colorDark_bg">#FFFFFFFF</color>
 
-    <color name="colorGreen">#49C04B</color>
+    <color name="colorGreen">#6BDF6D</color>
     <color name="colorBlueGray">#9FB2C7</color>
     <color name="colorShadow">#D6E7F4</color>
 
@@ -26,6 +26,4 @@
     <color name="black">#000000</color>
 
     <color name="colorBlueShadow">#4d34adf1</color>
-
-    <color name="colorLightBlue">#EDF5FC</color>
 </resources>
