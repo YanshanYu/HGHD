@@ -21,11 +21,13 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
     private List<MyVideo> videoList;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
+        View videoView;
         ImageView videoImage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            videoView = itemView;
             videoImage = itemView.findViewById(R.id.video_name);
         }
     }
@@ -40,7 +42,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.video_item, parent, false);
         ViewHolder holder = new ViewHolder(view);
 
-        holder.videoImage.setOnClickListener(new View.OnClickListener() {
+        holder.videoView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int position = holder.getAdapterPosition();

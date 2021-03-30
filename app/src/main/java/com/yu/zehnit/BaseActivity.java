@@ -1,6 +1,11 @@
 package com.yu.zehnit;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +19,7 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityController.addActivity(this);
 
-//        CardUtils.init();
+        CardUtils.init();
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

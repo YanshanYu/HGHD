@@ -35,14 +35,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RehabilitationFragment extends Fragment implements View.OnClickListener{
+public class RehabilitationFragment extends Fragment {
 
     private RehabilitationViewModel rehabilitationViewModel;
-    private Button gazeHolding1;
-    private Button gazeHolding2;
-    private Button gazeHolding3;
-    private Button saccades;
-    private Button smoothPursuit;
 
     final String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
@@ -56,31 +51,11 @@ public class RehabilitationFragment extends Fragment implements View.OnClickList
         View root = inflater.inflate(R.layout.fragment_rehabilitation, container, false);
 
         initVideos();
-        RecyclerView recyclerView = root.findViewById(R.id.recycle_view);
+        RecyclerView recyclerView = root.findViewById(R.id.recycle_view_video);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         VideoAdapter adapter = new VideoAdapter(videoList);
         recyclerView.setAdapter(adapter);
-
-
-
-
-
-//        gazeHolding1=root.findViewById(R.id.gaze_holding1);
-//        gazeHolding1.setOnClickListener(this);
-//
-//        gazeHolding2=root.findViewById(R.id.gaze_holding2);
-//        gazeHolding2.setOnClickListener(this);
-//
-//        gazeHolding3=root.findViewById(R.id.gaze_holding3);
-//        gazeHolding3.setOnClickListener(this);
-//
-//        saccades=root.findViewById(R.id.scanner_experiment);
-//        saccades.setOnClickListener(this);
-//
-//        smoothPursuit=root.findViewById(R.id.eye_tracking_experiment);
-//        smoothPursuit.setOnClickListener(this);
-
 
         return root;
     }
@@ -96,24 +71,6 @@ public class RehabilitationFragment extends Fragment implements View.OnClickList
         videoList.add(video4);
         MyVideo video5 = new MyVideo("扫视", R.drawable.p5);
         videoList.add(video5);
-    }
-
-    @Override
-    public void onClick(View v) {
-//        int id = v.getId();
-//        Intent intent = new Intent(getActivity(), VideoPlayerActivity.class);
-//        if (id == R.id.gaze_holding1) {
-//            intent.putExtra("video", 1);
-//        } else if (id == R.id.gaze_holding2) {
-//            intent.putExtra("video", 2);
-//        } else if (id == R.id.gaze_holding3) {
-//            intent.putExtra("video", 3);
-//        } else if (id == R.id.eye_tracking_experiment) {
-//            intent.putExtra("video", 4);
-//        } else if (id == R.id.scanner_experiment) {
-//            intent.putExtra("video", 5);
-//        }
-//        startActivity(intent);
     }
 
 }

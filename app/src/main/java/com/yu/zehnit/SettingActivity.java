@@ -15,17 +15,17 @@ public class SettingActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        Button btnParamSetting = findViewById(R.id.button_controlsetting);
+//        Button btnParamSetting = findViewById(R.id.button_controlsetting);
         Button btnLogout = findViewById(R.id.button_logout);
-        Button btnAbout = findViewById(R.id.button_aboutus);
+//        Button btnAbout = findViewById(R.id.button_aboutus);
 
-        btnParamSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SettingActivity.this, ParamSettingActivity.class);
-                startActivity(intent);
-            }
-        });
+//        btnParamSetting.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(SettingActivity.this, ParamSettingActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,12 +39,12 @@ public class SettingActivity extends BaseActivity {
             }
         });
 
-        btnAbout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SettingActivity.this, AboutActivity.class);
-                startActivity(intent);
-            }
-        });
+//        btnAbout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(SettingActivity.this, AboutActivity.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 }

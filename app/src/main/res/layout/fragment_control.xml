@@ -1,90 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.control.ControlFragment">
+    android:orientation="vertical">
 
-    <Button
-        android:id="@+id/button_followhead1"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="110dp"
-        android:text="@string/follow_head"
-        android:textSize="25sp"
-        app:layout_constraintDimensionRatio="3:4"
-        app:layout_constraintEnd_toStartOf="@+id/button_followhead2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        android:background="@color/colorAccent">
 
-    <Button
-        android:id="@+id/button_followhead2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="110dp"
-        android:text="@string/follow_head"
-        android:textSize="25sp"
-        app:layout_constraintDimensionRatio="3:4"
-        app:layout_constraintEnd_toStartOf="@+id/button_followhead3"
-        app:layout_constraintStart_toEndOf="@+id/button_followhead1"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:text="@string/title_control"/>
 
-    <Button
-        android:id="@+id/button_followhead3"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="110dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/follow_head"
-        android:textSize="25sp"
-        app:layout_constraintDimensionRatio="3:4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button_followhead2"
-        app:layout_constraintTop_toTopOf="parent" />
+    </androidx.appcompat.widget.Toolbar>
 
-    <Button
-        android:id="@+id/button_eye_experiment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="8:4"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/eye_tracking_experiment"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/button_sca_experiment"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_followhead2" />
-
-    <Button
-        android:id="@+id/button_sca_experiment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/scanner_experiment"
-        android:textSize="25sp"
-        app:layout_constraintDimensionRatio="8:4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_eye_experiment" />
-
-<!--    <androidx.appcompat.widget.Toolbar-->
-<!--        android:id="@+id/toolbarControlCentre"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="@color/white"-->
-<!--        android:minHeight="?attr/actionBarSize"-->
-<!--        android:theme="?attr/actionBarTheme"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:navigationIcon="@drawable/back"-->
-<!--        app:title="控制中心" />-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle_view_ctrl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="57dp"/>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

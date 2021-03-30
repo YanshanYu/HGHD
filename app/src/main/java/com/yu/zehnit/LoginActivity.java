@@ -56,7 +56,7 @@ public class LoginActivity extends BaseActivity {
 
         checkBox = findViewById(R.id.checkBox_textpolicy);
 
-        cardView = findViewById(R.id.card_view);
+//        cardView = findViewById(R.id.card_view_login);
 //        CardUtils.setCardShadowColor(cardView, getResources().getColor(R.color.colorBlueShadow), getResources().getColor(R.color.white));
 
 

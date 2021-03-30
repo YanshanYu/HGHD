@@ -1,97 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.control.ControlFragment">
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/imageView_photo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="140dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="140dp"
-        android:layout_marginBottom="147dp"
-        android:layout_weight="1"
-        app:layout_constraintBottom_toTopOf="@+id/button_training_target"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.238"
-        tools:srcCompat="@tools:sample/avatars" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        android:background="@color/colorAccent">
 
-    <Button
-        android:id="@+id/button_training_target"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="7:2"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="25dp"
-        android:layout_weight="1"
-        android:drawableEnd="@drawable/forward"
-        android:text="@string/training_target"
-        android:textColor="@color/white"
-        android:textSize="28sp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonTrainingTime"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:text="@string/title_info"/>
 
-    <Button
-        android:id="@+id/buttonTrainingTime"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="7:2"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="50dp"
-        android:layout_weight="1"
-        android:drawableEnd="@drawable/forward"
-        android:text="@string/train_time"
-        android:textSize="28sp"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_training_target" />
+    </androidx.appcompat.widget.Toolbar>
 
-    <Button
-        android:id="@+id/button_shopping"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="7:2"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="50dp"
-        android:layout_weight="1"
-        android:drawableEnd="@drawable/forward"
-        android:text="@string/shopping_link"
-        android:textSize="28sp"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/button_setting"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonTrainingTime" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle_view_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="57dp"/>
 
-    <Button
-        android:id="@+id/button_setting"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="100dp"
-        android:layout_weight="1"
-        android:drawableEnd="@drawable/forward"
-        android:text="@string/setting"
-        android:textColor="@color/white"
-        android:textSize="28sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="7:2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_shopping" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
