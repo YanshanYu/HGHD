@@ -44,14 +44,6 @@ public class InfoFragment extends Fragment {
         InfoAdapter adapter = new InfoAdapter(infoList);
         recyclerView.setAdapter(adapter);
 
-//        Button btnSetting  = root.findViewById(R.id.button_setting);
-//        btnSetting.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(), SettingActivity.class);
-//                startActivity(intent);
-//            }
-//        });
 
         return root;
     }

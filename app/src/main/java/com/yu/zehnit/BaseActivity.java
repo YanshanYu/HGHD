@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.gyf.immersionbar.ImmersionBar;
 import com.yu.zehnit.tools.CardUtils;
 
 public class BaseActivity extends AppCompatActivity {

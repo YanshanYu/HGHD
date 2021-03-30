@@ -26,4 +26,6 @@
     <color name="black">#000000</color>
 
     <color name="colorBlueShadow">#4d34adf1</color>
+
+    <color name="colorLightBlue">#EDF5FC</color>
 </resources>

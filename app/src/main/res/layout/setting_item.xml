@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
-    
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
@@ -10,7 +11,7 @@
         android:background="@animator/shadow_item">
 
         <ImageView
-            android:id="@+id/img_icon"
+            android:id="@+id/img_ic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -18,7 +19,7 @@
             android:layout_gravity="bottom"/>
 
         <TextView
-            android:id="@+id/text_show"
+            android:id="@+id/text_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="66dp"
@@ -28,7 +29,7 @@
             android:textColor="@color/colorDarkGray"/>
 
         <ImageView
-            android:id="@+id/img_go"
+            android:id="@+id/img_jump"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"

@@ -10,7 +10,7 @@
         android:layout_height="45dp"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        android:background="@color/colorAccent">
+        android:background="@color/white">
 
         <TextView
             android:id="@+id/toolbar_title"
@@ -19,7 +19,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:singleLine="true"
-            android:textColor="@color/white"
+            android:textColor="@color/colorDarkGray"
             android:textSize="20sp"
             android:text="@string/title_control"/>
 

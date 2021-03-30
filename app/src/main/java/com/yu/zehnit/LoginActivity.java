@@ -17,6 +17,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.gyf.immersionbar.ImmersionBar;
 import com.yu.zehnit.tools.CardUtils;
 import com.yu.zehnit.tools.SMS;
 
@@ -55,6 +56,8 @@ public class LoginActivity extends BaseActivity {
         btnGetCode.setEnabled(false);
 
         checkBox = findViewById(R.id.checkBox_textpolicy);
+
+        ImmersionBar.with(this).init();
 
 //        cardView = findViewById(R.id.card_view_login);
 //        CardUtils.setCardShadowColor(cardView, getResources().getColor(R.color.colorBlueShadow), getResources().getColor(R.color.white));

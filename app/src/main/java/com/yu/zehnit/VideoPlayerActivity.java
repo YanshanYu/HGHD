@@ -25,7 +25,7 @@ import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 
-public class VideoPlayerActivity extends BaseActivity {
+public class VideoPlayerActivity extends Activity {
 
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
