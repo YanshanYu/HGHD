@@ -22,7 +22,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/back"
         app:title="控制设置"
-        android:background="@drawable/border_bottom"
         app:titleTextColor="#000" />
 
     <TextView
@@ -68,6 +67,8 @@
         android:thumb="@drawable/ic_sb_24dp"
         app:layout_constraintStart_toStartOf="@+id/sin_frequency_img"
         app:layout_constraintTop_toTopOf="@+id/sin_frequency_img" />
+
+
 
 
     <TextView

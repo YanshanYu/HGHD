@@ -9,6 +9,7 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.AppCompatSeekBar;
 
@@ -17,13 +18,16 @@ import com.yu.zehnit.R;
 public class IndicatorSeekBar extends AppCompatSeekBar {
 
     // 画笔 进度条里面的数字
-    private Paint mPaint;
+//    private Paint mPaint;
     // 进度文字位置信息
     private Rect mProgressTextRect = new Rect();
     // 滑块按钮宽度
     private int mThumbWidth = dp2px(40);
     // 进度指示器宽度
     private int mIndicatorWidth = dp2px(40);
+
+
+
     // 进度监听
     private OnIndicatorSeekBarChangeListener mIndicatorSeekBarChangeListener;
 
@@ -41,28 +45,22 @@ public class IndicatorSeekBar extends AppCompatSeekBar {
     }
 
     private void init() {
-   //     mPaint = new TextPaint();
-
-  //      mPaint.setAntiAlias(true);
+//        mPaint = new TextPaint();
+//
+//        mPaint.setAntiAlias(true);
 //        mPaint.set(Color.parseColor("#FFFFFF"));
- //       mPaint.setTextSize(sp2px(16));
+//        mPaint.setTextSize(sp2px(16));
 //        mPaint.setColor(Color.parseColor("#FFFFFF"));
 
-        // 如果不设置padding，当滑动到最左边或最右边时，滑块会显示不全
-//        setPadding(mThumbWidth/4, 0, mThumbWidth/4, 0);
+
+//         如果不设置padding，当滑动到最左边或最右边时，滑块会显示不全
+        setPadding(mThumbWidth/2, 0, mThumbWidth/2, 0);
 
         // 设置滑动监听
         this.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-//                if(progress == 0) {
-//                    mPaint.setColor(Color.parseColor("#000000"));
-//                }else {
-//                    mPaint.setColor(Color.parseColor("#FFFFFF"));
-//                }
-//                if(progress == 100) {
-//                    mPaint.setColor(Color.parseColor("#000000"));
-//                }
+
 
             }
 
@@ -82,25 +80,25 @@ public class IndicatorSeekBar extends AppCompatSeekBar {
         });
     }
 
-    @Override
-    protected synchronized void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        String progressText = Integer.toString(getProgress());
-        mPaint.getTextBounds(progressText, 0, progressText.length(), mProgressTextRect);
-
-        // 进度百分比
-        float progressRatio = (float) getProgress() / getMax();
-        // thumb偏移量
-        float thumbOffset = (mThumbWidth - mProgressTextRect.width()) / 2 - mThumbWidth * progressRatio;
-        float thumbX = getWidth() * progressRatio + thumbOffset;
-        float thumbY = getHeight() / 2f + mProgressTextRect.height() / 2f;
-        canvas.drawText(progressText, thumbX, thumbY, mPaint);
-
-        if (mIndicatorSeekBarChangeListener != null) {
-            float indicatorOffset = getWidth() * progressRatio - (mIndicatorWidth - mThumbWidth) / 2 - mThumbWidth * progressRatio;
-            mIndicatorSeekBarChangeListener.onProgressChanged(this, getProgress(), indicatorOffset);
-        }
-    }
+//    @Override
+//    protected synchronized void onDraw(Canvas canvas) {
+//        super.onDraw(canvas);
+//        String progressText = Integer.toString(getProgress());
+//        mPaint.getTextBounds(progressText, 0, progressText.length(), mProgressTextRect);
+//
+//        // 进度百分比
+//        float progressRatio = (float) getProgress() / getMax();
+//        // thumb偏移量
+//        float thumbOffset = (mThumbWidth - mProgressTextRect.width()) / 2 - mThumbWidth * progressRatio;
+//        float thumbX = getWidth() * progressRatio + thumbOffset;
+//        float thumbY = getHeight() / 2f + mProgressTextRect.height() / 2f;
+//        canvas.drawText(progressText, thumbX, thumbY, mPaint);
+//
+//        if (mIndicatorSeekBarChangeListener != null) {
+//            float indicatorOffset = getWidth() * progressRatio - (mIndicatorWidth - mThumbWidth) / 2 - mThumbWidth * progressRatio;
+//            mIndicatorSeekBarChangeListener.onProgressChanged(this, getProgress(), indicatorOffset);
+//        }
+//    }
 
     /**
      * 设置进度监听
