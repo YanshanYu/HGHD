@@ -6,7 +6,7 @@
     <solid android:color="#fff"/>  <!-- 颜色-->
     <stroke
         android:width="0.5dp"
-        android:color="#fff" />
+        android:color="@color/colorRecBackground" />
     <size
         android:width="27dp"
         android:height="27dp" />
