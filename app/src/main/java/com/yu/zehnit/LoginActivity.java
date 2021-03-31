@@ -94,11 +94,14 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 code = editCode.getText().toString();
-                if (code.length() == 6 && telPhone.length() == 11) {
-                    btnLogin.setEnabled(true);
-                } else {
-                    btnLogin.setEnabled(false);
+                if (telPhone != null) {
+                    if (code.length() == 6 && telPhone.length() == 11) {
+                        btnLogin.setEnabled(true);
+                    } else {
+                        btnLogin.setEnabled(false);
+                    }
                 }
+
             }
 
             @Override

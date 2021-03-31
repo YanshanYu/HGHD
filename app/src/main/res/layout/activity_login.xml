@@ -79,7 +79,7 @@
             android:maxLength="6"
             android:layout_marginStart="48dp"
             android:layout_marginTop="194dp"
-            android:layout_marginEnd="102dp"
+            android:layout_marginEnd="20dp"
             android:hint="@string/enter_code"
             android:textSize="16sp" />
 
@@ -87,9 +87,9 @@
             android:id="@+id/button_get_checknum"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_marginTop="198dp"
-            android:layout_marginStart="226dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginTop="195dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="22dp"
             android:background="@animator/flat_button"
             android:text="@string/get_code"
             android:textSize="12sp"
