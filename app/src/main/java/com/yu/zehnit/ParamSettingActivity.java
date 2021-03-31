@@ -62,6 +62,10 @@ public class ParamSettingActivity extends BaseActivity {
         fangFrequencySeekBar.setProgress(fangFrequencyValue);
         fangAmplitudeSeekBar.setProgress(fangAmplitudeValue);
 
+        sinFrequencyIndicator.setText(Integer.toString(sinFrequencyValue));
+        sinAmplitudeIndicator.setText(Integer.toString(sinAmplitudeValue));
+        fangFrequencyIndicator.setText(Integer.toString(fangFrequencyValue));
+        fangAmplitudeIndicator.setText(Integer.toString(fangAmplitudeValue));
         // 监听返回按钮
         toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -75,12 +79,7 @@ public class ParamSettingActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
-        editor.putInt("sin_frequency", sinFrequencySeekBar.getProgress());
-        editor.putInt("sin_amplitude", sinAmplitudeSeekBar.getProgress());
-        editor.putInt("fang_frequency", fangFrequencySeekBar.getProgress());
-        editor.putInt("fang_amplitude", fangAmplitudeSeekBar.getProgress());
-        editor.apply();
+
         super.onDestroy();
 
     }
@@ -102,6 +101,9 @@ public class ParamSettingActivity extends BaseActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+                editor.putInt("sin_frequency", sinFrequencySeekBar.getProgress());
+                editor.apply();
 
             }
         });
@@ -123,6 +125,9 @@ public class ParamSettingActivity extends BaseActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+                editor.putInt("sin_amplitude", sinAmplitudeSeekBar.getProgress());
+                editor.apply();
 
             }
         });
@@ -144,6 +149,9 @@ public class ParamSettingActivity extends BaseActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+                editor.putInt("fang_frequency", fangFrequencySeekBar.getProgress());
+                editor.apply();
 
             }
         });
@@ -166,6 +174,9 @@ public class ParamSettingActivity extends BaseActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+                editor.putInt("fang_amplitude", fangAmplitudeSeekBar.getProgress());
+                editor.apply();
 
             }
         });
