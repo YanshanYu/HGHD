@@ -23,14 +23,12 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.ViewHolder> {
         View infoView;
         ImageView iconImg;
         TextView text;
-        ImageView goImg;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             infoView = itemView;
             iconImg = itemView.findViewById(R.id.img_icon);
             text = itemView.findViewById(R.id.text_show);
-            goImg = itemView.findViewById(R.id.img_go);
         }
     }
 
@@ -57,7 +55,7 @@ public class InfoAdapter extends RecyclerView.Adapter<InfoAdapter.ViewHolder> {
 //                        break;
                     case 2:
 //                        intent = new Intent(v.getContext(), SettingActivity.class);
-//                        break;
+                        break;
                     case 3:
                         intent = new Intent(v.getContext(), SettingActivity.class);
                         v.getContext().startActivity(intent);

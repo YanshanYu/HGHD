@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.gyf.immersionbar.ImmersionBar;
+
 public class WelcomeActivity extends BaseActivity {
 
     private Intent intentToLogin;
@@ -15,6 +17,9 @@ public class WelcomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
+        ImmersionBar.with(this).statusBarColor(R.color.white).statusBarDarkFont(true)
+                .fitsSystemWindows(true).init();
 
         intentToMain = new Intent(WelcomeActivity.this, MainActivity.class);
         intentToLogin = new Intent(WelcomeActivity.this, LoginActivity.class);

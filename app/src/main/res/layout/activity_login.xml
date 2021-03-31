@@ -5,29 +5,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/login_background"
     tools:context=".ui.control.ControlFragment">
 
 
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/login_background"
-        android:scaleType="fitXY"
-        android:adjustViewBounds="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    <ImageView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:src="@drawable/login_background"-->
+<!--        android:scaleType="fitXY"-->
+<!--        android:adjustViewBounds="true"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view_login"
-        android:layout_width="330dp"
+        android:layout_width="match_parent"
         android:layout_height="410dp"
-        android:layout_marginLeft="0dp"
+        android:layout_marginStart="27.5dp"
         android:layout_marginTop="0dp"
-        android:layout_marginRight="0dp"
+        android:layout_marginEnd="27.5dp"
         android:layout_marginBottom="0dp"
         app:cardElevation="5dp"
         app:cardPreventCornerOverlap="false"
@@ -38,15 +39,15 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="174dp"
-            android:layout_height="44dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:src="@drawable/zehnit_logo"
             android:layout_marginTop="37dp"
             android:layout_marginStart="22.5dp"/>
 
         <ImageView
-            android:layout_width="22dp"
-            android:layout_height="22dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:src="@drawable/phone"
             android:layout_marginTop="140.5dp"
             android:layout_marginStart="16.5dp"/>
@@ -84,7 +85,7 @@
 
         <Button
             android:id="@+id/button_get_checknum"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_marginTop="198dp"
             android:layout_marginStart="226dp"
@@ -120,8 +121,8 @@
 
 
     <TextView
-        android:layout_width="173dp"
-        android:layout_height="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="欢迎使用"
         android:textColor="#ffffffff"
         android:textSize="34sp"

@@ -8,12 +8,12 @@
 
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbar_setting"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        android:background="@color/colorAccent"
+        android:background="@color/white"
         app:navigationIcon="@drawable/back">
 
         <TextView
@@ -23,7 +23,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:singleLine="true"
-            android:textColor="@color/white"
+            android:textColor="@color/colorDarkGray"
             android:textSize="20sp"
             android:text="@string/setting"/>
 
@@ -32,7 +32,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_view_setting"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"/>
 
     <Button
         android:id="@+id/button_logout"
@@ -44,48 +45,6 @@
         android:background="@color/white"
         android:textColor="@color/colorDarkGray"
         android:textSize="18sp" />
-
-
-<!--    <Button-->
-<!--        android:id="@+id/button_controlsetting"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        app:layout_constraintDimensionRatio="16:4"-->
-<!--        android:layout_marginStart="68dp"-->
-<!--        android:layout_marginTop="40dp"-->
-<!--        android:layout_marginEnd="68dp"-->
-<!--        android:drawableEnd="@drawable/forward"-->
-<!--        android:text="@string/control_design"-->
-<!--        android:textSize="20sp"-->
-<!--         />-->
-
-<!--    <Button-->
-<!--        android:id="@+id/button_aboutus"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        app:layout_constraintDimensionRatio="16:4"-->
-<!--        android:layout_marginStart="68dp"-->
-<!--        android:layout_marginTop="30dp"-->
-<!--        android:layout_marginEnd="68dp"-->
-<!--        android:drawableRight="@drawable/forward"-->
-<!--        android:text="@string/about_us"-->
-<!--        android:textSize="20sp"-->
-<!--         />-->
-
-<!--    <Button-->
-<!--        android:id="@+id/button_relish"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        app:layout_constraintDimensionRatio="16:4"-->
-<!--        android:layout_marginStart="68dp"-->
-<!--        android:layout_marginTop="30dp"-->
-<!--        android:layout_marginEnd="68dp"-->
-<!--        android:drawableRight="@drawable/forward"-->
-<!--        android:text="@string/unhitch_equipment"-->
-<!--        android:textSize="20sp"-->
-<!--         />-->
-
-
 
 
 </LinearLayout>

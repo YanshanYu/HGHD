@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.gyf.immersionbar.ImmersionBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -27,6 +28,9 @@ public class MainActivity extends BaseActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+        ImmersionBar.with(this).statusBarColor(R.color.white).statusBarDarkFont(true)
+                .fitsSystemWindows(true).init();
 
 
     }

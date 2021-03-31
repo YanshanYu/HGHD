@@ -11,6 +11,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gyf.immersionbar.ImmersionBar;
 import com.yu.zehnit.tools.IndicatorSeekBar;
 
 
@@ -35,6 +36,9 @@ public class ParamSettingActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_param_setting);
+
+        ImmersionBar.with(this).statusBarColor(R.color.white).statusBarDarkFont(true)
+                .fitsSystemWindows(true).init();
 
         sinFrequencySeekBar = findViewById(R.id.sin_frequency);
         sinAmplitudeSeekBar = findViewById(R.id.sin_amplitude);
