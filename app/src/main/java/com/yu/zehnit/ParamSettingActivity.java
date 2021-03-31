@@ -1,26 +1,23 @@
 package com.yu.zehnit;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.gyf.immersionbar.ImmersionBar;
-import com.yu.zehnit.tools.IndicatorSeekBar;
+
 
 
 public class ParamSettingActivity extends BaseActivity {
 
-    private IndicatorSeekBar sinFrequencySeekBar;
-    private IndicatorSeekBar sinAmplitudeSeekBar;
-    private IndicatorSeekBar fangFrequencySeekBar;
-    private IndicatorSeekBar fangAmplitudeSeekBar;
+    private SeekBar sinFrequencySeekBar;
+    private SeekBar sinAmplitudeSeekBar;
+    private SeekBar fangFrequencySeekBar;
+    private SeekBar fangAmplitudeSeekBar;
 
 
     private TextView sinFrequencyIndicator;
@@ -65,6 +62,10 @@ public class ParamSettingActivity extends BaseActivity {
         fangFrequencySeekBar.setProgress(fangFrequencyValue);
         fangAmplitudeSeekBar.setProgress(fangAmplitudeValue);
 
+        sinFrequencyIndicator.setText(Integer.toString(sinFrequencyValue));
+        sinAmplitudeIndicator.setText(Integer.toString(sinAmplitudeValue));
+        fangFrequencyIndicator.setText(Integer.toString(fangFrequencyValue));
+        fangAmplitudeIndicator.setText(Integer.toString(fangAmplitudeValue));
         // 监听返回按钮
         toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -78,12 +79,7 @@ public class ParamSettingActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
-        editor.putInt("sin_frequency", sinFrequencySeekBar.getProgress());
-        editor.putInt("sin_amplitude", sinAmplitudeSeekBar.getProgress());
-        editor.putInt("fang_frequency", fangFrequencySeekBar.getProgress());
-        editor.putInt("fang_amplitude", fangAmplitudeSeekBar.getProgress());
-        editor.apply();
+
         super.onDestroy();
 
     }
@@ -91,106 +87,100 @@ public class ParamSettingActivity extends BaseActivity {
     private void initSinFrequencyData() {
 
 
-        final ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) sinFrequencyIndicator.getLayoutParams();
-        sinFrequencySeekBar.setOnSeekBarChangeListener(new IndicatorSeekBar.OnIndicatorSeekBarChangeListener() {
-
+        sinFrequencySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, float indicatorOffset) {
-                String indicatorText = Integer.toString(progress);
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                String indicatorText = Integer.toString(i);
                 sinFrequencyIndicator.setText(indicatorText);
-                params.leftMargin = (int) indicatorOffset;
-
-                sinFrequencyIndicator.setLayoutParams(params);
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                sinFrequencyIndicator.setVisibility(View.VISIBLE);
+
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                sinFrequencyIndicator.setVisibility(View.INVISIBLE);
+                SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+                editor.putInt("sin_frequency", sinFrequencySeekBar.getProgress());
+                editor.apply();
+
             }
         });
+
     }
 
     private void initSinAmplitudeData() {
-        final ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) sinAmplitudeIndicator.getLayoutParams();
-        sinAmplitudeSeekBar.setOnSeekBarChangeListener(new IndicatorSeekBar.OnIndicatorSeekBarChangeListener() {
-
+        sinAmplitudeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, float indicatorOffset) {
-                String indicatorText = Integer.toString(progress);
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                String indicatorText = Integer.toString(i);
                 sinAmplitudeIndicator.setText(indicatorText);
-                params.leftMargin = (int) indicatorOffset;
-                Log.d(TestApp, String.valueOf(indicatorOffset));
-                sinAmplitudeIndicator.setLayoutParams(params);
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                sinAmplitudeIndicator.setVisibility(View.VISIBLE);
+
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                sinAmplitudeIndicator.setVisibility(View.INVISIBLE);
+                SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+                editor.putInt("sin_amplitude", sinAmplitudeSeekBar.getProgress());
+                editor.apply();
+
             }
         });
 
 
     }
     private void initFangFrequencyData() {
-
-        final ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) fangFrequencyIndicator.getLayoutParams();
-        fangFrequencySeekBar.setOnSeekBarChangeListener(new IndicatorSeekBar.OnIndicatorSeekBarChangeListener() {
-
+        fangFrequencySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, float indicatorOffset) {
-                String indicatorText = Integer.toString(progress);
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                String indicatorText = Integer.toString(i);
                 fangFrequencyIndicator.setText(indicatorText);
-                params.leftMargin = (int) indicatorOffset;
-                Log.d(TestApp, String.valueOf(indicatorOffset));
-                fangFrequencyIndicator.setLayoutParams(params);
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                fangFrequencyIndicator.setVisibility(View.VISIBLE);
+
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                fangFrequencyIndicator.setVisibility(View.INVISIBLE);
+                SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+                editor.putInt("fang_frequency", fangFrequencySeekBar.getProgress());
+                editor.apply();
+
             }
         });
+
+
 
     }
     private void initFangAmplitudeData() {
-
-        final ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) fangAmplitudeIndicator.getLayoutParams();
-        fangAmplitudeSeekBar.setOnSeekBarChangeListener(new IndicatorSeekBar.OnIndicatorSeekBarChangeListener() {
-
+        fangAmplitudeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, float indicatorOffset) {
-                String indicatorText = Integer.toString(progress);
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                String indicatorText = Integer.toString(i);
                 fangAmplitudeIndicator.setText(indicatorText);
-                params.leftMargin = (int) indicatorOffset;
-                Log.d(TestApp, String.valueOf(indicatorOffset));
-                fangAmplitudeIndicator.setLayoutParams(params);
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                fangAmplitudeIndicator.setVisibility(View.VISIBLE);
+
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                fangAmplitudeIndicator.setVisibility(View.INVISIBLE);
+                SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
+                editor.putInt("fang_amplitude", fangAmplitudeSeekBar.getProgress());
+                editor.apply();
+
             }
         });
+
 
     }
 
