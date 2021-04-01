@@ -74,8 +74,8 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar_add"
         app:srcCompat="@drawable/add" />
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/appCompatEditText_entersn"
+    <EditText
+        android:id="@+id/editText_sn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
@@ -88,7 +88,7 @@
         app:layout_constraintTop_toBottomOf="@+id/logo_sn" />
 
     <Button
-        android:id="@+id/button_verify"
+        android:id="@+id/button_add"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:layout_marginStart="50dp"
@@ -114,7 +114,7 @@
         android:textSize="20dp"
         android:textStyle="normal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appCompatEditText_entersn" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_sn" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -53,7 +53,6 @@ public class CtrlAdapter extends RecyclerView.Adapter<CtrlAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         recyclerView = parent.findViewById(R.id.recycle_view_ctrl);
-        Log.d(TAG, "onCreateViewHolder: ");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.control_item, parent, false);
         ViewHolder holder = new ViewHolder(view);
 
@@ -108,7 +107,6 @@ public class CtrlAdapter extends RecyclerView.Adapter<CtrlAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Log.d(TAG, "onBindViewHolder: ");
         initCtrl(holder, position);
     }
 

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.yu.zehnit.AddEquipmentActivity;
@@ -62,6 +63,7 @@ public class EqpAdapter extends RecyclerView.Adapter<EqpAdapter.ViewHolder> {
                     v.getContext().startActivity(intent);
                 } else {
                     // 跳转到fragment_control
+                    Navigation.findNavController(v).navigate(R.id.action_navigation_home_to_navigation_control);
                 }
             }
         });

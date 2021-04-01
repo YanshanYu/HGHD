@@ -1,73 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorRecBackground">
+    android:layout_height="match_parent">
 
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/home_without_eqp"
+        android:visibility="invisible"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="#000" >
-        <TextView
-            android:id="@+id/toolbar_title"
-            android:layout_width="wrap_content"
-            android:layout_height="44dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:singleLine="true"
-            android:textColor="@color/colorDarkGray"
-            android:textSize="20sp"
-            android:text="设备管理"/>
-    </androidx.appcompat.widget.Toolbar>
+        android:layout_height="match_parent"
+        android:background="@color/colorRecBackground">
 
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_view_home"
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleTextColor="#000" >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textColor="@color/colorDarkGray"
+                android:textSize="20sp"
+                android:text="设备管理"/>
+        </androidx.appcompat.widget.Toolbar>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_view_home"
+            android:layout_width="match_parent"
+            android:layout_height="371.5dp"
+            android:layout_marginStart="37.5dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="37.5dp"
+            android:layout_marginBottom="0dp"
+            app:cardElevation="5dp"
+            app:cardPreventCornerOverlap="false"
+            app:cardCornerRadius="15dp"
+            app:layout_constraintVertical_bias="0.45"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/tj"
+                android:layout_marginTop="48.5dp"
+                android:layout_gravity="center_horizontal" />
+
+            <Button
+                android:id="@+id/button_add_experiment"
+                android:layout_width="230dp"
+                android:layout_height="44dp"
+                android:background="@animator/round_button"
+                android:layout_marginTop="276.5dp"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/add_equipment"
+                android:textColor="@color/white"/>
+
+        </androidx.cardview.widget.CardView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <FrameLayout
+        android:id="@+id/home_with_eqp"
+        android:visibility="invisible"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="371.5dp"
-        android:layout_marginStart="37.5dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="37.5dp"
-        android:layout_marginBottom="0dp"
-        app:cardElevation="5dp"
-        app:cardPreventCornerOverlap="false"
-        app:cardCornerRadius="15dp"
-        app:layout_constraintVertical_bias="0.45"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textColor="@color/colorDarkGray"
+                android:textSize="20sp"
+                android:text="设备管理"/>
+
+        </androidx.appcompat.widget.Toolbar>
+
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/tj"
-            android:layout_marginTop="48.5dp"
-            android:layout_gravity="center_horizontal" />
-
-        <Button
-            android:id="@+id/button_add_experiment"
-            android:layout_width="230dp"
-            android:layout_height="44dp"
-            android:background="@animator/round_button"
-            android:layout_marginTop="276.5dp"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/add_equipment"
-            android:textColor="@color/white"/>
-
-    </androidx.cardview.widget.CardView>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:layout_marginTop="45dp"
+            android:layout_marginBottom="50dp"
+            android:src="@drawable/eqp_bg" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="248dp"
+            android:layout_marginBottom="50dp"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycle_view_eqp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+</FrameLayout>
