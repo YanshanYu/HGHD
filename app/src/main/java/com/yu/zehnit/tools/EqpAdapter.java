@@ -89,7 +89,4 @@ public class EqpAdapter extends RecyclerView.Adapter<EqpAdapter.ViewHolder> {
         return eqpList.size();
     }
 
-
-
-
 }

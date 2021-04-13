@@ -9,7 +9,7 @@ public class Equipment{
     private int imgGo; // 跳转按钮
 
     private int imgAdd; // 添加图标
-    private String text; // 说明
+    private String text; // 在线状态
 
     public Equipment() {
     }
@@ -47,5 +47,17 @@ public class Equipment{
 
     public String getText() {
         return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    @Override
+    public String toString() {
+        return "Equipment{" +
+                "name='" + name + '\'' +
+                ", text='" + text + '\'' +
+                '}';
     }
 }
