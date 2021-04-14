@@ -2,6 +2,13 @@ package com.yu.zehnit;
 
 import android.app.Application;
 import android.bluetooth.le.ScanSettings;
+import android.widget.LinearLayout;
+
+import com.yu.zehnit.tools.EqpAdapter;
+import com.yu.zehnit.tools.Equipment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.wandersnail.ble.EasyBLE;
 import cn.wandersnail.ble.ScanConfiguration;
@@ -9,9 +16,30 @@ import cn.wandersnail.ble.ScannerType;
 import cn.wandersnail.commons.base.AppHolder;
 import cn.wandersnail.commons.poster.ThreadMode;
 
+/**
+ * 在这里定义一些全局变量，比如：设备列表和设备适配器
+ */
 public class MyApplication extends Application {
 
     private static MyApplication instance;
+    private List<Equipment> eqpList = new ArrayList<>();
+    private EqpAdapter adapter;
+
+    public List<Equipment> getEqpList() {
+        return eqpList;
+    }
+
+    public void setEqpList(List<Equipment> eqpList) {
+        this.eqpList = eqpList;
+    }
+
+    public EqpAdapter getAdapter() {
+        return adapter;
+    }
+
+    public void setAdapter(EqpAdapter adapter) {
+        this.adapter = adapter;
+    }
 
     @Override
     public void onCreate() {

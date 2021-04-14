@@ -5,6 +5,7 @@ public class Equipment{
     private int category; // 类别
 
     private String name; // 设备名称
+    private String address; // 设备地址
     private int imgId; // 设备图片
     private int imgGo; // 跳转按钮
 
@@ -14,9 +15,10 @@ public class Equipment{
     public Equipment() {
     }
 
-    public Equipment(int category, String name, int imgId, String text) {
+    public Equipment(int category, String name, String address, int imgId, String text) {
         this.category = category;
         this.name = name;
+        this.address = address;
         this.imgId = imgId;
         this.text = text;
     }
@@ -31,6 +33,10 @@ public class Equipment{
 
     public String getName() {
         return name;
+    }
+
+    public String getAddress() {
+        return address;
     }
 
     public int getImgId() {

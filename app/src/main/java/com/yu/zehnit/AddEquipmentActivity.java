@@ -174,7 +174,6 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
                 break;
             case CONNECTING:
                 Log.d(TAG, "AddEquipmentActivity onConnectionStateChanged: 正在连接...");
-
                 break;
             case CONNECTED:
                 Log.d(TAG, "AddEquipmentActivity onConnectionStateChanged: 已连接");
@@ -213,6 +212,7 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
     @Override
     public void onCharacteristicWrite(@NonNull Request request, @NonNull byte[] value) {
         Log.d(TAG, "AddEquipmentActivity onCharacteristicWrite: 成功写入特征值：" + StringUtils.toHex(value));
+        // 写入成功后读取返回的特征值
         readCharacteristic(sUuid, cUuid);
     }
 

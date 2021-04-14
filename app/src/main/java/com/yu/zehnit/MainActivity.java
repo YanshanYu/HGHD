@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gyf.immersionbar.ImmersionBar;
+import com.yu.zehnit.tools.EqpAdapter;
 import com.yu.zehnit.tools.Equipment;
 
 import androidx.annotation.NonNull;
@@ -37,6 +38,9 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import java.util.List;
+
+import cn.wandersnail.ble.Connection;
 import cn.wandersnail.ble.ConnectionConfiguration;
 import cn.wandersnail.ble.Device;
 import cn.wandersnail.ble.EasyBLE;
@@ -46,17 +50,12 @@ public class MainActivity extends BaseActivity implements EventObserver {
 
 
     private static final String TAG = "dxx";
-    private BluetoothAdapter bluetoothAdapter;
 
     private final static int REQUEST_ENABLE_BT = 1;
-    private int count = 0;
+    private int eqpNum;
+    private String address;
 
-    // Time out
-    private static final long DEVICE_CONNECT_TIMEOUT = 20000;
-
-    private boolean isScanning = false;
-    private boolean isDeviceConnected = false, isConnecting = false;
-    private Handler handler;
+    private boolean isDeviceConnected = false;
 
     private ProgressDialog progressDialog;
     private AlertDialog dialog;
@@ -80,7 +79,7 @@ public class MainActivity extends BaseActivity implements EventObserver {
                 .fitsSystemWindows(true).init();
 
         // 注册观察者
-//        EasyBLE.getInstance().registerObserver(this);
+        EasyBLE.getInstance().registerObserver(this);
 
 
         // Use this check to determine whether BLE is supported on the device. Then
@@ -90,9 +89,6 @@ public class MainActivity extends BaseActivity implements EventObserver {
             finish();
         }
 
-        final BluetoothManager bluetoothManager =
-                (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
-        bluetoothAdapter = bluetoothManager.getAdapter();
 
         // Ensures Bluetooth is available on the device and it is enabled. If not,
         // displays a dialog requesting user permission to enable Bluetooth.
@@ -100,7 +96,15 @@ public class MainActivity extends BaseActivity implements EventObserver {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "activity onResume: ");
 
+        if (bluetoothIsOn()) {
+            updateEqp();
+        }
+    }
 
     @Override
     public void onBackPressed() {
@@ -122,77 +126,142 @@ public class MainActivity extends BaseActivity implements EventObserver {
 
     }
 
-//    @Override
-//    public void onConnectionStateChanged(@NonNull Device device) {
-//        Log.d(TAG, "onConnectionStateChanged: " +device.getConnectionState());
-//        Equipment equipment;
-//        switch (device.getConnectionState()) {
-//            case DISCONNECTED:
-//                progressDialog.dismiss();
-//                tipDialog("连接失败，请确定设备已打开");
-////                equipment = eqpList.get(0);
-////                equipment.setText("离线");
-////                adapter.notifyDataSetChanged();
-//                break;
-//            case SERVICE_DISCOVERED:
-//                progressDialog.dismiss();
-//                tipDialog("连接成功");
-////                equipment = eqpList.get(0);
-////                equipment.setText("在线");
-////                adapter.notifyDataSetChanged();
-//                break;
-//        }
-//    }
-//
-//    private void showProgressDialog(){
-//        progressDialog = new ProgressDialog(MainActivity.this);
-//        progressDialog.setMessage("正在连接设备...");
-//        progressDialog.setCancelable(false);
-//        progressDialog.show();
-//    }
-//
-//    private void tipDialog(String msg){
-//        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-//        builder.setTitle("提示");
-//        builder.setMessage(msg);
-//        // 点击对话框以外的区域是否让对话框消失
-//        builder.setCancelable(false);
-//
-//        if (msg.equals("连接成功")) {
-//            Message message = new Message();
-//            message.what = 1;
-//            handler.sendMessageDelayed(message, 1000);
-//        } else {
-//            builder.setPositiveButton("重试", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    if (!address.equals("N/A")) {
-//                        progressDialog.show();
-//                        connectEqp();
-//                    }
-//                }
-//            });
-//        }
-//        dialog = builder.create();      //创建AlertDialog对象
-//        dialog.show();
-//    }
-//
-//    private void connectEqp() {
-//        ConnectionConfiguration config = new ConnectionConfiguration();
-//        config.setConnectTimeoutMillis(10000);
-//        config.setRequestTimeoutMillis(1000);
-//        config.setAutoReconnect(false);
-//        if (!address.equals("N/A")) {
-//            EasyBLE.getInstance().connect(address, config);
-//        }
-//    }
+    private boolean bluetoothIsOn () {
+        return EasyBLE.getInstance().isBluetoothOn();
+    }
+
+    private void updateEqp() {
+        SharedPreferences pref = getSharedPreferences("eqpNum", Context.MODE_PRIVATE);
+        eqpNum = pref.getInt("num", 0);
+        String fileName;
+        if (bluetoothIsOn() && eqpNum != 0) {
+            List<Equipment> eqpList = MyApplication.getInstance().getEqpList();
+            eqpList.clear();
+            for (int i = 1; i <= eqpNum; i++) {
+                fileName = "eqp" + i;
+                pref = getSharedPreferences(fileName, Context.MODE_PRIVATE);
+                String name = pref.getString("name", "N/A");
+                address = pref.getString("address" , "N/A");
+                Equipment eqp;
+                // 初始化/更新时只连接最后一个设备
+                if (i == eqpNum) {
+                    // 获取连接状态
+                    Connection connection = EasyBLE.getInstance().getConnection(address);
+
+                    if (connection == null) {
+                        eqp = new Equipment(0, name, address, R.mipmap.ic_launcher_round, "离线");
+                        // 进行连接，并显示UI
+                        showProgressDialog();
+                        connectEqp();
+                    } else {
+                        eqp = new Equipment(0, name, address, R.mipmap.ic_launcher_round, "在线");
+                    }
+                } else {
+                    eqp = new Equipment(0, name, address, R.mipmap.ic_launcher_round, "离线");
+                }
+                eqpList.add(eqp);
+            }
+            Equipment addEqp = new Equipment(1);
+            eqpList.add(addEqp);
+            // 更新全局设备列表
+            MyApplication.getInstance().setEqpList(eqpList);
+            // 更新全局设备适配器
+            EqpAdapter adapter = new EqpAdapter(eqpList);
+            MyApplication.getInstance().setAdapter(adapter);
+        }
+    }
+
+    private void showProgressDialog(){
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("正在连接设备...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
+
+    private void connectEqp() {
+        if (bluetoothIsOn()) {
+            ConnectionConfiguration config = new ConnectionConfiguration();
+            config.setConnectTimeoutMillis(10000);
+            config.setRequestTimeoutMillis(1000);
+            config.setAutoReconnect(false);
+            EasyBLE.getInstance().connect(address, config);
+        } else {
+            tipDialog("手机蓝牙未打开，请打开后重试");
+        }
+    }
+
+    @Override
+    public void onConnectionStateChanged(@NonNull Device device) {
+        Log.d(TAG, "onConnectionStateChanged: " +device.getConnectionState());
+        // 获取最后一个设备以便更新状态
+        Equipment equipment = MyApplication.getInstance().getEqpList().get(0);
+        // 获取设备适配器监听数据变化
+        EqpAdapter adapter = MyApplication.getInstance().getAdapter();
+        switch (device.getConnectionState()) {
+            case DISCONNECTED:
+                progressDialog.dismiss();
+                EasyBLE.getInstance().releaseAllConnections();
+                tipDialog("连接失败，请确定设备已打开");
+                equipment.setText("离线");
+                adapter.notifyDataSetChanged();
+                break;
+            case SERVICE_DISCOVERED:
+                progressDialog.dismiss();
+                tipDialog("连接成功");
+                equipment.setText("在线");
+                adapter.notifyDataSetChanged();
+                break;
+        }
+    }
+
+    private void tipDialog(String msg){
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle("提示");
+        builder.setMessage(msg);
+        // 点击对话框以外的区域是否让对话框消失
+        builder.setCancelable(false);
+
+        if (msg.equals("连接成功")) {
+            Message message = new Message();
+            message.what = 1;
+            handler.sendMessageDelayed(message, 800);
+        } else if (msg.equals("连接失败，请确定设备已打开")){
+            builder.setPositiveButton("重试", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                        progressDialog.show();
+                        connectEqp();
+                }
+            });
+        } else {
+            builder.setPositiveButton("好的", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    progressDialog.dismiss();
+                    requestBluetoothEnable();
+                }
+            });
+        }
+        dialog = builder.create();      //创建AlertDialog对象
+        dialog.show();
+    }
+
 
     private void requestBluetoothEnable() {
-        if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled()) {
+        if (!bluetoothIsOn()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             Log.d(TAG, "MainActivity onCreate: 请求蓝牙");
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
     }
+
+    Handler handler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            if (msg.what == 1){
+                dialog.dismiss();
+            }
+        }
+    };
 
 }
