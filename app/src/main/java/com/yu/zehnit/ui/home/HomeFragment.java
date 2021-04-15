@@ -31,7 +31,7 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private Button addEquipBtn;
 
-    private FrameLayout homeWithEqp;
+    private ConstraintLayout homeWithEqp;
     private ConstraintLayout homeWithoutEqp;
     private View root;
 
@@ -44,7 +44,9 @@ public class HomeFragment extends Fragment {
         root = inflater.inflate(R.layout.fragment_home, container, false);
 
         homeWithEqp = root.findViewById(R.id.home_with_eqp);
+        homeWithEqp.setVisibility(View.INVISIBLE);
         homeWithoutEqp = root.findViewById(R.id.home_without_eqp);
+        homeWithoutEqp.setVisibility(View.INVISIBLE);
 
         return root;
     }

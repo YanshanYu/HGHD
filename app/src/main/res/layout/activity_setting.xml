@@ -31,6 +31,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_view_setting"
+        android:overScrollMode="never"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"/>

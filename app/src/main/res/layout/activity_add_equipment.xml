@@ -33,13 +33,22 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <ImageView
+        android:id="@+id/logo_sn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_add"
+        app:srcCompat="@drawable/add" />
 
     <TextView
         android:id="@+id/t1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginStart="37dp"
+        android:layout_marginTop="50dp"
         android:text="开启头戴仪\n输入设备的SN号"
         android:textColor="@color/darkColorPrimary"
         android:textSize="20sp"
@@ -51,9 +60,9 @@
 
     <TextView
         android:id="@+id/t2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="37.5dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="30dp"
         android:text="设备的SN号在设备的xxxx处"
@@ -64,36 +73,42 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-    <ImageView
-        android:id="@+id/logo_sn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="124dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_add"
-        app:srcCompat="@drawable/add" />
+
 
     <EditText
         android:id="@+id/editText_sn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="50dp"
+        android:layout_marginStart="37.5dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="37.5dp"
         android:hint="@string/enter_sn"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo_sn" />
 
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="37.5dp"
+        android:layout_marginTop="42dp"
+        android:text="| 提示"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:textStyle="normal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_sn" />
+
     <Button
         android:id="@+id/button_add"
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="104dp"
+        android:layout_marginStart="38dp"
+        android:layout_marginEnd="38dp"
+        android:layout_marginBottom="90dp"
         android:background="@animator/round_button"
         android:text="添加"
         android:textColor="@color/white"
@@ -102,19 +117,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="43dp"
-        android:text="提示"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        android:textStyle="normal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_sn" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

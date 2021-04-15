@@ -101,7 +101,7 @@ public class MainActivity extends BaseActivity implements EventObserver {
         super.onResume();
         Log.d(TAG, "activity onResume: ");
 
-        if (bluetoothIsOn()) {
+        if (bluetoothIsOn() && progressDialog == null) {
             updateEqp();
         }
     }
@@ -183,6 +183,7 @@ public class MainActivity extends BaseActivity implements EventObserver {
             ConnectionConfiguration config = new ConnectionConfiguration();
             config.setConnectTimeoutMillis(10000);
             config.setRequestTimeoutMillis(1000);
+            // 不自动重连
             config.setAutoReconnect(false);
             EasyBLE.getInstance().connect(address, config);
         } else {
@@ -199,6 +200,7 @@ public class MainActivity extends BaseActivity implements EventObserver {
         EqpAdapter adapter = MyApplication.getInstance().getAdapter();
         switch (device.getConnectionState()) {
             case DISCONNECTED:
+                Log.d(TAG, "onConnectionStateChanged:  断开连接了");
                 progressDialog.dismiss();
                 EasyBLE.getInstance().releaseAllConnections();
                 tipDialog("连接失败，请确定设备已打开");
