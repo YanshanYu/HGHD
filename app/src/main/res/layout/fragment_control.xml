@@ -25,8 +25,34 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="视靶"
+            android:textSize="18sp"
+            android:textColor="@color/colorDarkGray"
+            android:layout_marginStart="41dp"
+            android:layout_gravity="center_vertical"/>
+
+        <cn.wandersnail.widget.textview.SwitchButton
+            android:id="@+id/switch_target"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="40dp" />
+
+    </FrameLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_view_ctrl"
+        android:overScrollMode="never"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="57dp"/>

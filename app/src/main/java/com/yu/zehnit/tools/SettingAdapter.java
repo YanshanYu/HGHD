@@ -14,24 +14,69 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.yu.zehnit.AboutActivity;
-import com.yu.zehnit.ActivityController;
-import com.yu.zehnit.LoginActivity;
-import com.yu.zehnit.ParamSettingActivity;
 import com.yu.zehnit.R;
-import com.yu.zehnit.SettingActivity;
 
 import java.util.List;
 
 public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.ViewHolder> {
 
     private List<Setting> settingList;
-    private RecyclerView recyclerView;
+    private OnRecycleViewItemClickListener listener;
 
     public SettingAdapter(List<Setting> settingList) {
         this.settingList = settingList;
     }
 
+    /**
+     * 设置监听
+     * @param listener
+     */
+    public void setListener(OnRecycleViewItemClickListener listener) {
+        this.listener = listener;
+    }
+
+
+    /**
+     * 创建ViewHolder实例
+     * @param parent
+     * @param viewType
+     * @return
+     */
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // 加载setting_item布局
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.setting_item, parent, false);
+        SettingAdapter.ViewHolder holder = new SettingAdapter.ViewHolder(view);
+        return holder;
+    }
+
+    /**
+     * 对ViewHolder实例赋值
+     * @param holder
+     * @param position
+     */
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Setting setting = settingList.get(position);
+        holder.iconImg.setImageResource(setting.getImgId());
+        holder.text.setText(setting.getName());
+        holder.settingView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onClick(position);
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return settingList.size();
+    }
+
+    /**
+     * 静态内部类，用于获得布局中的控件实例
+     */
     static class ViewHolder extends RecyclerView.ViewHolder {
         View settingView;
         ImageView iconImg;
@@ -45,71 +90,4 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.ViewHold
         }
     }
 
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        recyclerView = parent.findViewById(R.id.recycle_view_setting);
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.setting_item, parent, false);
-        SettingAdapter.ViewHolder holder = new SettingAdapter.ViewHolder(view);
-        holder.settingView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = holder.getAdapterPosition();
-                Intent intent;
-                switch (position) {
-                    case 0:
-                        intent = new Intent(v.getContext(), ParamSettingActivity.class);
-                        v.getContext().startActivity(intent);
-                        break;
-                    case 1:
-                        tipDialog("是否确定解绑设备？");
-                        break;
-                    case 2:
-                        intent = new Intent(v.getContext(), AboutActivity.class);
-                        v.getContext().startActivity(intent);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
-        return holder;
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Setting setting = settingList.get(position);
-        holder.iconImg.setImageResource(setting.getImgId());
-        holder.text.setText(setting.getName());
-    }
-
-    @Override
-    public int getItemCount() {
-        return settingList.size();
-    }
-
-    private void tipDialog(String msg) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(recyclerView.getContext());
-        builder.setTitle("提示");
-        builder.setMessage(msg);
-//        builder.setIcon(R.mipmap.ic_launcher);
-        builder.setCancelable(false);            //点击对话框以外的区域是否让对话框消失
-
-        //设置正面按钮
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(recyclerView.getContext(), "设备已解绑", Toast.LENGTH_LONG).show();
-            }
-        });
-        //设置反面按钮
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
-
-        AlertDialog dialog = builder.create();      //创建AlertDialog对象
-        dialog.show();                              //显示对话框
-    }
 }

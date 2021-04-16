@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.HGHD" parent="Theme.MaterialComponents.DayNight.DarkActionBar.Bridge">
+    <style name="Theme.HGHD" parent="Theme.MaterialComponents.Light.DarkActionBar.Bridge">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorAccent</item>

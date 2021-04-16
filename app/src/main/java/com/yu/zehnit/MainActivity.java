@@ -45,6 +45,7 @@ import cn.wandersnail.ble.ConnectionConfiguration;
 import cn.wandersnail.ble.Device;
 import cn.wandersnail.ble.EasyBLE;
 import cn.wandersnail.ble.EventObserver;
+import cn.wandersnail.widget.dialog.DefaultAlertDialog;
 
 public class MainActivity extends BaseActivity implements EventObserver {
 
@@ -101,9 +102,21 @@ public class MainActivity extends BaseActivity implements EventObserver {
         super.onResume();
         Log.d(TAG, "activity onResume: ");
 
-        if (bluetoothIsOn() && progressDialog == null) {
+        if (bluetoothIsOn() && (!isDeviceConnected)) {
             updateEqp();
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isDeviceConnected = false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EasyBLE.getInstance().release();
     }
 
     @Override
@@ -154,6 +167,7 @@ public class MainActivity extends BaseActivity implements EventObserver {
                         showProgressDialog();
                         connectEqp();
                     } else {
+                        isDeviceConnected = true;
                         eqp = new Equipment(0, name, address, R.mipmap.ic_launcher_round, "在线");
                     }
                 } else {
@@ -201,14 +215,20 @@ public class MainActivity extends BaseActivity implements EventObserver {
         switch (device.getConnectionState()) {
             case DISCONNECTED:
                 Log.d(TAG, "onConnectionStateChanged:  断开连接了");
-                progressDialog.dismiss();
+                isDeviceConnected = false;
+                if (progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
                 EasyBLE.getInstance().releaseAllConnections();
                 tipDialog("连接失败，请确定设备已打开");
                 equipment.setText("离线");
                 adapter.notifyDataSetChanged();
                 break;
             case SERVICE_DISCOVERED:
-                progressDialog.dismiss();
+                isDeviceConnected = true;
+                if (progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
                 tipDialog("连接成功");
                 equipment.setText("在线");
                 adapter.notifyDataSetChanged();
@@ -217,34 +237,41 @@ public class MainActivity extends BaseActivity implements EventObserver {
     }
 
     private void tipDialog(String msg){
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("提示");
-        builder.setMessage(msg);
+        DefaultAlertDialog dialog = new DefaultAlertDialog(MainActivity.this);
+//        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        dialog.setTitle("提示");
+        dialog.setMessage(msg);
+//        builder.setTitle("提示");
+//        builder.setMessage(msg);
         // 点击对话框以外的区域是否让对话框消失
-        builder.setCancelable(false);
+        dialog.setCancelable(false);
+//        builder.setCancelable(false);
+        dialog.setTitleBackgroundColor(-1);
 
         if (msg.equals("连接成功")) {
-            Message message = new Message();
-            message.what = 1;
-            handler.sendMessageDelayed(message, 800);
+//            Message message = new Message();
+//            message.what = 1;
+//            handler.sendMessageDelayed(message, 800);
+
+            dialog.setAutoDismiss(true);
+            dialog.setAutoDismissDelayMillis(800);
         } else if (msg.equals("连接失败，请确定设备已打开")){
-            builder.setPositiveButton("重试", new DialogInterface.OnClickListener() {
+            dialog.setPositiveButton("重试", new View.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialog, int which) {
-                        progressDialog.show();
-                        connectEqp();
+                public void onClick(View v) {
+                    progressDialog.show();
+                    connectEqp();
                 }
             });
         } else {
-            builder.setPositiveButton("好的", new DialogInterface.OnClickListener() {
+            dialog.setPositiveButton("好的", new View.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialog, int which) {
+                public void onClick(View v) {
                     progressDialog.dismiss();
                     requestBluetoothEnable();
                 }
             });
         }
-        dialog = builder.create();      //创建AlertDialog对象
         dialog.show();
     }
 
@@ -257,13 +284,13 @@ public class MainActivity extends BaseActivity implements EventObserver {
         }
     }
 
-    Handler handler = new Handler(Looper.getMainLooper()) {
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            if (msg.what == 1){
-                dialog.dismiss();
-            }
-        }
-    };
+//    Handler handler = new Handler(Looper.getMainLooper()) {
+//        @Override
+//        public void handleMessage(@NonNull Message msg) {
+//            if (msg.what == 1){
+//                dialog.dismiss();
+//            }
+//        }
+//    };
 
 }

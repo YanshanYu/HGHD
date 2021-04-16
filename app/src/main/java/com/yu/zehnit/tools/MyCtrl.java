@@ -4,16 +4,14 @@ public class MyCtrl {
 
     private String name;
     private int imgId;
-    private int imgId2;
     private int switchImgId;
 
     public MyCtrl() {
     }
 
-    public MyCtrl(String name, int imgId, int imgId2, int switchImgId) {
+    public MyCtrl(String name, int imgId, int switchImgId) {
         this.name = name;
         this.imgId = imgId;
-        this.imgId2 = imgId2;
         this.switchImgId = switchImgId;
     }
 
@@ -30,7 +28,11 @@ public class MyCtrl {
         return switchImgId;
     }
 
-    public int getImgId2() {
-        return imgId2;
+    public void setImgId(int imgId) {
+        this.imgId = imgId;
+    }
+
+    public void setSwitchImgId(int switchImgId) {
+        this.switchImgId = switchImgId;
     }
 }

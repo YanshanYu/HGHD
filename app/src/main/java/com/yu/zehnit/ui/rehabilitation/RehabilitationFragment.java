@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.yu.zehnit.R;
 import com.yu.zehnit.VideoPlayerActivity;
 import com.yu.zehnit.tools.MyVideo;
+import com.yu.zehnit.tools.OnRecycleViewItemClickListener;
 import com.yu.zehnit.tools.VideoAdapter;
 
 import java.io.File;
@@ -55,6 +56,32 @@ public class RehabilitationFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         VideoAdapter adapter = new VideoAdapter(videoList);
+        adapter.setListener(new OnRecycleViewItemClickListener() {
+            @Override
+            public void onClick(int pos) {
+                Intent intent = new Intent(getContext(), VideoPlayerActivity.class);
+                switch (pos) {
+                    case 0:
+                        intent.putExtra("video", 1);
+                        break;
+                    case 1:
+                        intent.putExtra("video", 2);
+                        break;
+                    case 2:
+                        intent.putExtra("video", 3);
+                        break;
+                    case 3:
+                        intent.putExtra("video", 4);
+                        break;
+                    case 4:
+                        intent.putExtra("video", 5);
+                        break;
+                    default:
+                        break;
+                }
+                startActivity(intent);
+            }
+        });
         recyclerView.setAdapter(adapter);
 
         return root;

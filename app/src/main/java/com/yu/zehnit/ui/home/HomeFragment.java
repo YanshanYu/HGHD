@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +23,10 @@ import com.yu.zehnit.AddEquipmentActivity;
 import com.yu.zehnit.MyApplication;
 import com.yu.zehnit.R;
 import com.yu.zehnit.tools.EqpAdapter;
+import com.yu.zehnit.tools.Equipment;
+import com.yu.zehnit.tools.OnRecycleViewItemClickListener;
+
+import java.util.List;
 
 import cn.wandersnail.ble.EasyBLE;
 
@@ -90,9 +95,24 @@ public class HomeFragment extends Fragment {
         if (EasyBLE.getInstance().isBluetoothOn()) {
             // 获取设备适配器
             EqpAdapter adapter = MyApplication.getInstance().getAdapter();
+            // 获取设备列表
+            List<Equipment> eqpList = MyApplication.getInstance().getEqpList();
             RecyclerView recyclerView = root.findViewById(R.id.recycle_view_eqp);
             LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
             recyclerView.setLayoutManager(layoutManager);
+            adapter.setListener(new OnRecycleViewItemClickListener() {
+                @Override
+                public void onClick(int pos) {
+                    Equipment equipment = eqpList.get(pos);
+                    if (equipment.getCategory() == 1) {
+                        Intent intent = new Intent(getContext(), AddEquipmentActivity.class);
+                        startActivity(intent);
+                    } else {
+                        // 跳转到fragment_control
+                        Navigation.findNavController(getView()).navigate(R.id.action_navigation_home_to_navigation_control);
+                    }
+                }
+            });
             recyclerView.setAdapter(adapter);
         }
 

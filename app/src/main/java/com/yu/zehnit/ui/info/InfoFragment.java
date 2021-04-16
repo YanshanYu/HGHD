@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +23,7 @@ import com.yu.zehnit.SettingActivity;
 import com.yu.zehnit.tools.CtrlAdapter;
 import com.yu.zehnit.tools.Info;
 import com.yu.zehnit.tools.InfoAdapter;
+import com.yu.zehnit.tools.OnRecycleViewItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +44,31 @@ public class InfoFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         InfoAdapter adapter = new InfoAdapter(infoList);
+        adapter.setListener(new OnRecycleViewItemClickListener() {
+            @Override
+            public void onClick(int pos) {
+                Intent intent;
+                switch (pos) {
+                    case 0:
+//                        intent = new Intent(getContext(), SettingActivity.class);
+//                        break;
+                    case 1:
+//                        intent = new Intent(getContext(), SettingActivity.class);
+//                        break;
+                    case 2:
+                        Toast.makeText(getContext(), "跳转", Toast.LENGTH_SHORT).show();
+//                        intent = new Intent(getContext(), SettingActivity.class);
+                        break;
+                    case 3:
+                        intent = new Intent(getContext(), SettingActivity.class);
+                        startActivity(intent);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
         recyclerView.setAdapter(adapter);
-
 
         return root;
     }
