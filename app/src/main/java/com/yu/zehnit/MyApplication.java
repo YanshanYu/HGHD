@@ -24,6 +24,15 @@ public class MyApplication extends Application {
     private static MyApplication instance;
     private List<Equipment> eqpList = new ArrayList<>();
     private EqpAdapter adapter;
+    private boolean isConnected = false;
+
+    public boolean isConnected() {
+        return isConnected;
+    }
+
+    public void setConnected(boolean connected) {
+        isConnected = connected;
+    }
 
     public List<Equipment> getEqpList() {
         return eqpList;

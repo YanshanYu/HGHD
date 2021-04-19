@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.gyf.immersionbar.ImmersionBar;
 
+import com.yu.zehnit.tools.Equipment;
 import com.yu.zehnit.tools.OnRecycleViewItemClickListener;
 import com.yu.zehnit.tools.Setting;
 import com.yu.zehnit.tools.SettingAdapter;
@@ -139,13 +140,17 @@ public class SettingActivity extends BaseActivity {
                 public void onClick(View v) {
                     // 释放所有连接
                     EasyBLE.getInstance().releaseAllConnections();
+                    // 更新设备连接状态
+                    MyApplication.getInstance().setConnected(false);
                     // 更新设备总数
                     SharedPreferences.Editor editor = getSharedPreferences("eqpNum", MODE_PRIVATE).edit();
                     eqpNum--;
                     editor.putInt("num", eqpNum);
                     editor.apply();
-                    // 清空设备列表
-                    MyApplication.getInstance().setEqpList(null);
+                    // 更新设备列表
+                    List<Equipment> equipmentList = MyApplication.getInstance().getEqpList();
+                    equipmentList.remove(0);
+                    MyApplication.getInstance().setEqpList(equipmentList);
 
 
                     Toast.makeText(SettingActivity.this, "设备已解绑", Toast.LENGTH_SHORT).show();
@@ -159,7 +164,7 @@ public class SettingActivity extends BaseActivity {
             public void onClick(View v) {
             }
         });
-
-        dialog.show();                              //显示对话框
+        //显示对话框
+        dialog.show();
     }
 }

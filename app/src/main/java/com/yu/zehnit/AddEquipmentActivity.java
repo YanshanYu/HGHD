@@ -141,7 +141,8 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
                     handler.sendMessageDelayed(message, 12000);
                     EasyBLE.getInstance().startScan();
                 } else {
-                    askForGPS();
+                    // 提示请求位置服务
+                    tipDialog("检测到您未开启位置服务", "去打开");
                 }
             }
         });
@@ -151,7 +152,6 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        EasyBLE.getInstance().release();
         EasyBLE.getInstance().removeScanListener(scanListener);
         EasyBLE.getInstance().unregisterObserver(this);
     }
@@ -214,7 +214,6 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
         Log.d(TAG, "AddEquipmentActivity onCharacteristicWrite: 成功写入特征值：" + StringUtils.toHex(value));
         // 写入成功后读取返回的特征值
         readCharacteristic(sUuid, cUuid);
-//        addEqp(new byte[]{1,2});
     }
 
     @Override
@@ -290,7 +289,6 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
     }
 
     private void writeCharacteristic(UUID serviceUuid, UUID characteristicUuid) {
-        Log.d(TAG, "开始写入特征值");
         WriteCharacteristicBuilder builder = new RequestBuilderFactory().getWriteCharacteristicBuilder(serviceUuid,
                 characteristicUuid, new byte[]{(byte) 0xC0, 0x01, 0x00, 0x00, 0x00, (byte) 0xC0});
         //根据需要设置写入配置
@@ -310,10 +308,8 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
 
 
     private void addEqp(byte[] validValue) {
-        Log.d(TAG, "addEqp: -------------------------------------------------------------------------------");
 
         if (StringUtils.toHex(validValue).replace(" ", "").equals(textSn.getText().toString())) {
-//        if ("1".equals(textSn.getText().toString())){
             progressDialog.dismiss();
             saveEqp();
             tipDialog("连接成功", "好的");
@@ -348,11 +344,6 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
         return gpsEnabled;
     }
 
-    private void askForGPS() {
-
-        tipDialog("检测到您未开启位置服务", "去打开");
-
-    }
 
     private ScanListener scanListener = new ScanListener() {
         @Override
@@ -376,7 +367,6 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
             //搜索结果
             Log.d(TAG, "onScanResult: 名称：" + device.getName() + "   地址：" + device.getAddress());
             if (device.getName().equals("VetiBand")) {
-//            if (device.getName().equals("Mi Smart Band 4")) {
                 findDevice = true;
                 mDevice = device;
                 // 找到设备停止扫描
