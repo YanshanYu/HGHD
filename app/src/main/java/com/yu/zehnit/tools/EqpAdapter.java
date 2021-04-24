@@ -64,7 +64,7 @@ public class EqpAdapter extends RecyclerView.Adapter<EqpAdapter.ViewHolder> {
             holder.text.setText(eqp.getText());
         } else {
             holder.addImg.setImageResource(R.drawable.ic_add);
-            holder.text.setText("添加新的设备");
+            holder.text.setText(R.string.add_new_device);
         }
         holder.eqpView.setOnClickListener(new View.OnClickListener() {
             @Override

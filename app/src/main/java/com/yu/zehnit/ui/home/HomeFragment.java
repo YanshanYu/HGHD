@@ -1,15 +1,12 @@
 package com.yu.zehnit.ui.home;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -25,6 +22,7 @@ import com.yu.zehnit.R;
 import com.yu.zehnit.tools.EqpAdapter;
 import com.yu.zehnit.tools.Equipment;
 import com.yu.zehnit.tools.OnRecycleViewItemClickListener;
+import com.yu.zehnit.tools.SharedPreferencesUtils;
 
 import java.util.List;
 
@@ -63,8 +61,10 @@ public class HomeFragment extends Fragment {
         Log.d(TAG, "fragment onResume: ");
 
 
-        SharedPreferences pref = getActivity().getSharedPreferences("eqpNum", Context.MODE_PRIVATE);
-        int eqpNum = pref.getInt("num", 0);
+        SharedPreferencesUtils.setFileName("info");
+        int eqpNum = (int) SharedPreferencesUtils.getParam(getContext(), "eqpNum", 0);
+//        SharedPreferences pref = getActivity().getSharedPreferences("eqpNum", Context.MODE_PRIVATE);
+//        int eqpNum = pref.getInt("num", 0);
 
         if (eqpNum == 0) {
             Log.d(TAG, "HomeFragment onResume: 无设备");

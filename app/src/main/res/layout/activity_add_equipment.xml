@@ -29,7 +29,7 @@
             android:singleLine="true"
             android:textColor="@color/colorGray"
             android:textSize="20sp"
-            android:text="@string/add_equipment"/>
+            android:text="@string/add_device"/>
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="37dp"
         android:layout_marginTop="50dp"
-        android:text="开启头戴仪\n输入设备的SN号"
+        android:text="@string/tips"
         android:textColor="@color/darkColorPrimary"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -65,7 +65,7 @@
         android:layout_marginStart="37.5dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="30dp"
-        android:text="设备的SN号在设备的xxxx处"
+        android:text="@string/tips1_text"
         android:textColor="@color/colorGray"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -95,7 +95,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="37.5dp"
         android:layout_marginTop="42dp"
-        android:text="| 提示"
+        android:text="@string/tips1"
         android:textColor="@color/black"
         android:textSize="14sp"
         android:textStyle="normal"
@@ -110,7 +110,7 @@
         android:layout_marginEnd="38dp"
         android:layout_marginBottom="90dp"
         android:background="@animator/round_button"
-        android:text="添加"
+        android:text="@string/add"
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"

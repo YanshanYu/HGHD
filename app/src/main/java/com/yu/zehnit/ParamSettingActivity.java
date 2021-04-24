@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import com.gyf.immersionbar.ImmersionBar;
 
-
-
 public class ParamSettingActivity extends BaseActivity {
 
     private SeekBar sinFrequencySeekBar;
@@ -27,7 +25,6 @@ public class ParamSettingActivity extends BaseActivity {
 
     private Toolbar toolbar;
 
-    private static final String TestApp="TestApp";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

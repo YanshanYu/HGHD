@@ -7,4 +7,5 @@ public class Setting extends Info{
     public Setting(String name, int imgId) {
         super(name, imgId);
     }
+
 }

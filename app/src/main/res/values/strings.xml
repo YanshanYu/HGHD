@@ -1,42 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">HGHD</string>
+    <string name="app_name" translatable="false">HGHD</string>
+
+    <!--  LoginActivity -->
+    <string name="welcome">欢迎使用</string>
+    <string name="enter_phone_number">请输入您的手机号码…</string>
+    <string name="enter_code">请输入验证码…</string>
+    <string name="get_code">获取验证码</string>
+    <string name="login">登录</string>
+    <string name="policy">登录代表您已阅读和同意《志听隐私政策》</string>
+
+
+
+    <!--  MainActivity -->
     <string name="title_home">主页</string>
     <string name="title_control">控制中心</string>
     <string name="title_rehabilitation">康复视频</string>
     <string name="title_info">个人中心</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="company_name">上海志听</string>
-    <string name="version_number">v1.0</string>
-    <string name="service_agreement">服务协议</string>
-    <string name="privacy_policy">隐私政策</string>
-    <string name="contact_us">联系我们</string>
-    <string name="add_equipment">添加设备</string>
-    <string name="control_design">控制设置</string>
-    <string name="about_us">关于我们</string>】
-    <string name="unhitch_equipment">解绑设备</string>
-    <string name="message">消息通知</string>
-    <string name="logout">退出登录</string>
-    <string name="frequency">频率</string>
-    <string name="range">幅度</string>
-    <string name="login">登录</string>
-    <string name="enter_phone_number">请输入您的手机号码...</string>
-    <string name="enter_code">请输入验证码...</string>
-    <string name="get_code">获取验证码</string>
-    <string name="policy">登录代表您已阅读和同意《志听隐私政策》</string>
+    <!-- 提示框 -->
+    <string name="connection_failed">连接失败，请确定设备已打开</string>
+    <string name="bt_is_off">手机蓝牙未打开，请打开后重试</string>
+
+    <!--  HomeFragment -->
+    <string name="device_management">设备管理</string>
+    <string name="add_device">添加设备</string>
+    <string name="online">在线</string>
+    <string name="offline">离线</string>
+    <string name="add_new_device">添加新的设备</string>
+
+    <!--  ControlFragment -->
+    <string name="visual_target">视靶</string>
+    <string name="gaze_holding1">跟随头动Ⅰ</string>
+    <string name="gaze_holding2">跟随头动Ⅱ</string>
+    <string name="gaze_holding3">跟随头动Ⅲ</string>
+    <string name="smooth_pursuit">视追踪实验</string>
+    <string name="saccades">扫视实验</string>
+
+    <!--  InfoFragment -->
     <string name="training_target">训练目标</string>
     <string name="train_time">训练次数</string>
     <string name="shopping_link">商城链接</string>
     <string name="setting">设置</string>
-    <string name="equipment_name">设备名称</string>
-    <string name="equipment_state">设备状态</string>
-    <string name="enter_sn">请输入您的SN号...</string>
-    <string name="verify">验证</string>
-    <string name="video_message">视频简介</string>
-    <string name="eye_tracking_experiment">视追踪实验</string>
-    <string name="scanner_experiment">扫视实验</string>
-    <string name="follow_head">跟随头动</string>
-    <string name="gaze_holding1">凝视稳定性训练1</string>
-    <string name="gaze_holding2">凝视稳定性训练2</string>
-    <string name="gaze_holding3">凝视稳定性训练3</string>
+
+
+
+    <!--  SettingActivity -->
+    <string name="param_setting">控制设置</string>
+    <string name="unbind_device">解绑设备</string>
+    <string name="switch_lang">切换语言</string>
+    <string name="about_us">关于我们</string>
+    <string name="logout">退出登录</string>
+
+    <!--  提示框  -->
+    <string name="sure_to_logout">您确定要退出登录吗？</string>
+    <string name="sure_to_unbind">是否确定解绑设备？</string>
+    <string name="sure">确定</string>
+    <string name="cancel">取消</string>
+    <string name="unbind_info">设备已解绑</string>
+
+
+
+    <!--  AddEquipmentActivity -->
+    <string name="tips">开启头戴仪\n输入设备的SN号</string>
+    <string name="enter_sn">请输入您的SN号…</string>
+    <string name="tips1">| 提示</string>
+    <string name="tips1_text">设备的SN号在设备的xxxx处</string>
+    <string name="add">添加</string>
+
+    <!--  提示框  -->
+    <string name="scan_device">正在扫描设备…</string>
+    <string name="no_gps">检测到您未开启位置服务</string>
+    <string name="turn_on">去打开</string>
+    <string name="can_not_find_device">搜索不到设备，请确保设备打开后重试</string>
+    <string name="ok">好的</string>
+    <string name="connect_device">正在连接设备…</string>
+    <string name="tip">提示</string>
+    <string name="connection_succeeded">连接成功</string>
+    <string name="wrong_SN">输入的SN码有误，请核对后重试</string>
+    <string name="try_again">重试</string>
+
+
+
+    <!--  ParamActivity  -->
+    <string name="frequency">频率</string>
+    <string name="amplitude">幅度</string>
+
+
+
+    <!--  AboutActivity  -->
+    <string name="version">版本号 V1.0</string>
+    <string name="contact_us">联系我们</string>
+
+
+
+
+
+
 </resources>

@@ -2,13 +2,13 @@ package com.yu.zehnit;
 
 import android.app.Application;
 import android.bluetooth.le.ScanSettings;
-import android.widget.LinearLayout;
 
 import com.yu.zehnit.tools.EqpAdapter;
 import com.yu.zehnit.tools.Equipment;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import cn.wandersnail.ble.EasyBLE;
 import cn.wandersnail.ble.ScanConfiguration;
@@ -20,6 +20,9 @@ import cn.wandersnail.commons.poster.ThreadMode;
  * 在这里定义一些全局变量，比如：设备列表和设备适配器
  */
 public class MyApplication extends Application {
+
+    public static final UUID SRVC_UUID = UUID.fromString("a5ee0033-b9b0-421b-bfba-09662b4be396");
+    public static final UUID CHAR_UUID = UUID.fromString("4054303d-aa2d-45f4-9664-bbf2c9627f0c");
 
     private static MyApplication instance;
     private List<Equipment> eqpList = new ArrayList<>();

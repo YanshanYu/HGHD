@@ -34,7 +34,7 @@
                 android:singleLine="true"
                 android:textColor="@color/colorDarkGray"
                 android:textSize="20sp"
-                android:text="设备管理"/>
+                android:text="@string/device_management"/>
         </androidx.appcompat.widget.Toolbar>
 
 
@@ -69,7 +69,7 @@
                 android:background="@animator/round_button"
                 android:layout_marginTop="276.5dp"
                 android:layout_gravity="center_horizontal"
-                android:text="@string/add_equipment"
+                android:text="@string/add_device"
                 android:textColor="@color/white"/>
 
         </androidx.cardview.widget.CardView>
@@ -103,7 +103,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:singleLine="true"
-                android:text="设备管理"
+                android:text="@string/device_management"
                 android:textColor="@color/colorDarkGray"
                 android:textSize="20sp" />
 

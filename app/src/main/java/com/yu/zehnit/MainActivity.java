@@ -1,38 +1,22 @@
 package com.yu.zehnit;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothManager;
-import android.bluetooth.le.BluetoothLeScanner;
-import android.bluetooth.le.ScanCallback;
-import android.bluetooth.le.ScanResult;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.gyf.immersionbar.ImmersionBar;
 import com.yu.zehnit.tools.EqpAdapter;
 import com.yu.zehnit.tools.Equipment;
+import com.yu.zehnit.tools.SharedPreferencesUtils;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -97,7 +81,7 @@ public class MainActivity extends BaseActivity implements EventObserver {
         // 注册观察者
         EasyBLE.getInstance().registerObserver(this);
 
-        Log.d(TAG, "activity onResume: ");
+        Log.d(TAG, "activity onResume: " + MyApplication.getInstance().isConnected());
         if (bluetoothIsOn() && (!MyApplication.getInstance().isConnected())) {
             updateEqp();
         }
@@ -141,8 +125,10 @@ public class MainActivity extends BaseActivity implements EventObserver {
 
 
     private void updateEqp() {
-        SharedPreferences pref = getSharedPreferences("eqpNum", Context.MODE_PRIVATE);
-        eqpNum = pref.getInt("num", 0);
+        SharedPreferencesUtils.setFileName("info");
+        eqpNum = (int) SharedPreferencesUtils.getParam(MainActivity.this, "eqpNum", 0);
+//        SharedPreferences pref = getSharedPreferences("eqpNum", Context.MODE_PRIVATE);
+//        eqpNum = pref.getInt("num", 0);
         Log.d(TAG, "updateEqp: 主页设备数量" + eqpNum);
         String fileName;
         if (bluetoothIsOn() && eqpNum != 0) {
@@ -150,9 +136,13 @@ public class MainActivity extends BaseActivity implements EventObserver {
             eqpList.clear();
             for (int i = 1; i <= eqpNum; i++) {
                 fileName = "eqp" + i;
-                pref = getSharedPreferences(fileName, Context.MODE_PRIVATE);
-                String name = pref.getString("name", "N/A");
-                address = pref.getString("address" , "N/A");
+                SharedPreferencesUtils.setFileName(fileName);
+                String name = (String) SharedPreferencesUtils.getParam(MainActivity.this, "name", "N/A");
+                address = (String) SharedPreferencesUtils.getParam(MainActivity.this, "address", "N/A");
+
+//                pref = getSharedPreferences(fileName, Context.MODE_PRIVATE);
+//                String name = pref.getString("name", "N/A");
+//                address = pref.getString("address" , "N/A");
                 Equipment eqp;
                 // 初始化/更新时只连接最后一个设备
                 if (i == eqpNum) {
@@ -160,16 +150,16 @@ public class MainActivity extends BaseActivity implements EventObserver {
                     Connection connection = EasyBLE.getInstance().getConnection(address);
 
                     if (connection == null) {
-                        eqp = new Equipment(0, name, address, R.mipmap.ic_launcher_round, "离线");
+                        eqp = new Equipment(0, name, address, R.mipmap.ic_launcher_round, getString(R.string.offline));
                         // 进行连接，并显示UI
                         showProgressDialog();
                         connectEqp();
                     } else {
                         MyApplication.getInstance().setConnected(true);
-                        eqp = new Equipment(0, name, address, R.mipmap.ic_launcher_round, "在线");
+                        eqp = new Equipment(0, name, address, R.mipmap.ic_launcher_round, getString(R.string.online));
                     }
                 } else {
-                    eqp = new Equipment(0, name, address, R.mipmap.ic_launcher_round, "离线");
+                    eqp = new Equipment(0, name, address, R.mipmap.ic_launcher_round, getString(R.string.offline));
                 }
                 eqpList.add(eqp);
             }
@@ -185,7 +175,7 @@ public class MainActivity extends BaseActivity implements EventObserver {
 
     private void showProgressDialog(){
         progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("正在连接设备...");
+        progressDialog.setMessage(getString(R.string.connect_device));
         progressDialog.setCancelable(false);
         progressDialog.show();
     }
@@ -199,7 +189,7 @@ public class MainActivity extends BaseActivity implements EventObserver {
             config.setAutoReconnect(false);
             EasyBLE.getInstance().connect(address, config);
         } else {
-            tipDialog("手机蓝牙未打开，请打开后重试");
+            tipDialog(getString(R.string.bt_is_off));
         }
     }
 
@@ -217,8 +207,8 @@ public class MainActivity extends BaseActivity implements EventObserver {
                     progressDialog.dismiss();
                 }
                 EasyBLE.getInstance().releaseAllConnections();
-                tipDialog("连接失败，请确定设备已打开");
-                equipment.setText("离线");
+                tipDialog(getString(R.string.connection_failed));
+                equipment.setText(getString(R.string.offline));
                 adapter.notifyDataSetChanged();
                 break;
             case SERVICE_DISCOVERED:
@@ -226,8 +216,8 @@ public class MainActivity extends BaseActivity implements EventObserver {
                 if (progressDialog.isShowing()) {
                     progressDialog.dismiss();
                 }
-                tipDialog("连接成功");
-                equipment.setText("在线");
+                tipDialog(getString(R.string.connection_succeeded));
+                equipment.setText(getString(R.string.online));
                 adapter.notifyDataSetChanged();
                 break;
         }
@@ -235,17 +225,17 @@ public class MainActivity extends BaseActivity implements EventObserver {
 
     private void tipDialog(String msg){
         DefaultAlertDialog dialog = new DefaultAlertDialog(MainActivity.this);
-        dialog.setTitle("提示");
+        dialog.setTitle(getString(R.string.tip));
         dialog.setMessage(msg);
         // 点击对话框以外的区域是否让对话框消失
         dialog.setCancelable(false);
         dialog.setTitleBackgroundColor(-1);
 
-        if (msg.equals("连接成功")) {
+        if (msg.equals(getString(R.string.connection_succeeded))) {
             dialog.setAutoDismiss(true);
             dialog.setAutoDismissDelayMillis(800);
-        } else if (msg.equals("连接失败，请确定设备已打开")){
-            dialog.setPositiveButton("重试", new View.OnClickListener() {
+        } else if (msg.equals(getString(R.string.connection_failed))){
+            dialog.setPositiveButton(getString(R.string.try_again), new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     progressDialog.show();
@@ -253,7 +243,7 @@ public class MainActivity extends BaseActivity implements EventObserver {
                 }
             });
         } else {
-            dialog.setPositiveButton("好的", new View.OnClickListener() {
+            dialog.setPositiveButton(getString(R.string.ok), new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     progressDialog.dismiss();

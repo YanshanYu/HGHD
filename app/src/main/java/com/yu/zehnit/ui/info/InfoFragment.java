@@ -74,13 +74,13 @@ public class InfoFragment extends Fragment {
     }
 
     private void initInfo() {
-        Info goal = new Info("训练目标", R.drawable.goal);
+        Info goal = new Info(getString(R.string.training_target), R.drawable.goal);
         infoList.add(goal);
-        Info times = new Info("训练次数", R.drawable.times);
+        Info times = new Info(getString(R.string.train_time), R.drawable.times);
         infoList.add(times);
-        Info mall = new Info("商城链接", R.drawable.mall);
+        Info mall = new Info(getString(R.string.shopping_link), R.drawable.mall);
         infoList.add(mall);
-        Info setting = new Info("设置", R.drawable.setting);
+        Info setting = new Info(getString(R.string.setting), R.drawable.setting);
         infoList.add(setting);
     }
 }

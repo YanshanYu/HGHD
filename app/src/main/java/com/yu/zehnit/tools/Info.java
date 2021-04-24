@@ -19,4 +19,8 @@ public class Info {
     public int getImgId() {
         return imgId;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

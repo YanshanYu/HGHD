@@ -1,19 +1,10 @@
 package com.yu.zehnit;
 
-import android.Manifest;
 import android.app.ProgressDialog;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.bluetooth.BluetoothGattService;
-import android.bluetooth.le.ScanResult;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -25,19 +16,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
 
 import com.gyf.immersionbar.ImmersionBar;
+import com.yu.zehnit.tools.SharedPreferencesUtils;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 
 import cn.wandersnail.ble.Connection;
@@ -62,7 +49,6 @@ import cn.wandersnail.widget.dialog.DefaultAlertDialog;
 public class AddEquipmentActivity extends BaseActivity implements EventObserver {
 
     private static final String TAG = "dxx";
-    private static final long DEVICE_CONNECT_TIMEOUT = 20000;
 
     private Toolbar toolbar;
     private Button btnAdd;
@@ -72,9 +58,6 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
     private Connection connection;
     private Device mDevice;
 
-    private UUID sUuid, cUuid;
-
-    private static final int REQUEST_FINE_LOCATION = 2;
 
     private boolean findDevice = false;
     private Message message;
@@ -115,11 +98,7 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (textSn.getText().length() != 0) {
-                    btnAdd.setEnabled(true);
-                } else {
-                    btnAdd.setEnabled(false);
-                }
+                btnAdd.setEnabled(textSn.getText().length() != 0);
             }
         });
 
@@ -134,7 +113,8 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
             public void onClick(View v) {
                 if (hasGPS()) {
                     progressDialog = new ProgressDialog(AddEquipmentActivity.this);
-                    progressDialog.setMessage("正在扫描设备...");
+                    progressDialog.setMessage(getString(R.string.scan_device));
+                    progressDialog.setCancelable(false);
                     progressDialog.show();
                     message = new Message();
                     message.what = 11;
@@ -142,7 +122,7 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
                     EasyBLE.getInstance().startScan();
                 } else {
                     // 提示请求位置服务
-                    tipDialog("检测到您未开启位置服务", "去打开");
+                    tipDialog(getString(R.string.no_gps), getString(R.string.turn_on));
                 }
             }
         });
@@ -161,7 +141,7 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
         public void handleMessage(@NonNull Message msg) {
             if (msg.what == 11 && (!findDevice)){
                 progressDialog.dismiss();
-                tipDialog("搜索不到设备，请确保设备打开后重试", "好的");
+                tipDialog(getString(R.string.can_not_find_device), getString(R.string.ok));
             }
         }
     };
@@ -183,25 +163,25 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
                 break;
             case SERVICE_DISCOVERED:
                 Log.d(TAG, "AddEquipmentActivity onConnectionStateChanged: 已发现服务");
-                progressDialog.setMessage("正在连接设备");
-                List<BluetoothGattService> services = connection.getGatt().getServices();
-                boolean flag = false;
-                for (BluetoothGattService service : services) {
-                    Log.d(TAG, "--------- AddEquipmentActivity onConnectionStateChanged: service uuid : ---------" + service.getUuid().toString());
-                    List<BluetoothGattCharacteristic> characteristics = service.getCharacteristics();
-                    for (BluetoothGattCharacteristic characteristic : characteristics) {
-                        Log.d(TAG, "AddEquipmentActivity onConnectionStateChanged: characteristic uuid : " + characteristic.getUuid().toString());
-//                        if (characteristic.getUuid().toString().equals("4054303d-aa2d-45f4-9664-bbf2c9627f0c")) {
-                        if (connection.hasProperty(service.getUuid(), characteristic.getUuid(), BluetoothGattCharacteristic.PROPERTY_WRITE)) {
-                            sUuid = service.getUuid();
-                            cUuid = characteristic.getUuid();
-                            writeCharacteristic(sUuid, cUuid);
-                            flag = true;
-                            break;
-                        }
-                    }
-                    if (flag) break;
-                }
+                progressDialog.setMessage(getString(R.string.connect_device));
+                writeCharacteristic(MyApplication.SRVC_UUID, MyApplication.CHAR_UUID);
+//                List<BluetoothGattService> services = connection.getGatt().getServices();
+//                boolean flag = false;
+//                for (BluetoothGattService service : services) {
+//                    Log.d(TAG, "--------- AddEquipmentActivity onConnectionStateChanged: service uuid : ---------" + service.getUuid().toString());
+//                    List<BluetoothGattCharacteristic> characteristics = service.getCharacteristics();
+//                    for (BluetoothGattCharacteristic characteristic : characteristics) {
+//                        Log.d(TAG, "AddEquipmentActivity onConnectionStateChanged: characteristic uuid : " + characteristic.getUuid().toString());
+//                        if (connection.hasProperty(service.getUuid(), characteristic.getUuid(), BluetoothGattCharacteristic.PROPERTY_WRITE)) {
+//                            sUuid = service.getUuid();
+//                            cUuid = characteristic.getUuid();
+//                            writeCharacteristic(sUuid, cUuid);
+//                            flag = true;
+//                            break;
+//                        }
+//                    }
+//                    if (flag) break;
+//                }
                 break;
             case DISCONNECTED:
                 break;
@@ -213,7 +193,7 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
     public void onCharacteristicWrite(@NonNull Request request, @NonNull byte[] value) {
         Log.d(TAG, "AddEquipmentActivity onCharacteristicWrite: 成功写入特征值：" + StringUtils.toHex(value));
         // 写入成功后读取返回的特征值
-        readCharacteristic(sUuid, cUuid);
+        readCharacteristic(MyApplication.SRVC_UUID, MyApplication.CHAR_UUID);
     }
 
     @Override
@@ -238,14 +218,14 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
      */
     private void tipDialog(String msg, String btnText) {
         DefaultAlertDialog dialog = new DefaultAlertDialog(AddEquipmentActivity.this);
-        dialog.setTitle("提示");
+        dialog.setTitle(getString(R.string.tip));
         dialog.setMessage(msg);
         dialog.setTitleBackgroundColor(-1);
         // 点击对话框以外的区域是否让对话框消失
         dialog.setCancelable(false);
 
 
-        if (msg.equals("连接成功")) {
+        if (msg.equals(getString(R.string.connection_succeeded))) {
             //设置正面按钮
             dialog.setPositiveButton(btnText, new View.OnClickListener() {
                 @Override
@@ -253,7 +233,7 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
                     finish();
                 }
             });
-        } else if (msg.equals("输入的SN码有误，请核对后重试")){
+        } else if (msg.equals(getString(R.string.wrong_SN))){
             dialog.setPositiveButton(btnText, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -262,7 +242,7 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
                     handler.removeMessages(message.what);
                 }
             });
-        } else if (msg.equals("检测到您未开启位置服务")){
+        } else if (msg.equals(getString(R.string.no_gps))){
             dialog.setPositiveButton(btnText, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -312,28 +292,34 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
         if (StringUtils.toHex(validValue).replace(" ", "").equals(textSn.getText().toString())) {
             progressDialog.dismiss();
             saveEqp();
-            tipDialog("连接成功", "好的");
+            tipDialog(getString(R.string.connection_succeeded), getString(R.string.ok));
         } else {
             progressDialog.dismiss();
-            tipDialog("输入的SN码有误，请核对后重试", "重试");
+            tipDialog(getString(R.string.wrong_SN), getString(R.string.try_again));
         }
     }
 
     private void saveEqp() {
         // 记录设备数量
-        SharedPreferences pref = getSharedPreferences("eqpNum", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        int count = pref.getInt("num", 0);
-        editor.putInt("num", count + 1);
-        editor.apply();
+        SharedPreferencesUtils.setFileName("info");
+        int count = (int) SharedPreferencesUtils.getParam(AddEquipmentActivity.this, "eqpNum", 0);
+        SharedPreferencesUtils.setParam(AddEquipmentActivity.this, "eqpNum", count + 1);
+//        SharedPreferences pref = getSharedPreferences("eqpNum", Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = pref.edit();
+//        int count = pref.getInt("num", 0);
+//        editor.putInt("num", count + 1);
+//        editor.apply();
 
         // 记录设备信息
         String fileName = "eqp" + (count + 1);
-        pref = getSharedPreferences(fileName, Context.MODE_PRIVATE);
-        editor = pref.edit();
-        editor.putString("name", mDevice.getName());
-        editor.putString("address", mDevice.getAddress());
-        editor.apply();
+        SharedPreferencesUtils.setFileName(fileName);
+        SharedPreferencesUtils.setParam(AddEquipmentActivity.this, "name", mDevice.getName());
+        SharedPreferencesUtils.setParam(AddEquipmentActivity.this, "address", mDevice.getAddress());
+//        pref = getSharedPreferences(fileName, Context.MODE_PRIVATE);
+//        editor = pref.edit();
+//        editor.putString("name", mDevice.getName());
+//        editor.putString("address", mDevice.getAddress());
+//        editor.apply();
 
     }
 

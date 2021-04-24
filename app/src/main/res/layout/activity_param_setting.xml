@@ -33,7 +33,7 @@
             android:singleLine="true"
             android:textColor="@color/colorDarkGray"
             android:textSize="20sp"
-            android:text="@string/control_design"/>
+            android:text="@string/param_setting"/>
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="72dp"
-        android:text="视追踪实验"
+        android:text="@string/smooth_pursuit"
         android:textColor="@color/colorAccent"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -180,7 +180,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="35dp"
-        android:text="频率"
+        android:text="@string/frequency"
         android:textColor="@color/colorDarkGray"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/sin_frequency_img"
@@ -191,7 +191,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
-        android:text="幅度"
+        android:text="@string/amplitude"
         android:textColor="@color/colorDarkGray"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@+id/sin_amplitude_img"
@@ -202,7 +202,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:text="频率"
+        android:text="@string/frequency"
         android:textColor="@color/colorDarkGray"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="@id/fang_frequency_img"
@@ -213,7 +213,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:text="幅度"
+        android:text="@string/amplitude"
         android:textSize="16sp"
         android:textColor="@color/colorDarkGray"
         app:layout_constraintStart_toStartOf="@id/fang_amplitude_img"
@@ -226,7 +226,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="83dp"
-        android:text="扫视实验"
+        android:text="@string/saccades"
         android:textColor="@color/colorGreen"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"

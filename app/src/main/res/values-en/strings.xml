@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  LoginActivity -->
+    <string name="welcome">Welcome</string>
+    <string name="enter_phone_number">please enter your phone number…</string>
+    <string name="enter_code">please enter code…</string>
+    <string name="get_code">get code</string>
+    <string name="login">login</string>
+    <string name="policy">Login means that you have read and agreed to the "ZEHNIT Privacy Policy"</string>
+
+
+    <!--    MainActivity -->
+    <string name="title_home">Home</string>
+    <string name="title_control">Control</string>
+    <string name="title_rehabilitation">Video</string>
+    <string name="title_info">Me</string>
+
+    <!--  HomeFragment  -->
+    <string name="add_device">Add Equipment</string>
+    <string name="device_management">Device Management</string>
+    <string name="online">Online</string>
+    <string name="offline">Offline</string>
+    <string name="add_new_device">Add New Device</string>
+
+    <!--  ControlFragment -->
+    <string name="visual_target">Visual Target</string>
+    <string name="gaze_holding1">Gaze HoldingⅠ</string>
+    <string name="gaze_holding2">Gaze HoldingⅡ</string>
+    <string name="gaze_holding3">Gaze HoldingⅢ</string>
+    <string name="smooth_pursuit">Smooth Pursuit</string>
+    <string name="saccades">Saccades</string>
+
+    <!--  InfoFragment -->
+    <string name="training_target">Training Target</string>
+    <string name="train_time">Training Time</string>
+    <string name="shopping_link">Shopping</string>
+    <string name="setting">Setting</string>
+
+
+
+    <!--  AddEquipmentActivity -->
+    <string name="tips">Turn on the device\nEnter the SN</string>
+    <string name="enter_sn">Please enter your SN…</string>
+    <string name="tips1">| Tips</string>
+    <string name="tips1_text">The SN is at xxxx of the device</string>
+    <string name="add">Add</string>
+
+    <!--  提示框  -->
+    <string name="scan_device">Scanning device…</string>
+    <string name="no_gps">You have not turned on GPS</string>
+    <string name="turn_on">Turn on</string>
+    <string name="can_not_find_device">The device can not be found, please make sure the device is turned on and try again</string>
+    <string name="ok">OK</string>
+    <string name="connect_device">Connecting device…</string>
+    <string name="tip">Tip</string>
+    <string name="connection_succeeded">Connection succeeded</string>
+    <string name="wrong_SN">The entered SN code is wrong, please check and try again</string>
+    <string name="try_again">Try again</string>
+
+
+
+    <!--  SettingActivity -->
+    <string name="param_setting">Param Setting</string>
+    <string name="unbind_device">Unbind Device</string>
+    <string name="switch_lang">Switch Language</string>
+    <string name="about_us">About</string>
+    <string name="logout">logout</string>
+
+    <!--  提示框  -->
+    <string name="sure_to_logout">Are you sure to log out?</string>
+    <string name="sure_to_unbind">Are you sure to unbind the device?</string>
+    <string name="sure">Sure</string>
+    <string name="cancel">Cancel</string>
+    <string name="unbind_info">The device is unbound</string>
+
+
+
+    <!--  ParamActivity  -->
+    <string name="frequency">Frequency</string>
+    <string name="amplitude">Amplitude</string>
+
+
+
+    <!--  AboutActivity  -->
+    <string name="version">Version 1.0</string>
+    <string name="contact_us">Contact us</string>
+    <string name="bt_is_off">Bluetooth is not turned on, please turn it on and try again</string>
+    <string name="connection_failed">Connection failed, please make sure the device is turned on</string>
+
+
+    <!--  提示框的文字  -->
+
+
+</resources>

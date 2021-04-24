@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.gyf.immersionbar.ImmersionBar;
+import com.yu.zehnit.tools.SharedPreferencesUtils;
 
 public class WelcomeActivity extends BaseActivity {
 
@@ -60,8 +61,8 @@ public class WelcomeActivity extends BaseActivity {
 
     private void chooseActivity() {
         // 若已登录，直接进入主页
-        SharedPreferences pref = getSharedPreferences("loginStatus", MODE_PRIVATE);
-        Boolean isLogin = pref.getBoolean("isLogin", false);
+        SharedPreferencesUtils.setFileName("info");
+        Boolean isLogin = (Boolean) SharedPreferencesUtils.getParam(WelcomeActivity.this, "isLogin", false);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override

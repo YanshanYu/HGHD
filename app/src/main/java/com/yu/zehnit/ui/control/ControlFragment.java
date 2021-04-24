@@ -151,15 +151,15 @@ public class ControlFragment extends Fragment {
     }
 
     private void initCtrl(){
-        MyCtrl ctrlGaze1 = new MyCtrl("跟随头动1", R.drawable.gaze1, R.drawable.switch_off);
+        MyCtrl ctrlGaze1 = new MyCtrl(getString(R.string.gaze_holding1), R.drawable.gaze1, R.drawable.switch_off);
         ctrlList.add(ctrlGaze1);
-        MyCtrl ctrlGaze2 = new MyCtrl("跟随头动2", R.drawable.gaze2, R.drawable.switch_off);
+        MyCtrl ctrlGaze2 = new MyCtrl(getString(R.string.gaze_holding2), R.drawable.gaze2, R.drawable.switch_off);
         ctrlList.add(ctrlGaze2);
-        MyCtrl ctrlGaze3 = new MyCtrl("跟随头动3", R.drawable.gaze3, R.drawable.switch_off);
+        MyCtrl ctrlGaze3 = new MyCtrl(getString(R.string.gaze_holding3), R.drawable.gaze3, R.drawable.switch_off);
         ctrlList.add(ctrlGaze3);
-        MyCtrl ctrlTrack = new MyCtrl("视追踪实验", R.drawable.pursuit,  R.drawable.switch_off);
+        MyCtrl ctrlTrack = new MyCtrl(getString(R.string.smooth_pursuit), R.drawable.pursuit,  R.drawable.switch_off);
         ctrlList.add(ctrlTrack);
-        MyCtrl ctrlSaccade = new MyCtrl("扫视实验", R.drawable.saccade, R.drawable.switch_off);
+        MyCtrl ctrlSaccade = new MyCtrl(getString(R.string.saccades), R.drawable.saccade, R.drawable.switch_off);
         ctrlList.add(ctrlSaccade);
     }
 }
