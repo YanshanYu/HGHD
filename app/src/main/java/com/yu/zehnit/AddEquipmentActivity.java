@@ -291,6 +291,7 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
 
         if (StringUtils.toHex(validValue).replace(" ", "").equals(textSn.getText().toString())) {
             progressDialog.dismiss();
+            //todo: 断开上一个设备的连接（若有的话），并将连接状态置为未连接
             saveEqp();
             tipDialog(getString(R.string.connection_succeeded), getString(R.string.ok));
         } else {
@@ -352,7 +353,7 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
         public void onScanResult(@NonNull Device device, boolean isConnectedBySys) {
             //搜索结果
             Log.d(TAG, "onScanResult: 名称：" + device.getName() + "   地址：" + device.getAddress());
-            if (device.getName().equals("VetiBand")) {
+            if (device.getName().equals("VertiBand")) {
                 findDevice = true;
                 mDevice = device;
                 // 找到设备停止扫描

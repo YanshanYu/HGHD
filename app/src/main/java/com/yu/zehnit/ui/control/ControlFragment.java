@@ -1,5 +1,6 @@
 package com.yu.zehnit.ui.control;
 
+import android.bluetooth.BluetoothGattCharacteristic;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.yu.zehnit.MyApplication;
 import com.yu.zehnit.R;
 import com.yu.zehnit.tools.CtrlAdapter;
 import com.yu.zehnit.tools.MyCtrl;
@@ -25,6 +27,11 @@ import com.yu.zehnit.tools.OnRecycleViewItemClickListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.wandersnail.ble.Connection;
+import cn.wandersnail.ble.EasyBLE;
+import cn.wandersnail.ble.RequestBuilderFactory;
+import cn.wandersnail.ble.WriteCharacteristicBuilder;
+import cn.wandersnail.ble.WriteOptions;
 import cn.wandersnail.widget.dialog.DefaultAlertDialog;
 import cn.wandersnail.widget.textview.SwitchButton;
 
@@ -37,11 +44,17 @@ public class ControlFragment extends Fragment {
     private boolean[] clickedStatus = new boolean[5]; // 记录点击状态
     private SwitchButton sbTarget;
 
+    private Connection connection;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         controlViewModel =
                 new ViewModelProvider(this).get(ControlViewModel.class);
         View root = inflater.inflate(R.layout.fragment_control, container, false);
+
+        if (EasyBLE.getInstance().getOrderedConnections().size() != 0) {
+            connection = EasyBLE.getInstance().getOrderedConnections().get(0);
+        }
 
         initCtrl();
         RecyclerView recyclerView = root.findViewById(R.id.recycle_view_ctrl);
@@ -97,10 +110,14 @@ public class ControlFragment extends Fragment {
         sbTarget.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    Toast.makeText(getContext(), "开关打开了", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getContext(), "开关关闭了", Toast.LENGTH_SHORT).show();
+                if (connection != null) {
+                    if (isChecked) {
+//                    Toast.makeText(getContext(), "开关打开了", Toast.LENGTH_SHORT).show();
+                        writeCharacteristic(1);
+                    } else {
+//                    Toast.makeText(getContext(), "开关关闭了", Toast.LENGTH_SHORT).show();
+                        writeCharacteristic(0);
+                    }
                 }
             }
         });
@@ -161,5 +178,36 @@ public class ControlFragment extends Fragment {
         ctrlList.add(ctrlTrack);
         MyCtrl ctrlSaccade = new MyCtrl(getString(R.string.saccades), R.drawable.saccade, R.drawable.switch_off);
         ctrlList.add(ctrlSaccade);
+    }
+
+    private void writeCharacteristic(int cases) {
+
+        byte[] data = null;
+        switch (cases) {
+            case 0:
+                // 关闭激光
+                data = new byte[]{(byte) 0xC0, 0x01, 0x11, 0x00, 0x01, 0x00, (byte) 0xC0};
+                break;
+            case 1:
+                // 打开激光
+                data = new byte[]{(byte) 0xC0, 0x01, 0x11, 0x00, 0x01, 0x64, (byte) 0xC0};
+                break;
+        }
+        WriteCharacteristicBuilder builder = new RequestBuilderFactory().getWriteCharacteristicBuilder(MyApplication.SRVC_UUID,
+                MyApplication.CHAR_UUID, data);
+
+        //根据需要设置写入配置
+        int writeType = connection.hasProperty(MyApplication.SRVC_UUID, MyApplication.CHAR_UUID,
+                BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE) ?
+                BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE : BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT;
+        builder.setWriteOptions(new WriteOptions.Builder()
+                .setPackageSize(connection.getMtu() - 3)
+                .setPackageWriteDelayMillis(5)
+                .setRequestWriteDelayMillis(10)
+                .setWaitWriteResult(true)
+                .setWriteType(writeType)
+                .build());
+        //不设置回调，使用观察者模式接收结果
+        builder.build().execute(connection);
     }
 }

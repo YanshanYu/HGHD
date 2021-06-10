@@ -98,12 +98,14 @@ public class MainActivity extends BaseActivity implements EventObserver {
     protected void onDestroy() {
         super.onDestroy();
         EasyBLE.getInstance().release();
+        MyApplication.getInstance().setConnected(false);
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        EasyBLE.getInstance().release();
+//        EasyBLE.getInstance().release();
+//        MyApplication.getInstance().setConnected(false);
         ActivityController.finishAll();
     }
 
