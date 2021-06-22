@@ -353,7 +353,7 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
         public void onScanResult(@NonNull Device device, boolean isConnectedBySys) {
             //搜索结果
             Log.d(TAG, "onScanResult: 名称：" + device.getName() + "   地址：" + device.getAddress());
-            if (device.getName().equals("VetiBand")) {
+            if (device.getName().equals("VertiBand")) {
                 findDevice = true;
                 mDevice = device;
                 // 找到设备停止扫描
