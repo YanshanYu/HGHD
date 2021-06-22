@@ -94,6 +94,9 @@ public class ControlFragment extends Fragment {
                     cardView.setCardBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     textView.setTextColor(getResources().getColor(R.color.white));
 
+                    // 点击该选项进行的操作
+                    ctrlTracking(pos);
+
                 } else {
                     // 其他item处于点击状态
                     Toast.makeText(getContext(), "请关闭之前的控制开关，再进行新的操作", Toast.LENGTH_SHORT).show();
@@ -110,14 +113,16 @@ public class ControlFragment extends Fragment {
         sbTarget.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                byte[] data = null;
                 if (connection != null) {
                     if (isChecked) {
 //                    Toast.makeText(getContext(), "开关打开了", Toast.LENGTH_SHORT).show();
-                        writeCharacteristic(1);
+                        data = new byte[]{(byte) 0xC0, 0x01, 0x10, 0x00, 0x01, (byte) 0xff, (byte) 0xC0};
                     } else {
 //                    Toast.makeText(getContext(), "开关关闭了", Toast.LENGTH_SHORT).show();
-                        writeCharacteristic(0);
+                        data = new byte[]{(byte) 0xC0, 0x01, 0x10, 0x00, 0x01, 0x00, (byte) 0xC0};
                     }
+                    writeCharacteristic(data);
                 }
             }
         });
@@ -167,6 +172,29 @@ public class ControlFragment extends Fragment {
         ctrl.setSwitchImgId(R.drawable.switch_on);
     }
 
+    private void ctrlTracking(int pos) {
+        byte[] data = null;
+        switch (pos) {
+            case 0:
+
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                data = new byte[]{(byte) 0xC0, 0x01, 0x13, 0x00, 0x04, 0x00, 0x00, (byte) 0xa0, 0x41, (byte) 0xC0};
+                writeCharacteristic(data);
+                data = new byte[]{(byte) 0xC0, 0x01, 0x14, 0x00, 0x04, 0x00, 0x00, (byte) 0x80, 0x3f, (byte) 0xC0};
+                writeCharacteristic(data);
+                data = new byte[]{(byte) 0xC0, 0x01, 0x16, 0x00, 0x01, 0x02, (byte) 0xC0};
+                writeCharacteristic(data);
+                break;
+            case 4:
+                break;
+        }
+    }
+
     private void initCtrl(){
         MyCtrl ctrlGaze1 = new MyCtrl(getString(R.string.gaze_holding1), R.drawable.gaze1, R.drawable.switch_off);
         ctrlList.add(ctrlGaze1);
@@ -180,19 +208,8 @@ public class ControlFragment extends Fragment {
         ctrlList.add(ctrlSaccade);
     }
 
-    private void writeCharacteristic(int cases) {
+    private void writeCharacteristic(byte[] data) {
 
-        byte[] data = null;
-        switch (cases) {
-            case 0:
-                // 关闭激光
-                data = new byte[]{(byte) 0xC0, 0x01, 0x10, 0x00, 0x01, 0x00, (byte) 0xC0};
-                break;
-            case 1:
-                // 打开激光
-                data = new byte[]{(byte) 0xC0, 0x01, 0x10, 0x00, 0x01, (byte)0xff, (byte) 0xC0};
-                break;
-        }
         WriteCharacteristicBuilder builder = new RequestBuilderFactory().getWriteCharacteristicBuilder(MyApplication.SRVC_UUID,
                 MyApplication.CHAR_UUID, data);
 
