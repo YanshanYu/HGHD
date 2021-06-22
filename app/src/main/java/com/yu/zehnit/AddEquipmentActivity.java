@@ -198,7 +198,7 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
 
     @Override
     public void onCharacteristicRead(@NonNull Request request, @NonNull byte[] value) {
-        Log.d(TAG, "AddEquipmentActivity onCharacteristicWrite: 读取到特征值：" + StringUtils.toHex(value));
+        Log.e(TAG, "AddEquipmentActivity onCharacteristicWrite: 读取到特征值：" + StringUtils.toHex(value));
 
         // 获得返回的特征值的有效字段（SN码）
         byte[] validValue = new byte[8];
@@ -353,7 +353,7 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
         public void onScanResult(@NonNull Device device, boolean isConnectedBySys) {
             //搜索结果
             Log.d(TAG, "onScanResult: 名称：" + device.getName() + "   地址：" + device.getAddress());
-            if (device.getName().equals("VertiBand")) {
+            if (device.getName().equals("VetiBand")) {
                 findDevice = true;
                 mDevice = device;
                 // 找到设备停止扫描

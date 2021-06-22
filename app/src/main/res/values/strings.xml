@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">HGHD</string>
+    <string name="app_name" translatable="false">VertiBand</string>
 
     <!--  LoginActivity -->
     <string name="welcome">欢迎使用</string>
@@ -88,7 +88,7 @@
 
 
     <!--  AboutActivity  -->
-    <string name="version">版本号 V1.0</string>
+    <string name="version">版本号 V1.0.0</string>
     <string name="contact_us">联系我们</string>
 
 

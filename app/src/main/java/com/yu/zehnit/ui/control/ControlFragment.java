@@ -186,11 +186,11 @@ public class ControlFragment extends Fragment {
         switch (cases) {
             case 0:
                 // 关闭激光
-                data = new byte[]{(byte) 0xC0, 0x01, 0x11, 0x00, 0x01, 0x00, (byte) 0xC0};
+                data = new byte[]{(byte) 0xC0, 0x01, 0x10, 0x00, 0x01, 0x00, (byte) 0xC0};
                 break;
             case 1:
                 // 打开激光
-                data = new byte[]{(byte) 0xC0, 0x01, 0x11, 0x00, 0x01, 0x64, (byte) 0xC0};
+                data = new byte[]{(byte) 0xC0, 0x01, 0x10, 0x00, 0x01, (byte)0xff, (byte) 0xC0};
                 break;
         }
         WriteCharacteristicBuilder builder = new RequestBuilderFactory().getWriteCharacteristicBuilder(MyApplication.SRVC_UUID,
