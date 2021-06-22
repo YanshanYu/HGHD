@@ -50,18 +50,18 @@ public class ParamSettingActivity extends BaseActivity {
         initFangAmplitudeData();
 
         SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
-        int sinFrequencyValue = pref.getInt("sin_frequency", 0);
+        float sinFrequencyValue = pref.getFloat("sin_frequency", (float) 0);
         int sinAmplitudeValue = pref.getInt("sin_amplitude", 0);
-        int fangFrequencyValue = pref.getInt("fang_frequency", 0);
+        float fangFrequencyValue = pref.getFloat("fang_frequency", (float) 0);
         int fangAmplitudeValue = pref.getInt("fang_amplitude", 0);
-        sinFrequencySeekBar.setProgress(sinFrequencyValue);
+        sinFrequencySeekBar.setProgress((int) sinFrequencyValue * 100);
         sinAmplitudeSeekBar.setProgress(sinAmplitudeValue);
-        fangFrequencySeekBar.setProgress(fangFrequencyValue);
+        fangFrequencySeekBar.setProgress((int) fangFrequencyValue * 100);
         fangAmplitudeSeekBar.setProgress(fangAmplitudeValue);
 
-        sinFrequencyIndicator.setText(Integer.toString(sinFrequencyValue));
+        sinFrequencyIndicator.setText(sinFrequencyValue + "Hz");
         sinAmplitudeIndicator.setText(Integer.toString(sinAmplitudeValue));
-        fangFrequencyIndicator.setText(Integer.toString(fangFrequencyValue));
+        fangFrequencyIndicator.setText(fangFrequencyValue + "Hz");
         fangAmplitudeIndicator.setText(Integer.toString(fangAmplitudeValue));
         // 监听返回按钮
         toolbar = findViewById(R.id.toolbar);
@@ -88,7 +88,7 @@ public class ParamSettingActivity extends BaseActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 String indicatorText = Integer.toString(i);
-                sinFrequencyIndicator.setText(indicatorText);
+                sinFrequencyIndicator.setText((float) i/100 + "Hz");
             }
 
             @Override
@@ -99,7 +99,7 @@ public class ParamSettingActivity extends BaseActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
-                editor.putInt("sin_frequency", sinFrequencySeekBar.getProgress());
+                editor.putFloat("sin_frequency", (float) sinFrequencySeekBar.getProgress()/100);
                 editor.apply();
 
             }
@@ -136,7 +136,7 @@ public class ParamSettingActivity extends BaseActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 String indicatorText = Integer.toString(i);
-                fangFrequencyIndicator.setText(indicatorText);
+                fangFrequencyIndicator.setText((float) i/100 + "Hz");
             }
 
             @Override
@@ -147,7 +147,7 @@ public class ParamSettingActivity extends BaseActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
-                editor.putInt("fang_frequency", fangFrequencySeekBar.getProgress());
+                editor.putFloat("fang_frequency", (float) fangFrequencySeekBar.getProgress()/100);
                 editor.apply();
 
             }
