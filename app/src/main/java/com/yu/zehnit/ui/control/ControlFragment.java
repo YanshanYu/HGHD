@@ -131,6 +131,7 @@ public class ControlFragment extends Fragment {
     }
 
     private void ctrlOff(MyCtrl ctrl, int pos){
+        byte[] data = null;
         switch (pos) {
             case 0:
                 ctrl.setImgId(R.drawable.gaze1);
@@ -143,9 +144,13 @@ public class ControlFragment extends Fragment {
                 break;
             case 3:
                 ctrl.setImgId(R.drawable.pursuit);
+                data = new byte[]{(byte) 0xC0, 0x01, 0x16, 0x00, 0x01, 0x00, (byte) 0xC0};
+                writeCharacteristic(data);
                 break;
             case 4:
                 ctrl.setImgId(R.drawable.saccade);
+                data = new byte[]{(byte) 0xC0, 0x01, 0x16, 0x00, 0x01, 0x00, (byte) 0xC0};
+                writeCharacteristic(data);
                 break;
         }
         ctrl.setSwitchImgId(R.drawable.switch_off);
@@ -183,17 +188,53 @@ public class ControlFragment extends Fragment {
             case 2:
                 break;
             case 3:
-                data = new byte[]{(byte) 0xC0, 0x01, 0x13, 0x00, 0x04, 0x00, 0x00, (byte) 0xa0, 0x41, (byte) 0xC0};
+               // data1=Integer.toHexString(Float.floatToIntBits(0.1f));
+                data = new byte[]{(byte) 0xC0, 0x01, 0x13, 0x00, 0x04, 0x00, 0x00, (byte) 0xF0, 0x41, (byte) 0xC0};
                 writeCharacteristic(data);
-                data = new byte[]{(byte) 0xC0, 0x01, 0x14, 0x00, 0x04, 0x00, 0x00, (byte) 0x80, 0x3f, (byte) 0xC0};
+                data = new byte[]{(byte) 0xC0, 0x01, 0x14, 0x00, 0x04, (byte)0xCC, (byte)0xCC, (byte) 0xCC, (byte)0x3D, (byte) 0xC0};
                 writeCharacteristic(data);
                 data = new byte[]{(byte) 0xC0, 0x01, 0x16, 0x00, 0x01, 0x02, (byte) 0xC0};
                 writeCharacteristic(data);
                 break;
             case 4:
+                data = new byte[]{(byte) 0xC0, 0x01, 0x13, 0x00, 0x04, 0x00, 0x00, (byte) 0xF0, 0x41, (byte) 0xC0};
+                writeCharacteristic(data);
+                data = new byte[]{(byte) 0xC0, 0x01, 0x14, 0x00, 0x04, (byte)0xCC, (byte)0xCC, (byte) 0xCC, (byte)0x3D, (byte) 0xC0};
+                writeCharacteristic(data);
+                data = new byte[]{(byte) 0xC0, 0x01, 0x16, 0x00, 0x01, 0x01, (byte) 0xC0};
+                writeCharacteristic(data);
                 break;
         }
     }
+
+    public static byte[] float2byte(float f) {
+
+        // 把float转换为byte[]
+        int fbit = Float.floatToIntBits(f);
+
+        byte[] b = new byte[4];
+        for (int i = 0; i < 4; i++) {
+            b[i] = (byte) (fbit >> (24 - i * 8));
+        }
+
+        // 翻转数组
+        int len = b.length;
+        // 建立一个与源数组元素类型相同的数组
+        byte[] dest = new byte[len];
+        // 为了防止修改源数组，将源数组拷贝一份副本
+        System.arraycopy(b, 0, dest, 0, len);
+        byte temp;
+        // 将顺位第i个与倒数第i个交换
+        for (int i = 0; i < len / 2; ++i) {
+            temp = dest[i];
+            dest[i] = dest[len - i - 1];
+            dest[len - i - 1] = temp;
+        }
+
+        return dest;
+
+    }
+
 
     private void initCtrl(){
         MyCtrl ctrlGaze1 = new MyCtrl(getString(R.string.gaze_holding1), R.drawable.gaze1, R.drawable.switch_off);
