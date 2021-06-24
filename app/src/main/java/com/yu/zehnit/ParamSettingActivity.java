@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 
 import com.gyf.immersionbar.ImmersionBar;
+import com.yu.zehnit.tools.SharedPreferencesUtils;
 
 public class ParamSettingActivity extends BaseActivity {
 
@@ -49,11 +50,14 @@ public class ParamSettingActivity extends BaseActivity {
         initFangFrequencyData();
         initFangAmplitudeData();
 
-        SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
-        float sinFrequencyValue = pref.getFloat("sin_frequency", (float) 0);
-        int sinAmplitudeValue = pref.getInt("sin_amplitude", 0);
-        float fangFrequencyValue = pref.getFloat("fang_frequency", (float) 0);
-        int fangAmplitudeValue = pref.getInt("fang_amplitude", 0);
+        SharedPreferencesUtils.setFileName("data");
+        float sinFrequencyValue = (float) SharedPreferencesUtils.getParam(ParamSettingActivity.this, "sin_frequency", 0.0f);
+//        float sinFrequencyValue = 0.1f;
+        int sinAmplitudeValue = (int) SharedPreferencesUtils.getParam(ParamSettingActivity.this, "sin_amplitude", 0);
+        float fangFrequencyValue = (float) SharedPreferencesUtils.getParam(ParamSettingActivity.this, "fang_frequency", 0.0f);
+        int fangAmplitudeValue = (int) SharedPreferencesUtils.getParam(ParamSettingActivity.this, "fang_amplitude", 0);
+//        float fangFrequencyValue = 0.1f;
+
         sinFrequencySeekBar.setProgress((int) sinFrequencyValue * 100);
         sinAmplitudeSeekBar.setProgress(sinAmplitudeValue);
         fangFrequencySeekBar.setProgress((int) fangFrequencyValue * 100);
@@ -98,10 +102,7 @@ public class ParamSettingActivity extends BaseActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
-                editor.putFloat("sin_frequency", (float) sinFrequencySeekBar.getProgress()/100);
-                editor.apply();
-
+                SharedPreferencesUtils.setParam(ParamSettingActivity.this, "sin_frequency", (float) sinFrequencySeekBar.getProgress()/100);
             }
         });
 
@@ -122,10 +123,7 @@ public class ParamSettingActivity extends BaseActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
-                editor.putInt("sin_amplitude", sinAmplitudeSeekBar.getProgress());
-                editor.apply();
-
+                SharedPreferencesUtils.setParam(ParamSettingActivity.this, "sin_amplitude", sinAmplitudeSeekBar.getProgress());
             }
         });
 
@@ -146,10 +144,7 @@ public class ParamSettingActivity extends BaseActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
-                editor.putFloat("fang_frequency", (float) fangFrequencySeekBar.getProgress()/100);
-                editor.apply();
-
+                SharedPreferencesUtils.setParam(ParamSettingActivity.this, "fang_frequency", (float) fangFrequencySeekBar.getProgress()/100);
             }
         });
 
@@ -171,9 +166,7 @@ public class ParamSettingActivity extends BaseActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
-                editor.putInt("fang_amplitude", fangAmplitudeSeekBar.getProgress());
-                editor.apply();
+                SharedPreferencesUtils.setParam(ParamSettingActivity.this, "fang_amplitude", fangAmplitudeSeekBar.getProgress());
 
             }
         });

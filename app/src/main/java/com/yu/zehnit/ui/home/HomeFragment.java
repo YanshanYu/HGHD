@@ -58,8 +58,6 @@ public class HomeFragment extends Fragment {
     public void onResume() {
 
         super.onResume();
-        Log.d(TAG, "fragment onResume: ");
-
 
         SharedPreferencesUtils.setFileName("info");
         int eqpNum = (int) SharedPreferencesUtils.getParam(getContext(), "eqpNum", 0);

@@ -23,6 +23,7 @@ import com.yu.zehnit.R;
 import com.yu.zehnit.tools.CtrlAdapter;
 import com.yu.zehnit.tools.MyCtrl;
 import com.yu.zehnit.tools.OnRecycleViewItemClickListener;
+import com.yu.zehnit.tools.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -173,20 +174,52 @@ public class ControlFragment extends Fragment {
     }
 
     private void ctrlTracking(int pos) {
-        byte[] data = null;
+        SharedPreferencesUtils.setFileName("data");
+        byte[] data = new byte[10];
+        byte[] frequency;
+        byte[] amplitude;
         switch (pos) {
             case 0:
-
                 break;
             case 1:
                 break;
             case 2:
                 break;
             case 3:
-                data = new byte[]{(byte) 0xC0, 0x01, 0x13, 0x00, 0x04, 0x00, 0x00, (byte) 0xa0, 0x41, (byte) 0xC0};
+                // 频率
+                data[0] = (byte) 0xC0;
+                data[1] = 0x01;
+                data[2] = 0x14;
+                data[3] = 0x00;
+                data[4] = 0x04;
+                data[9] = (byte) 0xC0;
+                float sinFrequency = (float) SharedPreferencesUtils.getParam(getContext(), "sin_frequency", 0.0f);
+                String freString = Integer.toHexString(Float.floatToIntBits(sinFrequency));
+                Log.d(TAG, "ctrlTracking: ------------------------------------- " + sinFrequency + " ----十六进制字符串：" + freString);
+                frequency = new byte[freString.length() / 2];
+                int index = 0;
+                for (int i = 0; i < freString.length(); i+=2) {
+                    frequency[index++] = (byte)Integer.parseInt(freString.substring(i,i+2), 16);
+                }
+                for (int i = 0; i < frequency.length; i++) {
+                    data[8 - i] = frequency[i];
+                }
                 writeCharacteristic(data);
-                data = new byte[]{(byte) 0xC0, 0x01, 0x14, 0x00, 0x04, 0x00, 0x00, (byte) 0x80, 0x3f, (byte) 0xC0};
+                // 幅度
+                data[2] = 0x13;
+                int sinAmplitude = (int) SharedPreferencesUtils.getParam(getContext(), "sin_amplitude", 0);
+                String ampString = Integer.toHexString(Float.floatToIntBits(sinAmplitude));
+                Log.d(TAG, "ctrlTracking: ------------------------------------- " + sinAmplitude + " ----十六进制字符串：" + ampString);
+                amplitude = new byte[ampString.length() / 2];
+                index = 0;
+                for (int i = 0; i < ampString.length(); i+=2) {
+                    amplitude[index++] = (byte) Integer.parseInt(ampString.substring(i, i + 2), 16);
+                }
+                for (int i = 0; i < amplitude.length; i++) {
+                    data[8 - i] = amplitude[i];
+                }
                 writeCharacteristic(data);
+                // 模式
                 data = new byte[]{(byte) 0xC0, 0x01, 0x16, 0x00, 0x01, 0x02, (byte) 0xC0};
                 writeCharacteristic(data);
                 break;
@@ -214,17 +247,29 @@ public class ControlFragment extends Fragment {
                 MyApplication.CHAR_UUID, data);
 
         //根据需要设置写入配置
-        int writeType = connection.hasProperty(MyApplication.SRVC_UUID, MyApplication.CHAR_UUID,
-                BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE) ?
-                BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE : BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT;
+//        int writeType = connection.hasProperty(MyApplication.SRVC_UUID, MyApplication.CHAR_UUID,
+//                BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE) ?
+//                BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE : BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT;
         builder.setWriteOptions(new WriteOptions.Builder()
                 .setPackageSize(connection.getMtu() - 3)
                 .setPackageWriteDelayMillis(5)
                 .setRequestWriteDelayMillis(10)
                 .setWaitWriteResult(true)
-                .setWriteType(writeType)
+                .setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT)
                 .build());
         //不设置回调，使用观察者模式接收结果
         builder.build().execute(connection);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume: 11111111111111111111");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause: Control");
     }
 }
