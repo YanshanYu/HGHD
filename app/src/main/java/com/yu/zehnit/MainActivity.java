@@ -22,6 +22,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import java.util.Arrays;
 import java.util.List;
 
 import cn.wandersnail.ble.Connection;
@@ -29,6 +30,8 @@ import cn.wandersnail.ble.ConnectionConfiguration;
 import cn.wandersnail.ble.Device;
 import cn.wandersnail.ble.EasyBLE;
 import cn.wandersnail.ble.EventObserver;
+import cn.wandersnail.ble.Request;
+import cn.wandersnail.commons.util.StringUtils;
 import cn.wandersnail.widget.dialog.DefaultAlertDialog;
 
 public class MainActivity extends BaseActivity implements EventObserver {
@@ -90,6 +93,7 @@ public class MainActivity extends BaseActivity implements EventObserver {
     @Override
     protected void onPause() {
         super.onPause();
+        Log.d(TAG, "onPause: Main");
         // 取消注册观察者
         EasyBLE.getInstance().unregisterObserver(this);
     }
@@ -260,9 +264,14 @@ public class MainActivity extends BaseActivity implements EventObserver {
     private void requestBluetoothEnable() {
         if (!bluetoothIsOn()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            Log.d(TAG, "MainActivity onCreate: 请求蓝牙");
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
+    }
+
+    @Override
+    public void onCharacteristicWrite(@NonNull Request request, @NonNull byte[] value) {
+
+        Log.d(TAG, "onCharacteristicWrite: 写入特征值：" + Arrays.toString(value));
     }
 
 }

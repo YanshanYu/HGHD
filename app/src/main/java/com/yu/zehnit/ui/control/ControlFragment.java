@@ -23,6 +23,7 @@ import com.yu.zehnit.R;
 import com.yu.zehnit.tools.CtrlAdapter;
 import com.yu.zehnit.tools.MyCtrl;
 import com.yu.zehnit.tools.OnRecycleViewItemClickListener;
+import com.yu.zehnit.tools.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -131,7 +132,6 @@ public class ControlFragment extends Fragment {
     }
 
     private void ctrlOff(MyCtrl ctrl, int pos){
-        byte[] data = null;
         switch (pos) {
             case 0:
                 ctrl.setImgId(R.drawable.gaze1);
@@ -144,13 +144,9 @@ public class ControlFragment extends Fragment {
                 break;
             case 3:
                 ctrl.setImgId(R.drawable.pursuit);
-                data = new byte[]{(byte) 0xC0, 0x01, 0x16, 0x00, 0x01, 0x00, (byte) 0xC0};
-                writeCharacteristic(data);
                 break;
             case 4:
                 ctrl.setImgId(R.drawable.saccade);
-                data = new byte[]{(byte) 0xC0, 0x01, 0x16, 0x00, 0x01, 0x00, (byte) 0xC0};
-                writeCharacteristic(data);
                 break;
         }
         ctrl.setSwitchImgId(R.drawable.switch_off);
@@ -178,63 +174,59 @@ public class ControlFragment extends Fragment {
     }
 
     private void ctrlTracking(int pos) {
-        byte[] data = null;
+        SharedPreferencesUtils.setFileName("data");
+        byte[] data = new byte[10];
+        byte[] frequency;
+        byte[] amplitude;
         switch (pos) {
             case 0:
-
                 break;
             case 1:
                 break;
             case 2:
                 break;
             case 3:
-               // data1=Integer.toHexString(Float.floatToIntBits(0.1f));
-                data = new byte[]{(byte) 0xC0, 0x01, 0x13, 0x00, 0x04, 0x00, 0x00, (byte) 0xF0, 0x41, (byte) 0xC0};
+                // 频率
+                data[0] = (byte) 0xC0;
+                data[1] = 0x01;
+                data[2] = 0x14;
+                data[3] = 0x00;
+                data[4] = 0x04;
+                data[9] = (byte) 0xC0;
+                float sinFrequency = (float) SharedPreferencesUtils.getParam(getContext(), "sin_frequency", 0.0f);
+                String freString = Integer.toHexString(Float.floatToIntBits(sinFrequency));
+                Log.d(TAG, "ctrlTracking: ------------------------------------- " + sinFrequency + " ----十六进制字符串：" + freString);
+                frequency = new byte[freString.length() / 2];
+                int index = 0;
+                for (int i = 0; i < freString.length(); i+=2) {
+                    frequency[index++] = (byte)Integer.parseInt(freString.substring(i,i+2), 16);
+                }
+                for (int i = 0; i < frequency.length; i++) {
+                    data[8 - i] = frequency[i];
+                }
                 writeCharacteristic(data);
-                data = new byte[]{(byte) 0xC0, 0x01, 0x14, 0x00, 0x04, (byte)0xCC, (byte)0xCC, (byte) 0xCC, (byte)0x3D, (byte) 0xC0};
+                // 幅度
+                data[2] = 0x13;
+                int sinAmplitude = (int) SharedPreferencesUtils.getParam(getContext(), "sin_amplitude", 0);
+                String ampString = Integer.toHexString(Float.floatToIntBits(sinAmplitude));
+                Log.d(TAG, "ctrlTracking: ------------------------------------- " + sinAmplitude + " ----十六进制字符串：" + ampString);
+                amplitude = new byte[ampString.length() / 2];
+                index = 0;
+                for (int i = 0; i < ampString.length(); i+=2) {
+                    amplitude[index++] = (byte) Integer.parseInt(ampString.substring(i, i + 2), 16);
+                }
+                for (int i = 0; i < amplitude.length; i++) {
+                    data[8 - i] = amplitude[i];
+                }
                 writeCharacteristic(data);
+                // 模式
                 data = new byte[]{(byte) 0xC0, 0x01, 0x16, 0x00, 0x01, 0x02, (byte) 0xC0};
                 writeCharacteristic(data);
                 break;
             case 4:
-                data = new byte[]{(byte) 0xC0, 0x01, 0x13, 0x00, 0x04, 0x00, 0x00, (byte) 0xF0, 0x41, (byte) 0xC0};
-                writeCharacteristic(data);
-                data = new byte[]{(byte) 0xC0, 0x01, 0x14, 0x00, 0x04, (byte)0xCC, (byte)0xCC, (byte) 0xCC, (byte)0x3D, (byte) 0xC0};
-                writeCharacteristic(data);
-                data = new byte[]{(byte) 0xC0, 0x01, 0x16, 0x00, 0x01, 0x01, (byte) 0xC0};
-                writeCharacteristic(data);
                 break;
         }
     }
-
-    public static byte[] float2byte(float f) {
-
-        // 把float转换为byte[]
-        int fbit = Float.floatToIntBits(f);
-
-        byte[] b = new byte[4];
-        for (int i = 0; i < 4; i++) {
-            b[i] = (byte) (fbit >> (24 - i * 8));
-        }
-
-        // 翻转数组
-        int len = b.length;
-        // 建立一个与源数组元素类型相同的数组
-        byte[] dest = new byte[len];
-        // 为了防止修改源数组，将源数组拷贝一份副本
-        System.arraycopy(b, 0, dest, 0, len);
-        byte temp;
-        // 将顺位第i个与倒数第i个交换
-        for (int i = 0; i < len / 2; ++i) {
-            temp = dest[i];
-            dest[i] = dest[len - i - 1];
-            dest[len - i - 1] = temp;
-        }
-
-        return dest;
-
-    }
-
 
     private void initCtrl(){
         MyCtrl ctrlGaze1 = new MyCtrl(getString(R.string.gaze_holding1), R.drawable.gaze1, R.drawable.switch_off);
@@ -255,17 +247,29 @@ public class ControlFragment extends Fragment {
                 MyApplication.CHAR_UUID, data);
 
         //根据需要设置写入配置
-        int writeType = connection.hasProperty(MyApplication.SRVC_UUID, MyApplication.CHAR_UUID,
-                BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE) ?
-                BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE : BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT;
+//        int writeType = connection.hasProperty(MyApplication.SRVC_UUID, MyApplication.CHAR_UUID,
+//                BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE) ?
+//                BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE : BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT;
         builder.setWriteOptions(new WriteOptions.Builder()
                 .setPackageSize(connection.getMtu() - 3)
                 .setPackageWriteDelayMillis(5)
                 .setRequestWriteDelayMillis(10)
                 .setWaitWriteResult(true)
-                .setWriteType(writeType)
+                .setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT)
                 .build());
         //不设置回调，使用观察者模式接收结果
         builder.build().execute(connection);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume: 11111111111111111111");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause: Control");
     }
 }
