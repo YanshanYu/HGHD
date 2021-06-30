@@ -58,9 +58,9 @@ public class ParamSettingActivity extends BaseActivity {
         int fangAmplitudeValue = (int) SharedPreferencesUtils.getParam(ParamSettingActivity.this, "fang_amplitude", 0);
 //        float fangFrequencyValue = 0.1f;
 
-        sinFrequencySeekBar.setProgress((int) sinFrequencyValue * 100);
+        sinFrequencySeekBar.setProgress((int) (sinFrequencyValue * 100));
         sinAmplitudeSeekBar.setProgress(sinAmplitudeValue);
-        fangFrequencySeekBar.setProgress((int) fangFrequencyValue * 100);
+        fangFrequencySeekBar.setProgress((int) (fangFrequencyValue * 100));
         fangAmplitudeSeekBar.setProgress(fangAmplitudeValue);
 
         sinFrequencyIndicator.setText(sinFrequencyValue + "Hz");
