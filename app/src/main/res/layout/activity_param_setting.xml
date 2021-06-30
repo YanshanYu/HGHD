@@ -179,7 +179,7 @@
         android:id="@+id/test"
         android:layout_width="match_parent"
         android:layout_height="37dp"
-        android:layout_marginTop="84dp"
+        android:layout_marginTop="130dp"
         android:background="@null"
         android:max="20"
         android:maxHeight="16dp"
@@ -187,7 +187,7 @@
         android:progress="10"
         android:progressDrawable="@drawable/seekbar_style_white"
         android:splitTrack="false"
-        android:thumb="@drawable/ic_sb_green"
+        android:thumb="@drawable/ic_sb_24dp"
         app:layout_constraintStart_toStartOf="@id/fang_amplitude_img"
         app:layout_constraintTop_toTopOf="@id/fang_amplitude_img" />
 
@@ -247,6 +247,18 @@
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/sin_amplitude" />
+
+    <TextView
+        android:id="@+id/calibration_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="83dp"
+        android:text="@string/calibration"
+        android:textSize="18sp"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/fang_amplitude" />
 
     <ImageView
         android:id="@+id/sin_frequency_img"

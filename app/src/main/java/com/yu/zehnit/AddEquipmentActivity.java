@@ -198,7 +198,7 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
 
     @Override
     public void onCharacteristicRead(@NonNull Request request, @NonNull byte[] value) {
-        Log.d(TAG, "AddEquipmentActivity onCharacteristicWrite: 读取到特征值：" + StringUtils.toHex(value));
+        Log.e(TAG, "AddEquipmentActivity onCharacteristicWrite: 读取到特征值：" + StringUtils.toHex(value));
 
         // 获得返回的特征值的有效字段（SN码）
         byte[] validValue = new byte[8];
