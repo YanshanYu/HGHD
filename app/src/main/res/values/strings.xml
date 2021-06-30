@@ -84,6 +84,7 @@
     <!--  ParamActivity  -->
     <string name="frequency">频率</string>
     <string name="amplitude">幅度</string>
+    <string name="calibration">校准</string>
 
 
 

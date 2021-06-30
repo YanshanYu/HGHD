@@ -132,23 +132,36 @@ public class ControlFragment extends Fragment {
     }
 
     private void ctrlOff(MyCtrl ctrl, int pos){
+        byte[] data = new byte[10];
         switch (pos) {
             case 0:
                 ctrl.setImgId(R.drawable.gaze1);
+                data = new byte[]{(byte) 0xC0, 0x01, 0x11, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, (byte) 0xC0};
+                writeCharacteristic(data);
+
                 break;
             case 1:
                 ctrl.setImgId(R.drawable.gaze2);
+                data = new byte[]{(byte) 0xC0, 0x01, 0x11, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, (byte) 0xC0};
+                writeCharacteristic(data);
+
                 break;
             case 2:
                 ctrl.setImgId(R.drawable.gaze3);
                 break;
             case 3:
                 ctrl.setImgId(R.drawable.pursuit);
+                data = new byte[]{(byte) 0xC0, 0x01, 0x16, 0x00, 0x01, 0x00, (byte) 0xC0};
+                writeCharacteristic(data);
                 break;
             case 4:
                 ctrl.setImgId(R.drawable.saccade);
+                data = new byte[]{(byte) 0xC0, 0x01, 0x16, 0x00, 0x01, 0x00, (byte) 0xC0};
+                writeCharacteristic(data);
                 break;
+
         }
+
         ctrl.setSwitchImgId(R.drawable.switch_off);
     }
 
@@ -180,10 +193,16 @@ public class ControlFragment extends Fragment {
         byte[] amplitude;
         switch (pos) {
             case 0:
+                data = new byte[]{(byte) 0xC0, 0x01, 0x11, 0x00, 0x04, 0x00, 0x00, (byte)0x80, (byte)0x3f, (byte) 0xC0};
+                writeCharacteristic(data);
                 break;
             case 1:
+                data = new byte[]{(byte) 0xC0, 0x01, 0x11, 0x00, 0x04, 0x00, 0x00, 0x00, 0x40, (byte) 0xC0};
+                writeCharacteristic(data);
                 break;
             case 2:
+                data = new byte[]{(byte) 0xC0, 0x01, 0x11, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, (byte) 0xC0};
+                writeCharacteristic(data);
                 break;
             case 3:
                 // 频率
@@ -224,6 +243,28 @@ public class ControlFragment extends Fragment {
                 writeCharacteristic(data);
                 break;
             case 4:
+                // 频率
+                data[0] = (byte) 0xC0;
+                data[1] = 0x01;
+                data[2] = 0x14;
+                data[3] = 0x00;
+                data[4] = 0x04;
+                data[9] = (byte) 0xC0;
+                float squFrequency = (float) SharedPreferencesUtils.getParam(getContext(), "sin_frequency", 0.0f);
+                String squFreString = Integer.toHexString(Float.floatToIntBits(squFrequency));
+                Log.d(TAG, "ctrlTracking: ------------------------------------- " + squFreString + " ----十六进制字符串：" + squFrequency);
+                frequency = new byte[squFreString.length() / 2];
+                int index4 = 0;
+                for (int i = 0; i < squFreString.length(); i+=2) {
+                    frequency[index4++] = (byte)Integer.parseInt(squFreString.substring(i,i+2), 16);
+                }
+                for (int i = 0; i < frequency.length; i++) {
+                    data[8 - i] = frequency[i];
+                }
+                writeCharacteristic(data);
+                // 模式
+                data = new byte[]{(byte) 0xC0, 0x01, 0x16, 0x00, 0x01, 0x01, (byte) 0xC0};
+                writeCharacteristic(data);
                 break;
         }
     }

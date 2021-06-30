@@ -78,6 +78,7 @@
     <!--  ParamActivity  -->
     <string name="frequency">Frequency</string>
     <string name="amplitude">Amplitude</string>
+    <string name="calibration">Calibration</string>
 
 
 
