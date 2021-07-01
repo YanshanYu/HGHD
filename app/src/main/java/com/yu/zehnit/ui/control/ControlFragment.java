@@ -212,9 +212,9 @@ public class ControlFragment extends Fragment {
                 data[3] = 0x00;
                 data[4] = 0x04;
                 data[9] = (byte) 0xC0;
-                float sinFrequency = (float) SharedPreferencesUtils.getParam(getContext(), "sin_frequency", 0.0f);
-                String freString = Integer.toHexString(Float.floatToIntBits(sinFrequency));
-                Log.d(TAG, "ctrlTracking: ------------------------------------- " + sinFrequency + " ----十六进制字符串：" + freString);
+                float pursuitFrequency = (float) SharedPreferencesUtils.getParam(getContext(), "pursuit_frequency", 0.0f);
+                String freString = Integer.toHexString(Float.floatToIntBits(pursuitFrequency));
+                Log.d(TAG, "ctrlTracking: ------------------------------------- " + pursuitFrequency + " ----十六进制字符串：" + freString);
                 frequency = new byte[freString.length() / 2];
                 int index = 0;
                 for (int i = 0; i < freString.length(); i+=2) {
@@ -226,9 +226,9 @@ public class ControlFragment extends Fragment {
                 writeCharacteristic(data);
                 // 幅度
                 data[2] = 0x13;
-                int sinAmplitude = (int) SharedPreferencesUtils.getParam(getContext(), "sin_amplitude", 0);
-                String ampString = Integer.toHexString(Float.floatToIntBits(sinAmplitude));
-                Log.d(TAG, "ctrlTracking: ------------------------------------- " + sinAmplitude + " ----十六进制字符串：" + ampString);
+                float pursuitAmplitude = (float) SharedPreferencesUtils.getParam(getContext(), "pursuit_amplitude", 0.0f);
+                String ampString = Integer.toHexString(Float.floatToIntBits(pursuitAmplitude));
+                Log.d(TAG, "ctrlTracking: ------------------------------------- " + pursuitAmplitude + " ----十六进制字符串：" + ampString);
                 amplitude = new byte[ampString.length() / 2];
                 index = 0;
                 for (int i = 0; i < ampString.length(); i+=2) {
@@ -250,9 +250,9 @@ public class ControlFragment extends Fragment {
                 data[3] = 0x00;
                 data[4] = 0x04;
                 data[9] = (byte) 0xC0;
-                float squFrequency = (float) SharedPreferencesUtils.getParam(getContext(), "sin_frequency", 0.0f);
-                String squFreString = Integer.toHexString(Float.floatToIntBits(squFrequency));
-                Log.d(TAG, "ctrlTracking: ------------------------------------- " + squFreString + " ----十六进制字符串：" + squFrequency);
+                float saccadeFrequency = (float) SharedPreferencesUtils.getParam(getContext(), "saccade_frequency", 0.0f);
+                String squFreString = Integer.toHexString(Float.floatToIntBits(saccadeFrequency));
+                Log.d(TAG, "ctrlTracking: ------------------------------------- " + squFreString + " ----十六进制字符串：" + saccadeFrequency);
                 frequency = new byte[squFreString.length() / 2];
                 int index4 = 0;
                 for (int i = 0; i < squFreString.length(); i+=2) {
