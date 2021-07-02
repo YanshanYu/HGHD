@@ -36,9 +36,6 @@ public class SharedPreferencesUtils {
             case "Boolean":
                 editor.putBoolean(key, (Boolean) value);
                 break;
-            case "Long":
-                editor.putLong(key, (Long) value);
-                break;
             case "Float":
                 editor.putFloat(key, (Float) value);
                 break;
@@ -67,8 +64,6 @@ public class SharedPreferencesUtils {
         switch (type) {
             case "Boolean":
                 return  pref.getBoolean(key, (Boolean) defaultValue);
-            case "Long":
-                return pref.getLong(key, (Long) defaultValue);
             case "Float":
                 return pref.getFloat(key, (Float) defaultValue);
             case "String":
