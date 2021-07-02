@@ -243,6 +243,7 @@ public class ControlFragment extends Fragment {
                 writeCharacteristic(data);
                 break;
             case 4:
+
                 // 频率
                 data[0] = (byte) 0xC0;
                 data[1] = 0x01;
@@ -250,7 +251,7 @@ public class ControlFragment extends Fragment {
                 data[3] = 0x00;
                 data[4] = 0x04;
                 data[9] = (byte) 0xC0;
-                float squFrequency = (float) SharedPreferencesUtils.getParam(getContext(), "sin_frequency", 0.0f);
+                float squFrequency = (float) SharedPreferencesUtils.getParam(getContext(), "fang_frequency", 0.0f);
                 String squFreString = Integer.toHexString(Float.floatToIntBits(squFrequency));
                 Log.d(TAG, "ctrlTracking: ------------------------------------- " + squFreString + " ----十六进制字符串：" + squFrequency);
                 frequency = new byte[squFreString.length() / 2];
@@ -262,6 +263,10 @@ public class ControlFragment extends Fragment {
                     data[8 - i] = frequency[i];
                 }
                 writeCharacteristic(data);
+                //幅度
+                data = new byte[]{(byte) 0xC0, 0x01, 0x13, 0x00, 0x04, 0x00, 0x00, (byte)0xa0, 0x40, (byte) 0xC0};
+                writeCharacteristic(data);
+
                 // 模式
                 data = new byte[]{(byte) 0xC0, 0x01, 0x16, 0x00, 0x01, 0x01, (byte) 0xC0};
                 writeCharacteristic(data);
