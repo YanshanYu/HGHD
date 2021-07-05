@@ -46,15 +46,16 @@ public class ParamAdapter extends RecyclerView.Adapter<ParamAdapter.ViewHolder> 
             holder.param1Value.setText(param.getParamValue1() + "Hz");
             holder.param1SeekBar.setProgress((int) (param.getParamValue1() * 100));
         } else {
+            holder.param1SeekBar.setMax(20);
             if (param.getExperimentName().equals("校准")) {
-                holder.param1SeekBar.setMax(20);
                 holder.param1SeekBar.setProgressDrawable(holder.itemView.getResources().getDrawable(R.drawable.seekbar_style_white));
-                holder.param1Value.setText(Integer.toString((int) param.getParamValue1() - 10));
+                holder.param1SeekBar.setProgress((int) param.getParamValue1() + 10);
+                holder.param1Value.setText(Integer.toString((int) (param.getParamValue1())));
             } else {
-                holder.param1SeekBar.setMax(10);
-                holder.param1Value.setText(Integer.toString((int) param.getParamValue1()));
+//                holder.param1SeekBar.setMax(20);
+                holder.param1SeekBar.setProgress((int) (param.getParamValue1() * 10));
+                holder.param1Value.setText(Float.toString(param.getParamValue1()));
             }
-            holder.param1SeekBar.setProgress((int) param.getParamValue1());
         }
         // 给第一个参数的seekBar设置监听
         holder.param1SeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -65,7 +66,7 @@ public class ParamAdapter extends RecyclerView.Adapter<ParamAdapter.ViewHolder> 
                 } else if (param.getExperimentName().equals("校准")){
                     holder.param1Value.setText(Integer.toString(progress - 10));
                 } else {
-                    holder.param1Value.setText(Integer.toString(progress));
+                    holder.param1Value.setText(Float.toString((float) progress / 10));
                 }
             }
 
@@ -77,14 +78,15 @@ public class ParamAdapter extends RecyclerView.Adapter<ParamAdapter.ViewHolder> 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 // 保存数据
+                // 保存的都是实际值，注意换算关系
                 if (param.getExperimentName().equals("视追踪实验")) {
                     SharedPreferencesUtils.setParam(holder.itemView.getContext(), "pursuit_frequency", (float) seekBar.getProgress()/100);
                 } else if (param.getExperimentName().equals("扫视实验")) {
                     SharedPreferencesUtils.setParam(holder.itemView.getContext(), "saccade_frequency", (float) seekBar.getProgress()/100);
                 } else if (param.getExperimentName().equals("校准")) {
-                    SharedPreferencesUtils.setParam(holder.itemView.getContext(), "calibration", (float) seekBar.getProgress());
+                    SharedPreferencesUtils.setParam(holder.itemView.getContext(), "calibration", (float) seekBar.getProgress() - 10);
                 } else {
-                    SharedPreferencesUtils.setParam(holder.itemView.getContext(), "gain", (float) seekBar.getProgress());
+                    SharedPreferencesUtils.setParam(holder.itemView.getContext(), "gain", (float) seekBar.getProgress() / 10);
                 }
             }
         });

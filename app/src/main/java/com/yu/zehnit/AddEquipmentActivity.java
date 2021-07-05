@@ -164,7 +164,8 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
             case SERVICE_DISCOVERED:
                 Log.d(TAG, "AddEquipmentActivity onConnectionStateChanged: 已发现服务");
                 progressDialog.setMessage(getString(R.string.connect_device));
-                writeCharacteristic(MyApplication.SRVC_UUID, MyApplication.CHAR_UUID);
+                byte[] data = new byte[]{(byte) 0xC0, 0x01, 0x00, 0x00, 0x00, (byte) 0xC0};
+                writeCharacteristic(data);
 //                List<BluetoothGattService> services = connection.getGatt().getServices();
 //                boolean flag = false;
 //                for (BluetoothGattService service : services) {
@@ -193,7 +194,7 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
     public void onCharacteristicWrite(@NonNull Request request, @NonNull byte[] value) {
         Log.d(TAG, "AddEquipmentActivity onCharacteristicWrite: 成功写入特征值：" + StringUtils.toHex(value));
         // 写入成功后读取返回的特征值
-        readCharacteristic(MyApplication.SRVC_UUID, MyApplication.CHAR_UUID);
+        readCharacteristic();
     }
 
     @Override
@@ -261,18 +262,18 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
         dialog.show();                              //显示对话框
     }
 
-    private void readCharacteristic(UUID serviceUuid, UUID characteristicUuid){
-        RequestBuilder<ReadCharacteristicCallback> builder = new RequestBuilderFactory().getReadCharacteristicBuilder(serviceUuid, characteristicUuid);
+    private void readCharacteristic(){
+        RequestBuilder<ReadCharacteristicCallback> builder = new RequestBuilderFactory().getReadCharacteristicBuilder(MyApplication.SRVC_UUID, MyApplication.CHAR_UUID);
         builder.setTag(UUID.randomUUID().toString());
         builder.setPriority(Integer.MAX_VALUE);//设置请求优先级
         builder.build().execute(connection);
     }
 
-    private void writeCharacteristic(UUID serviceUuid, UUID characteristicUuid) {
-        WriteCharacteristicBuilder builder = new RequestBuilderFactory().getWriteCharacteristicBuilder(serviceUuid,
-                characteristicUuid, new byte[]{(byte) 0xC0, 0x01, 0x00, 0x00, 0x00, (byte) 0xC0});
+    private void writeCharacteristic(byte[] data) {
+        WriteCharacteristicBuilder builder = new RequestBuilderFactory().getWriteCharacteristicBuilder(MyApplication.SRVC_UUID,
+                MyApplication.CHAR_UUID, data);
         //根据需要设置写入配置
-        int writeType = connection.hasProperty(serviceUuid, characteristicUuid,
+        int writeType = connection.hasProperty(MyApplication.SRVC_UUID, MyApplication.CHAR_UUID,
                 BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE) ?
                 BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE : BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT;
         builder.setWriteOptions(new WriteOptions.Builder()

@@ -3,6 +3,7 @@ package com.yu.zehnit;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import cn.wandersnail.ble.Connection;
 import cn.wandersnail.ble.ConnectionConfiguration;
@@ -31,6 +33,11 @@ import cn.wandersnail.ble.Device;
 import cn.wandersnail.ble.EasyBLE;
 import cn.wandersnail.ble.EventObserver;
 import cn.wandersnail.ble.Request;
+import cn.wandersnail.ble.RequestBuilder;
+import cn.wandersnail.ble.RequestBuilderFactory;
+import cn.wandersnail.ble.WriteCharacteristicBuilder;
+import cn.wandersnail.ble.WriteOptions;
+import cn.wandersnail.ble.callback.ReadCharacteristicCallback;
 import cn.wandersnail.commons.util.StringUtils;
 import cn.wandersnail.widget.dialog.DefaultAlertDialog;
 
@@ -42,6 +49,7 @@ public class MainActivity extends BaseActivity implements EventObserver {
     private final static int REQUEST_ENABLE_BT = 1;
     private int eqpNum;
     private String address;
+    private Connection connection;
 
     private ProgressDialog progressDialog;
 
@@ -193,7 +201,7 @@ public class MainActivity extends BaseActivity implements EventObserver {
             config.setRequestTimeoutMillis(1000);
             // 不自动重连
             config.setAutoReconnect(false);
-            EasyBLE.getInstance().connect(address, config);
+            connection = EasyBLE.getInstance().connect(address, config);
         } else {
             tipDialog(getString(R.string.bt_is_off));
         }
@@ -225,6 +233,9 @@ public class MainActivity extends BaseActivity implements EventObserver {
                 tipDialog(getString(R.string.connection_succeeded));
                 equipment.setText(getString(R.string.online));
                 adapter.notifyDataSetChanged();
+                // 发送指令检查视靶是否打开
+                byte[] data = new byte[]{(byte) 0xC0, 0x01, 0x17, 0x00, 0x01, 0x00, (byte) 0xC0};
+                writeCharacteristic(data);
                 break;
         }
     }
@@ -268,10 +279,49 @@ public class MainActivity extends BaseActivity implements EventObserver {
         }
     }
 
+    private void readCharacteristic(){
+        RequestBuilder<ReadCharacteristicCallback> builder = new RequestBuilderFactory().getReadCharacteristicBuilder(MyApplication.SRVC_UUID, MyApplication.CHAR_UUID);
+        builder.setTag(UUID.randomUUID().toString());
+        builder.setPriority(Integer.MAX_VALUE);//设置请求优先级
+        builder.build().execute(connection);
+    }
+
+    private void writeCharacteristic(byte[] data) {
+        WriteCharacteristicBuilder builder = new RequestBuilderFactory().getWriteCharacteristicBuilder(MyApplication.SRVC_UUID,
+                MyApplication.CHAR_UUID, data);
+        //根据需要设置写入配置
+        int writeType = connection.hasProperty(MyApplication.SRVC_UUID, MyApplication.CHAR_UUID,
+                BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE) ?
+                BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE : BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT;
+        builder.setWriteOptions(new WriteOptions.Builder()
+                .setPackageSize(connection.getMtu() - 3)
+                .setPackageWriteDelayMillis(5)
+                .setRequestWriteDelayMillis(10)
+                .setWaitWriteResult(true)
+                .setWriteType(writeType)
+                .build());
+        //不设置回调，使用观察者模式接收结果
+        builder.build().execute(connection);
+    }
+
     @Override
     public void onCharacteristicWrite(@NonNull Request request, @NonNull byte[] value) {
 
-        Log.d(TAG, "onCharacteristicWrite: 写入特征值：" + Arrays.toString(value));
+        Log.d(TAG, "onCharacteristicWrite: 写入特征值：" + StringUtils.toHex(value));
+
+        // 读取检查视靶是否打开指令的返回数据
+        if (value[2] == 0x17) {
+            readCharacteristic();
+        }
+    }
+
+    @Override
+    public void onCharacteristicRead(@NonNull Request request, @NonNull byte[] value) {
+        Log.e(TAG, "onCharacteristicWrite: 视靶是否打开：" + (value[5] == 0x01) + "----" + StringUtils.toHex(value));
+
+        // 获得返回的特征值的有效字段（最后一位）
+        MyApplication.getInstance().setTargetIsOn(value[5] == 0x01);
+
     }
 
 }

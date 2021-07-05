@@ -28,6 +28,15 @@ public class MyApplication extends Application {
     private List<Equipment> eqpList = new ArrayList<>();
     private EqpAdapter adapter;
     private boolean isConnected = false;
+    private boolean targetIsOn = false;
+
+    public boolean getTargetIsOn() {
+        return targetIsOn;
+    }
+
+    public void setTargetIsOn(boolean targetIsOn) {
+        this.targetIsOn = targetIsOn;
+    }
 
     public boolean isConnected() {
         return isConnected;

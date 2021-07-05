@@ -26,13 +26,16 @@ import com.yu.zehnit.tools.OnRecycleViewItemClickListener;
 import com.yu.zehnit.tools.SharedPreferencesUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import cn.wandersnail.ble.Connection;
 import cn.wandersnail.ble.EasyBLE;
+import cn.wandersnail.ble.Request;
 import cn.wandersnail.ble.RequestBuilderFactory;
 import cn.wandersnail.ble.WriteCharacteristicBuilder;
 import cn.wandersnail.ble.WriteOptions;
+import cn.wandersnail.commons.util.StringUtils;
 import cn.wandersnail.widget.dialog.DefaultAlertDialog;
 import cn.wandersnail.widget.textview.SwitchButton;
 
@@ -109,6 +112,8 @@ public class ControlFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         sbTarget = root.findViewById(R.id.switch_target);
+        sbTarget.setChecked(MyApplication.getInstance().getTargetIsOn());
+//        Log.d(TAG, "onCreateView: 视靶是否打开了..." + MyApplication.getInstance().getTargetIsOn());
         sbTarget.setBackColor(SwitchButton.generateBackColor(ContextCompat.getColor(getContext(), R.color.colorGreen)));
         sbTarget.setThumbColor(SwitchButton.getDefaultThumbColor());
         sbTarget.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -117,10 +122,10 @@ public class ControlFragment extends Fragment {
                 byte[] data = null;
                 if (connection != null) {
                     if (isChecked) {
-//                    Toast.makeText(getContext(), "开关打开了", Toast.LENGTH_SHORT).show();
+                        MyApplication.getInstance().setTargetIsOn(true);
                         data = new byte[]{(byte) 0xC0, 0x01, 0x10, 0x00, 0x01, (byte) 0xff, (byte) 0xC0};
                     } else {
-//                    Toast.makeText(getContext(), "开关关闭了", Toast.LENGTH_SHORT).show();
+                        MyApplication.getInstance().setTargetIsOn(false);
                         data = new byte[]{(byte) 0xC0, 0x01, 0x10, 0x00, 0x01, 0x00, (byte) 0xC0};
                     }
                     writeCharacteristic(data);
@@ -205,7 +210,6 @@ public class ControlFragment extends Fragment {
                 writeCharacteristic(data);
                 break;
             case 3:
-                // 频率
                 data[0] = (byte) 0xC0;
                 data[1] = 0x01;
                 data[2] = 0x14;
@@ -214,33 +218,39 @@ public class ControlFragment extends Fragment {
                 data[9] = (byte) 0xC0;
                 float pursuitFrequency = (float) SharedPreferencesUtils.getParam(getContext(), "pursuit_frequency", 0.0f);
                 String freString = Integer.toHexString(Float.floatToIntBits(pursuitFrequency));
-                Log.d(TAG, "ctrlTracking: ------------------------------------- " + pursuitFrequency + " ----十六进制字符串：" + freString);
-                frequency = new byte[freString.length() / 2];
-                int index = 0;
-                for (int i = 0; i < freString.length(); i+=2) {
-                    frequency[index++] = (byte)Integer.parseInt(freString.substring(i,i+2), 16);
-                }
-                for (int i = 0; i < frequency.length; i++) {
-                    data[8 - i] = frequency[i];
-                }
-                writeCharacteristic(data);
-                // 幅度
-                data[2] = 0x13;
                 float pursuitAmplitude = (float) SharedPreferencesUtils.getParam(getContext(), "pursuit_amplitude", 0.0f);
                 String ampString = Integer.toHexString(Float.floatToIntBits(pursuitAmplitude));
-                Log.d(TAG, "ctrlTracking: ------------------------------------- " + pursuitAmplitude + " ----十六进制字符串：" + ampString);
-                amplitude = new byte[ampString.length() / 2];
-                index = 0;
-                for (int i = 0; i < ampString.length(); i+=2) {
-                    amplitude[index++] = (byte) Integer.parseInt(ampString.substring(i, i + 2), 16);
+                if (freString.length() != 1 && ampString.length() != 1) { // 判断16进制字符串是否非零
+                    Log.d(TAG, "ctrlTracking: ------------------------------------- " + pursuitFrequency + " ----十六进制字符串：" + freString);
+                    Log.d(TAG, "ctrlTracking: ------------------------------------- " + pursuitAmplitude + " ----十六进制字符串：" + ampString);
+                    // 频率
+                    frequency = new byte[freString.length() / 2];
+                    int index = 0;
+                    for (int i = 0; i < freString.length(); i += 2) {
+                        frequency[index++] = (byte) Integer.parseInt(freString.substring(i, i + 2), 16);
+                    }
+                    // 倒着对应
+                    for (int i = 0; i < frequency.length; i++) {
+                        data[8 - i] = frequency[i];
+                    }
+                    Log.d(TAG, "ctrlTracking: 频率 " + StringUtils.toHex(data));
+                    writeCharacteristic(data);
+                    // 幅度
+                    data[2] = 0x13;
+                    amplitude = new byte[ampString.length() / 2];
+                    index = 0;
+                    for (int i = 0; i < ampString.length(); i += 2) {
+                        amplitude[index++] = (byte) Integer.parseInt(ampString.substring(i, i + 2), 16);
+                    }
+                    for (int i = 0; i < amplitude.length; i++) {
+                        data[8 - i] = amplitude[i];
+                    }
+                    Log.d(TAG, "ctrlTracking: 幅度 " + StringUtils.toHex(data));
+                    writeCharacteristic(data);
+                    // 模式
+                    data = new byte[]{(byte) 0xC0, 0x01, 0x16, 0x00, 0x01, 0x02, (byte) 0xC0};
+                    writeCharacteristic(data);
                 }
-                for (int i = 0; i < amplitude.length; i++) {
-                    data[8 - i] = amplitude[i];
-                }
-                writeCharacteristic(data);
-                // 模式
-                data = new byte[]{(byte) 0xC0, 0x01, 0x16, 0x00, 0x01, 0x02, (byte) 0xC0};
-                writeCharacteristic(data);
                 break;
             case 4:
                 // 频率
@@ -253,18 +263,17 @@ public class ControlFragment extends Fragment {
                 float saccadeFrequency = (float) SharedPreferencesUtils.getParam(getContext(), "saccade_frequency", 0.0f);
                 String squFreString = Integer.toHexString(Float.floatToIntBits(saccadeFrequency));
                 Log.d(TAG, "ctrlTracking: ------------------------------------- " + squFreString + " ----十六进制字符串：" + saccadeFrequency);
-                frequency = new byte[squFreString.length() / 2];
-                int index4 = 0;
-                for (int i = 0; i < squFreString.length(); i+=2) {
-                    frequency[index4++] = (byte)Integer.parseInt(squFreString.substring(i,i+2), 16);
+                if (squFreString.length() != 1) {
+                    frequency = new byte[squFreString.length() / 2];
+                    int index4 = 0;
+                    for (int i = 0; i < squFreString.length(); i+=2) {
+                        frequency[index4++] = (byte)Integer.parseInt(squFreString.substring(i,i+2), 16);
+                    }
+                    for (int i = 0; i < frequency.length; i++) {
+                        data[8 - i] = frequency[i];
+                    }
+                    writeCharacteristic(data);
                 }
-                for (int i = 0; i < frequency.length; i++) {
-                    data[8 - i] = frequency[i];
-                }
-                writeCharacteristic(data);
-                //幅度
-                data = new byte[]{(byte) 0xC0, 0x01, 0x13, 0x00, 0x04, 0x00, 0x00, (byte)0xa0, 0x40, (byte) 0xC0};
-                writeCharacteristic(data);
                 // 模式
                 data = new byte[]{(byte) 0xC0, 0x01, 0x16, 0x00, 0x01, 0x01, (byte) 0xC0};
                 writeCharacteristic(data);
@@ -291,29 +300,20 @@ public class ControlFragment extends Fragment {
                 MyApplication.CHAR_UUID, data);
 
         //根据需要设置写入配置
-//        int writeType = connection.hasProperty(MyApplication.SRVC_UUID, MyApplication.CHAR_UUID,
-//                BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE) ?
-//                BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE : BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT;
+        int writeType = connection.hasProperty(MyApplication.SRVC_UUID, MyApplication.CHAR_UUID,
+                BluetoothGattCharacteristic.PROPERTY_WRITE_NO_RESPONSE) ?
+                BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE : BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT;
         builder.setWriteOptions(new WriteOptions.Builder()
                 .setPackageSize(connection.getMtu() - 3)
                 .setPackageWriteDelayMillis(5)
                 .setRequestWriteDelayMillis(10)
                 .setWaitWriteResult(true)
-                .setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT)
+                .setWriteType(writeType)
                 .build());
         //不设置回调，使用观察者模式接收结果
         builder.build().execute(connection);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume: 11111111111111111111");
-    }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause: Control");
-    }
+
 }
