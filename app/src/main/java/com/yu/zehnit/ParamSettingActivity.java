@@ -47,7 +47,7 @@ public class ParamSettingActivity extends BaseActivity {
                 .fitsSystemWindows(true).init();
 
         initParams();
-        RecyclerView recyclerView = findViewById(R.id.recycle_view_param);
+        RecyclerView recyclerView = findViewById(R.id.recycle_view_param1);
         LinearLayoutManager layoutManager = new LinearLayoutManager(ParamSettingActivity.this);
         recyclerView.setLayoutManager(layoutManager);
         ParamAdapter adapter = new ParamAdapter(paramList);

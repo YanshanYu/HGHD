@@ -262,6 +262,9 @@ public class ControlFragment extends Fragment {
                     data[8 - i] = frequency[i];
                 }
                 writeCharacteristic(data);
+                //幅度
+                data = new byte[]{(byte) 0xC0, 0x01, 0x13, 0x00, 0x04, 0x00, 0x00, (byte)0xa0, 0x40, (byte) 0xC0};
+                writeCharacteristic(data);
                 // 模式
                 data = new byte[]{(byte) 0xC0, 0x01, 0x16, 0x00, 0x01, 0x01, (byte) 0xC0};
                 writeCharacteristic(data);

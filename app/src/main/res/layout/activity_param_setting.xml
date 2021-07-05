@@ -31,7 +31,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycle_view_param"
+        android:id="@+id/recycle_view_param1"
         android:overScrollMode="never"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
