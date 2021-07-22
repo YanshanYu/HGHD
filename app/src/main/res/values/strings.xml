@@ -85,6 +85,11 @@
     <string name="frequency">频率</string>
     <string name="amplitude">幅度</string>
     <string name="calibration">校准</string>
+    <string name="calibration_value">校准值</string>
+    <string name="gain">增益</string>
+    <string name="gain_value">增益</string>
+
+
 
 
 
