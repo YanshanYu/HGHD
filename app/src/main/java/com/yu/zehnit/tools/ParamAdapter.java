@@ -52,7 +52,7 @@ public class ParamAdapter extends RecyclerView.Adapter<ParamAdapter.ViewHolder> 
                 holder.param1SeekBar.setProgress((int) param.getParamValue1() + 10);
                 holder.param1Value.setText(Integer.toString((int) (param.getParamValue1())));
             } else {
-//                holder.param1SeekBar.setMax(20);
+                holder.param1SeekBar.setMax(10);
                 holder.param1SeekBar.setProgress((int) (param.getParamValue1() * 10));
                 holder.param1Value.setText(Float.toString(param.getParamValue1()));
             }

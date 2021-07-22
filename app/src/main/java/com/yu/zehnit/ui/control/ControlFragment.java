@@ -153,6 +153,8 @@ public class ControlFragment extends Fragment {
                 break;
             case 2:
                 ctrl.setImgId(R.drawable.gaze3);
+                data = new byte[]{(byte) 0xC0, 0x01, 0x11, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, (byte) 0xC0};
+                writeCharacteristic(data);
                 break;
             case 3:
                 ctrl.setImgId(R.drawable.pursuit);
@@ -166,7 +168,8 @@ public class ControlFragment extends Fragment {
                 break;
 
         }
-
+        data = new byte[]{(byte) 0xC0, 0x01, 0x12, 0x00, 0x00, (byte) 0xC0};
+        writeCharacteristic(data);
         ctrl.setSwitchImgId(R.drawable.switch_off);
     }
 
@@ -202,12 +205,33 @@ public class ControlFragment extends Fragment {
                 writeCharacteristic(data);
                 break;
             case 1:
-                data = new byte[]{(byte) 0xC0, 0x01, 0x11, 0x00, 0x04, 0x00, 0x00, 0x00, 0x40, (byte) 0xC0};
-                writeCharacteristic(data);
+
+                // 增益
+                data[0] = (byte) 0xC0;
+                data[1] = 0x01;
+                data[2] = 0x11;
+                data[3] = 0x00;
+                data[4] = 0x04;
+                data[9] = (byte) 0xC0;
+                float gainValue = (float) SharedPreferencesUtils.getParam(getContext(), "gain", 0.0f);
+                String gainString = Integer.toHexString(Float.floatToIntBits(1.0f-gainValue));
+                Log.d(TAG, "ctrlTracking: ------------------------------------- " + gainString + " ----十六进制字符串：" + gainValue);
+                if (gainString.length() != 1) {
+                    frequency = new byte[gainString.length() / 2];
+                    int index4 = 0;
+                    for (int i = 0; i < gainString.length(); i+=2) {
+                        frequency[index4++] = (byte)Integer.parseInt(gainString.substring(i,i+2), 16);
+                    }
+                    for (int i = 0; i < frequency.length; i++) {
+                        data[8 - i] = frequency[i];
+                    }
+                    writeCharacteristic(data);
+                }
                 break;
             case 2:
-                data = new byte[]{(byte) 0xC0, 0x01, 0x11, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, (byte) 0xC0};
+                data = new byte[]{(byte) 0xC0, 0x01, 0x11, 0x00, 0x04, 0x00, 0x00, 0x00, 0x40, (byte) 0xC0};
                 writeCharacteristic(data);
+
                 break;
             case 3:
                 data[0] = (byte) 0xC0;
@@ -274,6 +298,9 @@ public class ControlFragment extends Fragment {
                     }
                     writeCharacteristic(data);
                 }
+                //幅度
+                data = new byte[]{(byte) 0xC0, 0x01, 0x13, 0x00, 0x04, 0x00, 0x00, (byte)0xa0, 0x40, (byte) 0xC0};
+                writeCharacteristic(data);
                 // 模式
                 data = new byte[]{(byte) 0xC0, 0x01, 0x16, 0x00, 0x01, 0x01, (byte) 0xC0};
                 writeCharacteristic(data);
