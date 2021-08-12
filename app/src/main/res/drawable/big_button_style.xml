@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--第一层阴影-->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#4d34adf1" />
+            <corners
+                android:topLeftRadius="15dp"
+                android:topRightRadius="0dp"
+                android:bottomLeftRadius="0dp"
+                android:bottomRightRadius="15dp" />
+        </shape>
+    </item>
+    <!--第二层前景-->
+    <item
+        android:width="320dp"
+        android:height="400dp"
+        android:bottom="5dp"
+        android:left="5dp"
+        android:right="5dp"
+        android:top="5dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/white"/>
+            <corners
+                android:topLeftRadius="15dp"
+                android:topRightRadius="0dp"
+                android:bottomLeftRadius="0dp"
+                android:bottomRightRadius="15dp" />
+        </shape>
+    </item>
+</layer-list>
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<layer-list xmlns:android="http://schemas.android.com/apk/res/android">-->
+
+
+<!--&lt;!&ndash;    <item>&ndash;&gt;-->
+<!--&lt;!&ndash;        <shape android:shape="rectangle">&ndash;&gt;-->
+<!--&lt;!&ndash;            <solid android:color="#dbdbdb" />&ndash;&gt;-->
+<!--&lt;!&ndash;            <corners android:radius="19dp" />&ndash;&gt;-->
+<!--&lt;!&ndash;        </shape>&ndash;&gt;-->
+<!--&lt;!&ndash;    </item>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <item android:top="5dp" android:bottom="5dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:left="5dp" android:right="5dp">&ndash;&gt;-->
+<!--&lt;!&ndash;        <shape>&ndash;&gt;-->
+<!--&lt;!&ndash;            <solid android:color="#e6e6e6" />&ndash;&gt;-->
+<!--&lt;!&ndash;            <corners android:bottomRightRadius="15dp" />&ndash;&gt;-->
+
+<!--&lt;!&ndash;        </shape>&ndash;&gt;-->
+<!--&lt;!&ndash;    </item>&ndash;&gt;-->
+<!--&lt;!&ndash;    <item android:top="1dp" android:bottom="1dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:left="1dp" android:right="1dp">&ndash;&gt;-->
+<!--&lt;!&ndash;        <shape>&ndash;&gt;-->
+<!--&lt;!&ndash;            <solid android:color="#e6e6e6" />&ndash;&gt;-->
+<!--&lt;!&ndash;            <corners android:topLeftRadius="15dp" />&ndash;&gt;-->
+
+<!--&lt;!&ndash;        </shape>&ndash;&gt;-->
+<!--&lt;!&ndash;    </item>&ndash;&gt;-->
+
+<!--    <item android:width="320dp" android:height="400dp">-->
+<!--        <shape android:shape="rectangle">-->
+<!--            <solid android:color="#ffffffff" />-->
+<!--            <shape android:shadowDx="0" />-->
+<!--            <item android:shadowDy="15" />-->
+<!--            <item android:shadowColor="#4d34adf1" />-->
+<!--            <corners android:topLeftRadius="15dp" android:topRightRadius="0dp" android:bottomLeftRadius="0dp" android:bottomRightRadius="15dp" />-->
+<!--        </shape>-->
+<!--    </item>-->
+
+
+
+
+
+<!--</layer-list>-->

@@ -7,42 +7,80 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.yu.zehnit.MainActivity;
 import com.yu.zehnit.R;
 import com.yu.zehnit.SettingActivity;
+import com.yu.zehnit.tools.CtrlAdapter;
+import com.yu.zehnit.tools.Info;
+import com.yu.zehnit.tools.InfoAdapter;
+import com.yu.zehnit.tools.OnRecycleViewItemClickListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class InfoFragment extends Fragment {
 
     private InfoViewModel infoViewModel;
+    private List<Info> infoList = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         infoViewModel =
                 new ViewModelProvider(this).get(InfoViewModel.class);
         View root = inflater.inflate(R.layout.fragment_info, container, false);
-//        final TextView textView = root.findViewById(R.id.text_home);
-//        infoViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
-        Button btnSetting  = root.findViewById(R.id.button_setting);
-        btnSetting.setOnClickListener(new View.OnClickListener() {
+
+        initInfo();
+        RecyclerView recyclerView = root.findViewById(R.id.recycle_view_info);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        InfoAdapter adapter = new InfoAdapter(infoList);
+        adapter.setListener(new OnRecycleViewItemClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), SettingActivity.class);
-                startActivity(intent);
+            public void onClick(int pos) {
+                Intent intent;
+                switch (pos) {
+                    case 0:
+//                        intent = new Intent(getContext(), SettingActivity.class);
+//                        break;
+                    case 1:
+//                        intent = new Intent(getContext(), SettingActivity.class);
+//                        break;
+                    case 2:
+                        Toast.makeText(getContext(), "跳转", Toast.LENGTH_SHORT).show();
+//                        intent = new Intent(getContext(), SettingActivity.class);
+                        break;
+                    case 3:
+                        intent = new Intent(getContext(), SettingActivity.class);
+                        startActivity(intent);
+                        break;
+                    default:
+                        break;
+                }
             }
         });
+        recyclerView.setAdapter(adapter);
 
         return root;
+    }
+
+    private void initInfo() {
+        Info goal = new Info(getString(R.string.training_target), R.drawable.goal);
+        infoList.add(goal);
+        Info times = new Info(getString(R.string.train_time), R.drawable.times);
+        infoList.add(times);
+        Info mall = new Info(getString(R.string.shopping_link), R.drawable.mall);
+        infoList.add(mall);
+        Info setting = new Info(getString(R.string.setting), R.drawable.setting);
+        infoList.add(setting);
     }
 }

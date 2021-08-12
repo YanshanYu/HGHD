@@ -5,15 +5,15 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorPrimary">@color/colorPrimaryTextBlack</item>
         <item name="android:textColorSecondary">@color/colorSubTextBlack</item>
-        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowBackground">@color/colorDark_bg</item>
     </style>
 
     <style name="AppDarkTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/darkColorPrimary</item>
         <item name="colorAccent">@color/darkColorAccent</item>
-        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorPrimary">@color/colorSubTextWhite</item>
         <item name="android:textColorSecondary">@color/colorSubTextWhite</item>
-        <item name="android:windowBackground">@color/dark_bg</item>
+        <item name="android:windowBackground">@color/colorDark_bg</item>
     </style>
 
 </resources>

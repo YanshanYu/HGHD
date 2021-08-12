@@ -1,25 +1,31 @@
 package com.yu.zehnit;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.yu.zehnit.tools.IndicatorSeekBar;
 
+import com.gyf.immersionbar.ImmersionBar;
+import com.yu.zehnit.tools.Param;
+import com.yu.zehnit.tools.ParamAdapter;
+import com.yu.zehnit.tools.SharedPreferencesUtils;
+import com.yu.zehnit.tools.VideoAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ParamSettingActivity extends BaseActivity {
 
-    private IndicatorSeekBar sinFrequencySeekBar;
-    private IndicatorSeekBar sinAmplitudeSeekBar;
-    private IndicatorSeekBar fangFrequencySeekBar;
-    private IndicatorSeekBar fangAmplitudeSeekBar;
+    private SeekBar sinFrequencySeekBar;
+    private SeekBar sinAmplitudeSeekBar;
+    private SeekBar fangFrequencySeekBar;
+    private SeekBar fangAmplitudeSeekBar;
 
 
     private TextView sinFrequencyIndicator;
@@ -29,43 +35,25 @@ public class ParamSettingActivity extends BaseActivity {
 
     private Toolbar toolbar;
 
-    private static final String TestApp="TestApp";
+    private List<Param> paramList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_param_setting);
 
-        sinFrequencySeekBar = findViewById(R.id.sin_frequency);
-        sinAmplitudeSeekBar = findViewById(R.id.sin_amplitude);
-        fangFrequencySeekBar = findViewById(R.id.fang_frequency);
-        fangAmplitudeSeekBar = findViewById(R.id.fang_amplitude);
+        ImmersionBar.with(this).statusBarColor(R.color.white).statusBarDarkFont(true)
+                .fitsSystemWindows(true).init();
 
-        sinFrequencyIndicator = findViewById(R.id.sin_frequency_indicator);
-        sinAmplitudeIndicator = findViewById(R.id.sin_amplitude_indicator);
-        fangFrequencyIndicator = findViewById(R.id.fang_frequency_indicator);
-        fangAmplitudeIndicator = findViewById(R.id.fang_amplitude_indicator);
+        initParams();
+        RecyclerView recyclerView = findViewById(R.id.recycle_view_param1);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(ParamSettingActivity.this);
+        recyclerView.setLayoutManager(layoutManager);
+        ParamAdapter adapter = new ParamAdapter(paramList);
+        recyclerView.setAdapter(adapter);
 
-        initSinFrequencyData();
-        initSinAmplitudeData();
-        initFangFrequencyData();
-        initFangAmplitudeData();
 
-        SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
-        int sinFrequencyValue = pref.getInt("sin_frequency", 0);
-        int sinAmplitudeValue = pref.getInt("sin_amplitude", 0);
-        int fangFrequencyValue = pref.getInt("fang_frequency", 0);
-        int fangAmplitudeValue = pref.getInt("fang_amplitude", 0);
-        sinFrequencySeekBar.setProgress(sinFrequencyValue);
-        sinAmplitudeSeekBar.setProgress(sinAmplitudeValue);
-        fangFrequencySeekBar.setProgress(fangFrequencyValue);
-        fangAmplitudeSeekBar.setProgress(fangAmplitudeValue);
-//        if (sinFrequencyValue != 0) {
-//            sinFrequencySeekBar.setProgress(sinFrequencyValue);
-//            sinAmplitudeSeekBar.setProgress(sinAmplitudeValue);
-//            fangFrequencySeekBar.setProgress(fangFrequencyValue);
-//            fangAmplitudeSeekBar.setProgress(fangAmplitudeValue);
-//        }
         // 监听返回按钮
         toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -77,122 +65,25 @@ public class ParamSettingActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected void onDestroy() {
-        SharedPreferences.Editor editor = getSharedPreferences("data", MODE_PRIVATE).edit();
-        editor.putInt("sin_frequency", sinFrequencySeekBar.getProgress());
-        editor.putInt("sin_amplitude", sinAmplitudeSeekBar.getProgress());
-        editor.putInt("fang_frequency", fangFrequencySeekBar.getProgress());
-        editor.putInt("fang_amplitude", fangAmplitudeSeekBar.getProgress());
-        editor.apply();
-        super.onDestroy();
+    private void initParams() {
+        SharedPreferencesUtils.setFileName("data");
 
-    }
+        float calibrationValue = (float) SharedPreferencesUtils.getParam(ParamSettingActivity.this, "calibration", 0.0f);
+        Param calibration = new Param("校准", 0, "校准值", calibrationValue);
+        paramList.add(calibration);
 
-    private void initSinFrequencyData() {
+        float gainValue = (float) SharedPreferencesUtils.getParam(ParamSettingActivity.this, "gain", 0.0f);
+        Param gain = new Param("凝视增益", 0, "增益值", gainValue);
+        paramList.add(gain);
 
+        float pursuitFrequencyValue = (float) SharedPreferencesUtils.getParam(ParamSettingActivity.this, "pursuit_frequency", 0.0f);
+        float pursuitAmplitudeValue = (float) SharedPreferencesUtils.getParam(ParamSettingActivity.this, "pursuit_amplitude", 0.0f);
+        Param smoothPursuit = new Param("视追踪实验", 1, "频率", pursuitFrequencyValue, "幅度",pursuitAmplitudeValue);
+        paramList.add(smoothPursuit);
 
-        final ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) sinFrequencyIndicator.getLayoutParams();
-        sinFrequencySeekBar.setOnSeekBarChangeListener(new IndicatorSeekBar.OnIndicatorSeekBarChangeListener() {
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, float indicatorOffset) {
-                String indicatorText = Integer.toString(progress);
-                sinFrequencyIndicator.setText(indicatorText);
-                params.leftMargin = (int) indicatorOffset;
-                Log.d(TestApp, String.valueOf(indicatorOffset));
-                sinFrequencyIndicator.setLayoutParams(params);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                sinFrequencyIndicator.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                sinFrequencyIndicator.setVisibility(View.INVISIBLE);
-            }
-        });
-    }
-
-    private void initSinAmplitudeData() {
-        final ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) sinAmplitudeIndicator.getLayoutParams();
-        sinAmplitudeSeekBar.setOnSeekBarChangeListener(new IndicatorSeekBar.OnIndicatorSeekBarChangeListener() {
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, float indicatorOffset) {
-                String indicatorText = Integer.toString(progress);
-                sinAmplitudeIndicator.setText(indicatorText);
-                params.leftMargin = (int) indicatorOffset;
-                Log.d(TestApp, String.valueOf(indicatorOffset));
-                sinAmplitudeIndicator.setLayoutParams(params);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                sinAmplitudeIndicator.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                sinAmplitudeIndicator.setVisibility(View.INVISIBLE);
-            }
-        });
-
-
-    }
-    private void initFangFrequencyData() {
-
-        final ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) fangFrequencyIndicator.getLayoutParams();
-        fangFrequencySeekBar.setOnSeekBarChangeListener(new IndicatorSeekBar.OnIndicatorSeekBarChangeListener() {
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, float indicatorOffset) {
-                String indicatorText = Integer.toString(progress);
-                fangFrequencyIndicator.setText(indicatorText);
-                params.leftMargin = (int) indicatorOffset;
-                Log.d(TestApp, String.valueOf(indicatorOffset));
-                fangFrequencyIndicator.setLayoutParams(params);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                fangFrequencyIndicator.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                fangFrequencyIndicator.setVisibility(View.INVISIBLE);
-            }
-        });
-
-    }
-    private void initFangAmplitudeData() {
-
-        final ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) fangAmplitudeIndicator.getLayoutParams();
-        fangAmplitudeSeekBar.setOnSeekBarChangeListener(new IndicatorSeekBar.OnIndicatorSeekBarChangeListener() {
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, float indicatorOffset) {
-                String indicatorText = Integer.toString(progress);
-                fangAmplitudeIndicator.setText(indicatorText);
-                params.leftMargin = (int) indicatorOffset;
-                Log.d(TestApp, String.valueOf(indicatorOffset));
-                fangAmplitudeIndicator.setLayoutParams(params);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                fangAmplitudeIndicator.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                fangAmplitudeIndicator.setVisibility(View.INVISIBLE);
-            }
-        });
-
+        float saccadeFrequencyValue = (float) SharedPreferencesUtils.getParam(ParamSettingActivity.this, "saccade_frequency", 0.0f);
+        Param saccade = new Param("扫视实验", 0, "频率", saccadeFrequencyValue);
+        paramList.add(saccade);
     }
 
 

@@ -1,114 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:visibility="visible"
-    tools:context=".ui.control.ControlFragment">
+    android:orientation="vertical"
+    android:background="@color/colorRecBackground">
+
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_setting"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:layout_height="45dp"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/back"
-        app:title="@string/setting" />
+        android:background="@color/white"
+        app:navigationIcon="@drawable/back">
 
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textColor="@color/colorDarkGray"
+            android:textSize="20sp"
+            android:text="@string/setting"/>
 
-    <!--    <Switch-->
-    <!--        android:id="@+id/switch1"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="72dp"-->
-    <!--        android:layout_marginEnd="72dp"-->
-    <!--        android:textOff="关"-->
-    <!--        android:textOn="开"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/toolbar3" />-->
+    </androidx.appcompat.widget.Toolbar>
 
-    <!--    <Button-->
-<!--        android:id="@+id/buttonMessage"-->
-<!--        android:layout_width="274dp"-->
-<!--        android:layout_height="76dp"-->
-<!--        android:layout_marginStart="60dp"-->
-<!--        android:layout_marginTop="40dp"-->
-<!--        android:alpha="0.1"-->
-<!--        android:background="#CCCDCD"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/toolbarSetting" />-->
-
-    <Button
-        android:id="@+id/button_controlsetting"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="16:4"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="68dp"
-        android:backgroundTint="@color/babyblue"
-        android:drawableEnd="@drawable/forward"
-        android:text="@string/control_design"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_setting" />
-
-    <Button
-        android:id="@+id/button_aboutus"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="16:4"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="68dp"
-        android:backgroundTint="@color/babyblue"
-        android:drawableRight="@drawable/forward"
-        android:text="@string/about_us"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_relish" />
-
-    <Button
-        android:id="@+id/button_relish"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="16:4"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="68dp"
-        android:backgroundTint="@color/babyblue"
-        android:drawableRight="@drawable/forward"
-        android:text="@string/unhitch_equipment"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_controlsetting" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle_view_setting"
+        android:overScrollMode="never"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"/>
 
     <Button
         android:id="@+id/button_logout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="18:5"
-        android:layout_marginStart="68dp"
-        android:layout_marginEnd="68dp"
-        android:layout_marginBottom="30dp"
-        android:backgroundTint="@color/babyblue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="@string/logout"
-        android:textColor="@color/white"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:textColor="@color/colorDarkGray"
+        android:textSize="18sp" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/param_linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@animator/shadow_item"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/experiment_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="视追踪实验"
+            android:textSize="18sp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp">
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/frequency"
+                android:layout_marginStart="16dp"/>
+            <TextView
+                android:id="@+id/param1_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="频率"
+                android:textSize="16sp"
+                android:textColor="@color/colorDarkGray"
+                android:layout_marginStart="47dp" />
+            <TextView
+                android:id="@+id/param1_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="16dp"
+                android:text="0Hz"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp"/>
+
+            <SeekBar
+                android:id="@+id/param1_seekBar"
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginTop="40dp"
+                android:background="@null"
+                android:max="100"
+                android:maxHeight="16dp"
+                android:minHeight="16dp"
+                android:progress="0"
+                android:progressDrawable="@drawable/seekbar_progress_drawable"
+                android:splitTrack="false"
+                android:thumb="@drawable/ic_sb_24dp" />
+        </FrameLayout>
+        
+        <FrameLayout
+            android:id="@+id/second_param_frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp">
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/amplitude"
+                android:layout_marginStart="16dp"/>
+            <TextView
+                android:id="@+id/param2_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="幅度"
+                android:textSize="16sp"
+                android:textColor="@color/colorDarkGray"
+                android:layout_marginStart="47dp" />
+            <TextView
+                android:id="@+id/param2_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="16dp"
+                android:text="0"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp"/>
+
+            <SeekBar
+                android:id="@+id/param2_seekBar"
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginTop="40dp"
+                android:background="@null"
+                android:max="45"
+                android:maxHeight="16dp"
+                android:minHeight="16dp"
+                android:progress="0"
+                android:progressDrawable="@drawable/seekbar_progress_drawable"
+                android:splitTrack="false"
+                android:thumb="@drawable/ic_sb_24dp" />
+        </FrameLayout>
+
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/colorLine"
+        android:layout_gravity="center_horizontal"/>
+
+</LinearLayout>

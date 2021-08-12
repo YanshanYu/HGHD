@@ -1,10 +1,9 @@
 package com.yu.zehnit;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
@@ -16,7 +15,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.gyf.immersionbar.ImmersionBar;
 import com.yu.zehnit.tools.SMS;
+import com.yu.zehnit.tools.SharedPreferencesUtils;
 
 public class LoginActivity extends BaseActivity {
 
@@ -27,6 +28,8 @@ public class LoginActivity extends BaseActivity {
     private Button btnLogin;
     private Button btnGetCode;
     private CheckBox checkBox;
+    private CardView cardView;
+
     private Intent intent;
     private TimeCount timeCount;
 
@@ -51,6 +54,9 @@ public class LoginActivity extends BaseActivity {
         btnGetCode.setEnabled(false);
 
         checkBox = findViewById(R.id.checkBox_textpolicy);
+
+        ImmersionBar.with(this).init();
+
 
         editPhoneNumber.addTextChangedListener(new TextWatcher() {
             @Override
@@ -83,11 +89,14 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 code = editCode.getText().toString();
-                if (code.length() == 6 && btnGetCode.isEnabled()) {
-                    btnLogin.setEnabled(true);
-                } else {
-                    btnLogin.setEnabled(false);
+                if (telPhone != null) {
+                    if (code.length() == 6 && telPhone.length() == 11) {
+                        btnLogin.setEnabled(true);
+                    } else {
+                        btnLogin.setEnabled(false);
+                    }
                 }
+
             }
 
             @Override
@@ -127,9 +136,8 @@ public class LoginActivity extends BaseActivity {
                     try {
                         if (code.equals("123456")) {
                         //if (SMS.checkCode(code)) {
-                            SharedPreferences.Editor editor = getSharedPreferences("loginStatus", MODE_PRIVATE).edit();
-                            editor.putBoolean("isLogin", true);
-                            editor.apply();
+                            SharedPreferencesUtils.setFileName("info");
+                            SharedPreferencesUtils.setParam(LoginActivity.this, "isLogin", true);
                             startActivity(intent);
                         } else {
                             Toast.makeText(LoginActivity.this, "验证码输入错误，请重试", Toast.LENGTH_SHORT).show();
@@ -152,16 +160,17 @@ public class LoginActivity extends BaseActivity {
 
         @Override
         public void onTick(long millisUntilFinished) {
-            btnGetCode.setBackgroundColor(Color.parseColor("#B6B6D8"));
-            btnGetCode.setClickable(false);
-            btnGetCode.setText("(" + millisUntilFinished / 1000 + ") 秒后可重新发送");
+//            btnGetCode.setBackgroundColor(Color.parseColor("#B6B6D8"));
+            btnGetCode.setEnabled(false);
+
+            btnGetCode.setText("已发送(" + millisUntilFinished / 1000 + "s)");
         }
 
         @Override
         public void onFinish() {
-            btnGetCode.setText("重新获取验证码");
-            btnGetCode.setClickable(true);
-            btnGetCode.setBackgroundColor(Color.parseColor("#008577"));
+            btnGetCode.setText("获取验证码");
+            btnGetCode.setEnabled(true);
+            //btnGetCode.setBackgroundColor(Color.parseColor("#008577"));
 
         }
     }
