@@ -16,6 +16,7 @@ import com.gyf.immersionbar.ImmersionBar;
 import com.yu.zehnit.tools.EqpAdapter;
 import com.yu.zehnit.tools.Equipment;
 import com.yu.zehnit.tools.SharedPreferencesUtils;
+import com.yu.zehnit.ui.sessions.SessionDataManager;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
@@ -52,20 +53,25 @@ public class MainActivity extends BaseActivity implements EventObserver {
     private Connection connection;
 
     private ProgressDialog progressDialog;
-
-
+    public static final String[] TASKCAPTIONS={"Focus","Pursuit","Jump","Shake","Gaze"};
+    public static final int[] TASKVIDEOS={R.raw.gaze_holding1,R.raw.smooth_pursuit,R.raw.saccades,R.raw.gaze_holding2,R.raw.gaze_holding3};
+    public static final int[] TASKIMAGES={R.drawable.gaze1,R.drawable.pursuit,R.drawable.saccade,R.drawable.gaze2,R.drawable.gaze3};
+    public static final int[] TASKIMAGESUNCHECK={R.drawable.gaze_holding_uncheck_1,R.drawable.pursuit_uncheck,R.drawable.saccades_uncheck,R.drawable.gaze_holding_uncheck_2,R.drawable.gaze_holding_uncheck_3};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_control, R.id.navigation_rehabilitation,R.id.navigation_info)
+                R.id.navigation_home, R.id.navigation_control, R.id.navigation_sessions,R.id.navigation_info)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         // 切换fragment
         NavigationUI.setupWithNavController(navView, navController);
+        if(null==savedInstanceState){
+            SessionDataManager.readSessions(this);
+        }
 
         // 设置状态栏
         ImmersionBar.with(this).statusBarColor(R.color.white).statusBarDarkFont(true)

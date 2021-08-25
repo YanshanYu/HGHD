@@ -12,9 +12,9 @@
         android:title="@string/title_control" />
 
     <item
-        android:id="@+id/navigation_rehabilitation"
+        android:id="@+id/navigation_sessions"
         android:icon="@drawable/kf"
-        android:title="@string/title_rehabilitation" />
+        android:title="@string/title_sessions" />
     <item
         android:id="@+id/navigation_info"
         android:icon="@drawable/my"

@@ -26,10 +26,20 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        viewBinding true
+    }
+}
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven{url 'https://jitpack.io'}
+    }
 }
 
 dependencies {
-
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
     implementation 'com.shuyu:GSYVideoPlayer:8.1.1'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.gyf.immersionbar:immersionbar:3.0.0'

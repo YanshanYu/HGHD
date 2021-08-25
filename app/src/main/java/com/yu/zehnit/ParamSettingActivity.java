@@ -3,9 +3,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -15,7 +13,6 @@ import com.gyf.immersionbar.ImmersionBar;
 import com.yu.zehnit.tools.Param;
 import com.yu.zehnit.tools.ParamAdapter;
 import com.yu.zehnit.tools.SharedPreferencesUtils;
-import com.yu.zehnit.tools.VideoAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

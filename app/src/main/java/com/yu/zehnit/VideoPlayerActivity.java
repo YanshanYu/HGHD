@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.MediaController;
+import android.widget.VideoView;
 
 
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
@@ -34,16 +37,18 @@ public class VideoPlayerActivity extends Activity {
         videoPlayer = (StandardGSYVideoPlayer)findViewById(R.id.video_player);
 
         Intent intent = getIntent();
-        int video = intent.getIntExtra("video", 0);
+        int res = intent.getIntExtra("ID", 0);
 
         // 播放raw视频
         GSYVideoManager.instance().enableRawPlay(getApplicationContext());
 
         //增加封面
-        ImageView imageView = new ImageView(this);
-        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+       // ImageView imageView = new ImageView(this);
+      //  imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        String url="android.resource://" + getPackageName() + "/" + MainActivity.TASKVIDEOS[res];
+        videoPlayer.setUp(url,false,MainActivity.TASKCAPTIONS[res]);
 
-        String url;
+      /*  String url;
         switch (video) {
             case 1:
                 url = "android.resource://" + getPackageName() + "/" + R.raw.gaze_holding1;
@@ -75,7 +80,7 @@ public class VideoPlayerActivity extends Activity {
         }
 
         videoPlayer.setThumbImageView(imageView);
-
+*/
 
         //增加title
         videoPlayer.getTitleTextView().setVisibility(View.VISIBLE);
