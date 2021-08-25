@@ -28,4 +28,10 @@
     <color name="colorBlueShadow">#4d34adf1</color>
 
     <color name="colorLightBlue">#EDF5FC</color>
+    <color name="colorLineChart">#FFDB13</color>
+    <color name="colorFocus">#EE5050</color>
+    <color name="colorPursuit">#EC905D</color>
+    <color name="colorJump">#2DC5C8</color>
+    <color name="colorShake">#4375FB</color>
+    <color name="colorGaze">#AC82F1</color>
 </resources>

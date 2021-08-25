@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_sessions"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:navigationIcon="@drawable/back"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <TextView
+            android:id="@+id/session_title"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/title_sessions"
+            android:textColor="@color/colorDarkGray"
+            android:textSize="20sp" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view_session"
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        app:cardElevation="5dp"
+        android:layout_margin="16dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_sessions" >
+        <TableLayout
+            android:id="@+id/tableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="20dp"
+                android:background="#ff00a3e5">
+
+                <TextView
+                    android:id="@+id/tvsessioncaption"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:text="@string/task"
+                    android:textColor="#ffffffff"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:text="@string/score"
+                    android:textColor="#ffffffff"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_weight="2"
+                    android:layout_gravity="center_horizontal|center_vertical"
+/>
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="30dp">
+
+                <TextView
+                    android:id="@+id/tvspn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="16sp"
+                    android:layout_weight="1"
+                    android:text="@string/gaze_holding1" />
+
+                <TextView
+                    android:id="@+id/tvscorespn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    android:paddingEnd="10dp"
+                    android:layout_weight="1"
+                    android:textColor="#0984E3"
+                    android:textSize="21sp"
+                    android:text="0" />
+
+                <Button
+                    android:id="@+id/btspn"
+                    android:layout_width="75dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="20dp"
+                    android:background="@animator/play_button"
+                    android:onClick="onTaskClick"
+                    android:scaleType="fitCenter"
+                    android:layout_weight="2"
+                    android:tag="0"
+                    android:text="Play"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp" />
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="30dp">
+
+                <TextView
+                    android:id="@+id/tvpursuit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:text="@string/smooth_pursuit" />
+
+                <TextView
+                    android:id="@+id/tvscorepursuit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    android:paddingEnd="10dp"
+                    android:layout_weight="1"
+                    android:textColor="#0984E3"
+                    android:textSize="21sp"
+                    android:text="0" />
+
+                <Button
+                    android:id="@+id/btpursuit"
+                    android:layout_width="75dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="2"
+                    android:onClick="onTaskClick"
+                    android:scaleType="fitCenter"
+                    android:tag="1"
+                    android:background="@animator/play_button"
+                    android:text="Play"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="30dp">
+
+                <TextView
+                    android:id="@+id/tvsaccades"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:text="@string/saccades" />
+
+                <TextView
+                    android:id="@+id/tvscoresacc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    android:paddingEnd="10dp"
+                    android:layout_weight="1"
+                    android:textColor="#0984E3"
+                    android:textSize="21sp"
+                    android:text="0" />
+
+                <Button
+                    android:id="@+id/btsaccades"
+                    android:layout_width="75dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="2"
+                    android:onClick="onTaskClick"
+                    android:scaleType="fitCenter"
+                    android:tag="2"
+                    android:background="@animator/play_button"
+                    android:text="Play"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="30dp">
+
+                <TextView
+                    android:id="@+id/tvvorsupp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:text="@string/gaze_holding2" />
+
+                <TextView
+                    android:id="@+id/tvscorevorsupp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    android:paddingEnd="10dp"
+                    android:layout_weight="1"
+                    android:textColor="#0984E3"
+                    android:textSize="21sp"
+                    android:text="0" />
+
+                <Button
+                    android:id="@+id/btvorsupp"
+                    android:layout_width="75dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="2"
+                    android:onClick="onTaskClick"
+                    android:scaleType="fitCenter"
+                    android:tag="3"
+                    android:background="@animator/play_button"
+                    android:text="Play"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="30dp">
+
+                <TextView
+                    android:id="@+id/tvvortrain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    android:text="@string/gaze_holding3" />
+
+                <TextView
+                    android:id="@+id/tvscorevortrain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    android:paddingEnd="10dp"
+                    android:layout_weight="1"
+                    android:textColor="#0984E3"
+                    android:textSize="21sp"
+                    android:text="0" />
+
+                <Button
+                    android:id="@+id/btvortrain"
+                    android:layout_width="75dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="2"
+                    android:onClick="onTaskClick"
+                    android:scaleType="fitCenter"
+                    android:tag="4"
+                    android:background="@animator/play_button"
+                    android:text="Play"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"/>
+            </TableRow>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="10dp">
+                <View
+                    android:id="@+id/retangle"
+                    android:layout_width="0dp"
+                    android:layout_height="3dp"
+                    android:background="#F3F5F7"
+                    android:layout_weight="3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                </View>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="0dp">
+
+                <TextView
+                    android:id="@+id/tvts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="@string/total_score"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvscoretotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    android:paddingEnd="10dp"
+                    android:layout_weight="1"
+                    android:text="0"
+                    android:textColor="#0984E3"
+                    android:textSize="21sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_weight="2"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    />
+            </TableRow>
+        </TableLayout>
+    </androidx.cardview.widget.CardView>
+    <ImageButton
+        android:id="@+id/btend"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="75dp"
+        android:layout_marginBottom="63dp"
+        android:background="@android:color/transparent"
+        android:onClick="onStoreClick"
+        android:scaleType="fitCenter"
+        android:src="@drawable/end"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btrun"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="63dp"
+        android:layout_marginEnd="75dp"
+        android:background="@android:color/transparent"
+        android:onClick="onNextClick"
+        android:scaleType="fitCenter"
+        android:src="@drawable/play"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

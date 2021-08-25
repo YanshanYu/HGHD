@@ -12,7 +12,7 @@
     <!--    MainActivity -->
     <string name="title_home">Home</string>
     <string name="title_control">Control</string>
-    <string name="title_rehabilitation">Video</string>
+    <string name="title_sessions">Sessions</string>
     <string name="title_info">Me</string>
 
     <!--  HomeFragment  -->
@@ -24,11 +24,12 @@
 
     <!--  ControlFragment -->
     <string name="visual_target">Visual Target</string>
-    <string name="gaze_holding1">Gaze HoldingⅠ</string>
-    <string name="gaze_holding2">Gaze HoldingⅡ</string>
-    <string name="gaze_holding3">Gaze HoldingⅢ</string>
-    <string name="smooth_pursuit">Smooth Pursuit</string>
-    <string name="saccades">Saccades</string>
+    <string name="gaze_holding1">Focus</string>
+    <string name="gaze_holding2">Shake</string>
+    <string name="gaze_holding3">Gaze</string>
+    <string name="smooth_pursuit">Pursuit</string>
+    <string name="saccades">Jump</string>
+
 
     <!--  InfoFragment -->
     <string name="training_target">Training Target</string>
@@ -91,7 +92,22 @@
     <string name="connection_failed">Connection failed, please make sure the device is turned on</string>
 
 
-    <!--  提示框的文字  -->
+    <!--  Sessions Fragment  -->
+    <string name="sessions">Sessions</string>
+    <string name="id">ID</string>
+    <string name="date">Date</string>
+    <string name="score">Score</string>
+    <string name="delete">Delete</string>
+    <string name="chart">Chart</string>
 
+    <!--    Sessions Activity   -->
+    <string name="task">Tasks</string>
+    <string name="total_score">Total Score:</string>
+
+    <!--    Task Activity   -->
+    <string name="remaining_time">Remaining time:</string>
+    <string name="variant">Variant</string>
+    <!--    Chart Activity  -->
+    <string name="title_chart">Chart</string>
 
 </resources>

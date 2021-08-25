@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.yu.zehnit.MainActivity;
 import com.yu.zehnit.R;
+import com.yu.zehnit.SessionActivity;
 import com.yu.zehnit.SettingActivity;
 import com.yu.zehnit.tools.CtrlAdapter;
 import com.yu.zehnit.tools.Info;
