@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.fragment.app.Fragment;
@@ -47,75 +48,10 @@ public class SessionsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_sessions, container, false);
-
-      /*  sessionsViewModel =
-                new ViewModelProvider(this).get(SessionsViewModel.class);
-        RecyclerView recyclerView = root.findViewById(R.id.recycle_view_sessions);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        mlaSessionAdapter=new SessionsAdapter(sessionList);
-        sessionDataManager=new SessionDataManager();
-        mlaSessionAdapter.setListener(new OnRecycleViewItemClickListener(){
-            @Override
-            public void onClick(int pos) {
-                SessionDataManager.setSelectedSessionIndex(pos);
-                mlaSessionAdapter.notifyDataSetChanged();
-                setButtonEnable();
-            }
-        });
-        recyclerView.setAdapter(mlaSessionAdapter);
-
-        deleteBtn=root.findViewById(R.id.btdelete);
-        deleteBtn.setBackgroundResource(R.drawable.icon_delete);
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SessionDataManager.removeSelectedPatient();
-                mlaSessionAdapter.notifyDataSetChanged();
-            }
-        });
-        chartBtn=root.findViewById(R.id.btchart);
-        chartBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i=new Intent(getActivity(),ChartActivity.class);
-                startActivity(i);
-            }
-        });
-
-        addBtn=root.findViewById(R.id.btadd);
-        addBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), SessionActivity.class);
-                intent.putExtra("NO",sessionDataManager.getSize());
-                startActivityForResult(intent,15);
-            }
-        });
-
-
-        return root;
-    }
-    private void setButtonEnable(){
-        boolean selected=(SessionDataManager.getSelectedSessionIndex()>=0);
-        mbtDelete.setEnabled(selected);
-    }
-    @Override
-    public void onActivityResult(int requestCode,int resultCode,Intent data){
-        if(Activity.RESULT_OK!=resultCode)return;
-        if(15==requestCode){
-            Session session=(Session) data.getSerializableExtra(SessionActivity.SESSION);
-            if(session.getTotalScore()>0){
-                SessionDataManager.addSession(session);
-                mlaSessionAdapter.notifyDataSetChanged();
-            }
-        }
-    }
-}*/
-
         ListView lvsessions = root.findViewById(R.id.lvsessions);
         mlaSessionListAdapter = new SessionsListAdapter(getActivity());
         lvsessions.setAdapter(mlaSessionListAdapter);
+        lvsessions.setSelection(-1);
         lvsessions.setOnItemClickListener((adapterView, view, i, l) -> {
             SessionDataManager.setSelectedSessionIndex(i);
             mlaSessionListAdapter.notifyDataSetChanged();
@@ -134,21 +70,35 @@ public class SessionsFragment extends Fragment {
         });
         mbtDelete.setOnClickListener(view -> {
             SessionDataManager.removeSelectedPatient();
+            setButtonsEnable();
             mlaSessionListAdapter.notifyDataSetChanged();
         });
 
         mbtChart.setOnClickListener(view -> {
-            Intent i = new Intent(getActivity(), ChartActivity.class);
-            startActivity(i);
+            int amount= SessionDataManager.getSize();
+            if(amount==0){
+                Toast.makeText(getContext(), getResources().getString(R.string.alert_add_data), Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Intent i = new Intent(getActivity(), ChartActivity.class);
+                startActivity(i);
+            }
+
         });
         return root;
     }
 
     private void setButtonsEnable() {
         boolean selected = (SessionDataManager.getSelectedSessionIndex() >= 0);
-        mbtDelete.setEnabled(selected);
-        ivDelete.setImageResource(R.drawable.icon_delete_click);
-        tvDelete.setTextColor(getResources().getColor(R.color.colorDarkGray));
+        if(selected) {
+            mbtDelete.setEnabled(true);
+            ivDelete.setImageResource(R.drawable.icon_delete_click);
+            tvDelete.setTextColor(getResources().getColor(R.color.colorDarkGray));
+        }else{
+            mbtDelete.setEnabled(false);
+            ivDelete.setImageResource(R.drawable.icon_delete);
+            tvDelete.setTextColor(getResources().getColor(R.color.colorBlueGray));
+        }
 
     }
 
@@ -160,6 +110,7 @@ public class SessionsFragment extends Fragment {
             if (session.getTotalScore() > 0) {
                 SessionDataManager.addSession(session);
                 mlaSessionListAdapter.notifyDataSetChanged();
+                setButtonsEnable();
             }
         }
     }

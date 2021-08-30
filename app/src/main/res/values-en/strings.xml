@@ -99,6 +99,7 @@
     <string name="score">Score</string>
     <string name="delete">Delete</string>
     <string name="chart">Chart</string>
+    <string name="alert_add_data">No data!</string>
 
     <!--    Sessions Activity   -->
     <string name="task">Tasks</string>

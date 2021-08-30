@@ -1,11 +1,16 @@
 package com.yu.zehnit;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -16,11 +21,26 @@ import android.widget.Toolbar;
 import com.yu.zehnit.tools.Bluetooth;
 import com.yu.zehnit.tools.Task;
 
-import cn.wandersnail.ble.Connection;
-import cn.wandersnail.ble.EasyBLE;
+import java.util.UUID;
 
-public class TaskActivity extends BaseActivity {
+import cn.wandersnail.ble.Connection;
+import cn.wandersnail.ble.Device;
+import cn.wandersnail.ble.EasyBLE;
+import cn.wandersnail.ble.EventObserver;
+import cn.wandersnail.ble.Request;
+import cn.wandersnail.ble.RequestBuilder;
+import cn.wandersnail.ble.RequestBuilderFactory;
+import cn.wandersnail.ble.callback.NotificationChangeCallback;
+import cn.wandersnail.ble.callback.ReadCharacteristicCallback;
+import cn.wandersnail.commons.poster.RunOn;
+import cn.wandersnail.commons.poster.ThreadMode;
+import cn.wandersnail.commons.util.StringUtils;
+import cn.wandersnail.commons.util.ToastUtils;
+import cn.wandersnail.widget.dialog.DefaultAlertDialog;
+
+public class TaskActivity extends BaseActivity implements EventObserver {
     public static final String TASK="Task";
+
     private Task mTask;
     private TextView mtvRemaining;
     private ImageView mivHead;
@@ -31,6 +51,7 @@ public class TaskActivity extends BaseActivity {
     private Bluetooth bluetooth;
     private Connection conn;
     private ImageButton btnRun;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +61,11 @@ public class TaskActivity extends BaseActivity {
         if (EasyBLE.getInstance().getOrderedConnections().size() != 0) {
             conn = EasyBLE.getInstance().getOrderedConnections().get(0);
         }
+        // 注册观察者
+        EasyBLE.getInstance().registerObserver(this);
+        byte[] GyroDataOpenCommand=new byte[]{(byte) 0xC0, 0x01, 0x18, 0x00, 0x01, 0x01, (byte) 0xC0};
+        bluetooth.writeCharacteristic(conn,GyroDataOpenCommand);
+        setNotification();
         mtvRemaining=findViewById(R.id.tvremaining);
         mivHead=findViewById(R.id.ivhead);
         btnRun=findViewById(R.id.btrun);
@@ -109,6 +135,7 @@ public class TaskActivity extends BaseActivity {
         i.putExtra(TASK,mTask);
         setResult(Activity.RESULT_OK,i);
         EndTaskCommand();
+        EasyBLE.getInstance().unregisterObserver(this);
         finish();
     }
     public void setupNextVariant(){
@@ -171,7 +198,7 @@ public class TaskActivity extends BaseActivity {
                 purAmpData[3] = 0x00;
                 purAmpData[4] = 0x04;
                 purAmpData[9] = (byte) 0xC0;
-                temp=getByteArray(45.0f);
+                temp=getByteArray(30.0f);
                 // 倒着对应
                 for (int i = 0; i < temp.length; i++) {
                     purAmpData[8 - i] = temp[i];
@@ -268,6 +295,8 @@ public class TaskActivity extends BaseActivity {
         }
         data = new byte[]{(byte) 0xC0, 0x01, 0x12, 0x00, 0x00, (byte) 0xC0};
         bluetooth.writeCharacteristic(conn,data);
+        byte[] GyroDataStopCommand=new byte[]{(byte) 0xC0, 0x01, 0x18, 0x00, 0x01, 0x00, (byte) 0xC0};
+        bluetooth.writeCharacteristic(conn,GyroDataStopCommand);
     }
     public static byte[]getByteArray(float f){
         int intbits=Float.floatToIntBits(f);
@@ -282,4 +311,109 @@ public class TaskActivity extends BaseActivity {
         return b;
     }
 
+
+
+
+    @Override
+    public void onCharacteristicRead(@NonNull Request request, @NonNull byte[] value) {
+        byte[] validValue = new byte[24];
+        for (int i = 0; i < validValue.length; i++) {
+            validValue[i] = value[i + 5];
+        }
+        Log.d(TASK, "Gyro data:" + StringUtils.toHex(validValue));
+
+    }
+
+    @Override
+    public void onCharacteristicChanged(@NonNull Device device, @NonNull UUID service, @NonNull UUID characteristic, @NonNull byte[] value) {
+        Log.e(TASK,"call back data");
+    }
+
+    @Override
+    public void onCharacteristicWrite(@NonNull Request request, @NonNull byte[] value) {
+        Log.d(TASK, "AddEquipmentActivity onCharacteristicWrite: 成功写入特征值：" + StringUtils.toHex(value));
+        // 写入成功后读取返回的特征值
+        if(value[2]==0x18) {
+            readCharacteristic();
+        }
+    }
+    private void setNotification(){
+        RequestBuilder<ReadCharacteristicCallback> builder = new RequestBuilderFactory().getReadCharacteristicBuilder(MyApplication.SRVC_UUID, MyApplication.CHAR_UUID);
+        builder.build().execute(conn);
+    }
+
+    private void readCharacteristic(){
+        RequestBuilder<ReadCharacteristicCallback> builder = new RequestBuilderFactory().getReadCharacteristicBuilder(MyApplication.SRVC_UUID, MyApplication.CHAR_UUID);
+        builder.setTag(UUID.randomUUID().toString());
+        builder.setPriority(Integer.MAX_VALUE);//设置请求优先级
+        builder.setCallback(new ReadCharacteristicCallback() {
+          //  @RunOn(ThreadMode.BACKGROUND)
+            @Override
+            public void onCharacteristicRead(@NonNull Request request, @NonNull byte[] value) {
+                Log.d("EasyBLE", "主线程：" + (Looper.getMainLooper() == Looper.myLooper()) + ", 读取到特征值：" + StringUtils.toHex(value, " "));
+                ToastUtils.showShort("读取到特征值：" + StringUtils.toHex(value, " "));
+            }
+
+            @Override
+            public void onRequestFailed(@NonNull Request request, int failType, @Nullable Object value) {
+
+            }
+        });
+        builder.build().execute(conn);
+    }
+
+    @Override
+    public void onConnectionStateChanged(@NonNull Device device) {
+        switch (device.getConnectionState()) {
+            case SCANNING_FOR_RECONNECTION:
+                break;
+            case CONNECTING:
+              //  Log.d(TAG, "AddEquipmentActivity onConnectionStateChanged: 正在连接...");
+                break;
+            case CONNECTED:
+              //  Log.d(TAG, "AddEquipmentActivity onConnectionStateChanged: 已连接");
+                break;
+            case SERVICE_DISCOVERING:
+             //   Log.d(TAG, "AddEquipmentActivity onConnectionStateChanged: 正在发现服务...");
+                break;
+            case SERVICE_DISCOVERED:
+             //   Log.d(TAG, "AddEquipmentActivity onConnectionStateChanged: 已发现服务");
+                progressDialog.setMessage(getString(R.string.connect_device));
+                break;
+            case DISCONNECTED:
+                break;
+
+        }
+    }
+
+
+    private void tipDialog(String msg){
+        DefaultAlertDialog dialog = new DefaultAlertDialog(TaskActivity.this);
+        dialog.setTitle(getString(R.string.tip));
+        dialog.setMessage(msg);
+        // 点击对话框以外的区域是否让对话框消失
+        dialog.setCancelable(false);
+        dialog.setTitleBackgroundColor(-1);
+
+        if (msg.equals(getString(R.string.connection_succeeded))) {
+            dialog.setAutoDismiss(true);
+            dialog.setAutoDismissDelayMillis(800);
+        } else if (msg.equals(getString(R.string.connection_failed))){
+            dialog.setPositiveButton(getString(R.string.try_again), new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    progressDialog.show();
+                }
+            });
+        } else {
+            dialog.setPositiveButton(getString(R.string.ok), new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    progressDialog.dismiss();
+                   // requestBluetoothEnable();
+                }
+            });
+        }
+        dialog.show();
+    }
 }

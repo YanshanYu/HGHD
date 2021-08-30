@@ -98,6 +98,7 @@
     <string name="score">得分</string>
     <string name="delete">删除</string>
     <string name="chart">图表</string>
+    <string name="alert_add_data">请添加自定义方案</string>
 
     <!--    Task Activity   -->
     <string name="task">任务</string>

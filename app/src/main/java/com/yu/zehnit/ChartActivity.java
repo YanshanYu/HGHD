@@ -3,6 +3,7 @@ package com.yu.zehnit;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.view.View;
 import androidx.appcompat.widget.Toolbar;
@@ -21,6 +22,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.gyf.immersionbar.ImmersionBar;
+import com.yu.zehnit.tools.ValueFormatter;
 import com.yu.zehnit.ui.sessions.Session;
 import com.yu.zehnit.ui.sessions.SessionDataManager;
 
@@ -38,6 +40,7 @@ public class ChartActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        int amount_columns= SessionDataManager.getSize();
         setContentView(R.layout.activity_chart);
         ImmersionBar.with(this).statusBarColor(R.color.white).statusBarDarkFont(true)
                 .fitsSystemWindows(true).init();
@@ -55,25 +58,28 @@ public class ChartActivity extends BaseActivity {
         dataChart.setDrawGridBackground(false);
         dataChart.setDrawBarShadow(false);
         dataChart.setHighlightFullBarEnabled(false);
-        dataChart.setTouchEnabled(false);
+       // dataChart.setTouchEnabled(false);
         dataChart.setDrawValueAboveBar(false);
+        dataChart.setDrawOrder(new CombinedChart.DrawOrder[]{
+                CombinedChart.DrawOrder.BAR,CombinedChart.DrawOrder.LINE
+        });
 
         Legend legend=dataChart.getLegend();
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
         showDataOnChart();
+        Matrix m=new Matrix();
+        m.postScale(1.5f,1f);
+        dataChart.moveViewToX(amount_columns-1);
+        dataChart.getViewPortHandler().refresh(m,dataChart,false);
+        dataChart.animateX(500);
+
     }
     private void showDataOnChart(){
         data=new CombinedData();
         data.setData(getLineData());
         data.setData(getBarData());
-        setAxisXBottom();
-        setAxisYLeft();
-        dataChart.setData(data);
-       // dataChart.animateX(2000);
-        dataChart.invalidate();
-    }
-    private void setAxisXBottom(){
+        //set X axis
         int amount_columns= SessionDataManager.getSize();
         mColCcaptions = new String[amount_columns];
         DateFormat df = android.text.format.DateFormat.getDateFormat(this);
@@ -85,27 +91,26 @@ public class ChartActivity extends BaseActivity {
         XAxis xAxis=dataChart.getXAxis();
         xAxis.setGranularity(1f);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setLabelCount(amount_columns+1);
         xAxis.setValueFormatter(new IAxisValueFormatter(){
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
+                if(value<0||value>amount_columns-1) return "";
                 return mColCcaptions[(int) value];
             }
         });
-
-
-    }
-    private void setAxisYLeft(){
+        // set Y axis
         YAxis yAxisLeft=dataChart.getAxisLeft();
         yAxisLeft.setAxisMinimum(0f);
-      /*  yAxisLeft.setValueFormatter(new IAxisValueFormatter() {
-            @Override
-            public String getFormattedValue(float value, AxisBase axis) {
-                return value+"";
-            }
-        });*/
         yAxisLeft.setDrawGridLines(true);
         YAxis rightAxis=dataChart.getAxisRight();
         rightAxis.setDrawGridLines(false);
+
+        dataChart.setData(data);
+        xAxis.setAxisMinimum(dataChart.getCombinedData().getXMin()-0.5f);
+        xAxis.setAxisMaximum(dataChart.getCombinedData().getXMax()+0.5f);
+
+        dataChart.invalidate();
     }
     public LineData getLineData(){
         LineData lineData=new LineData();
@@ -127,46 +132,22 @@ public class ChartActivity extends BaseActivity {
         lineDataSet.setValueTextSize(16f);
         lineData.addDataSet(lineDataSet);
         return lineData;
-
-
-       /* LineData d = new LineData();
-
-        ArrayList<Entry> entries = new ArrayList<>();
-
-        for (int index = 0; index < 12; index++)
-            entries.add(new Entry(index + 0.5f, getRandom(15, 5)));
-
-        LineDataSet set = new LineDataSet(entries, "Line DataSet");
-        set.setColor(Color.rgb(240, 238, 70));
-        set.setLineWidth(2.5f);
-        set.setCircleColor(Color.rgb(240, 238, 70));
-        set.setCircleRadius(5f);
-        set.setFillColor(Color.rgb(240, 238, 70));
-        set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        set.setDrawValues(true);
-        set.setValueTextSize(10f);
-        set.setValueTextColor(Color.rgb(240, 238, 70));
-
-        set.setAxisDependency(YAxis.AxisDependency.LEFT);
-        d.addDataSet(set);
-
-        return d;
-*/
     }
 
 
     public BarData getBarData(){
         ArrayList<BarEntry> values = new ArrayList<>();
         int amount_columns= SessionDataManager.getSize();
-       // mColCcaptions = new String[amount_columns];
         DateFormat df = android.text.format.DateFormat.getDateFormat(this);
         for (int s = 0; s < amount_columns; s++) {
             float[] taskscores= new float[Session.AMOUNT_TASKS];
             Session session= SessionDataManager.getSession(s);
             assert session != null;
-            for(int t=0;t<taskscores.length;t++)taskscores[t]=session.getTaskScore(t);
+            for(int t=0;t<taskscores.length;t++) {
+                if(session.getTaskScore(t)==0)continue;
+                taskscores[t] = session.getTaskScore(t);
+            }
             values.add(new BarEntry(s,taskscores));
-          //  mColCcaptions[s]=df.format(session.getDate());
         }
         BarDataSet bardataset = new BarDataSet(values, "Scores");
 
@@ -177,6 +158,7 @@ public class ChartActivity extends BaseActivity {
         BarData barData=new BarData(bardataset);
         barData.setValueTextSize(16f);
         barData.setBarWidth(0.5f);
+        barData.setValueFormatter(new ValueFormatter());
         return barData;
 
 
