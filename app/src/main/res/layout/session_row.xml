@@ -1,0 +1,43 @@
+<LinearLayout android:layout_width="fill_parent"
+    android:layout_height="60dp"
+    android:background="@color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <TextView
+        android:id = "@+id/rno"
+        android:layout_width = "0dp"
+        android:layout_height = "match_parent"
+        android:layout_weight = "1"
+        android:ellipsize = "end"
+        android:padding = "5dp"
+        android:textColor="@color/colorLightGray"
+        android:textSize="17sp"
+        android:singleLine = "true"
+        android:gravity="center"/>
+
+    <TextView
+        android:id = "@+id/rdate"
+        android:layout_width = "0dp"
+        android:layout_height = "match_parent"
+        android:layout_weight = "3"
+        android:ellipsize = "end"
+        android:padding = "5dp"
+        android:textColor="@color/colorDarkGray"
+        android:textSize="17sp"
+        android:singleLine = "true"
+        android:gravity="center"/>
+
+    <TextView
+        android:id = "@+id/rscore"
+        android:layout_width = "0dp"
+        android:layout_height = "match_parent"
+        android:layout_weight = "2"
+        android:ellipsize = "end"
+        android:padding = "5dp"
+        android:textColor="@color/colorDarkGray"
+        android:textSize="17sp"
+        android:singleLine = "true"
+        android:gravity="center"/>
+
+</LinearLayout>

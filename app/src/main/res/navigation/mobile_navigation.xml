@@ -9,7 +9,11 @@
         android:id="@+id/navigation_home"
         android:name="com.yu.zehnit.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_control"
+            app:destination="@id/navigation_control" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_control"
@@ -18,10 +22,10 @@
         tools:layout="@layout/fragment_control" />
 
     <fragment
-        android:id="@+id/navigation_rehabilitation"
-        android:name="com.yu.zehnit.ui.rehabilitation.RehabilitationFragment"
-        android:label="@string/title_rehabilitation"
-        tools:layout="@layout/fragment_rehabilitation" />
+        android:id="@+id/navigation_sessions"
+        android:name="com.yu.zehnit.ui.sessions.SessionsFragment"
+        android:label="@string/title_sessions"
+        tools:layout="@layout/fragment_sessions" />
     <fragment
         android:id="@+id/navigation_info"
         android:name="com.yu.zehnit.ui.info.InfoFragment"

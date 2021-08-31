@@ -3,11 +3,11 @@
     android:shape="oval"
 
     android:useLevel="false">
-    <solid android:color="#3873FD"/>  <!-- 颜色-->
+    <solid android:color="@color/colorAccent"/>  <!-- 颜色-->
     <stroke
         android:width="0.5dp"
-        android:color="#3873FD" />
+        android:color="@color/colorRecBackground" />
     <size
-        android:width="20dp"
-        android:height="20dp" />
+        android:width="27dp"
+        android:height="27dp" />
 </shape>

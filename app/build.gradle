@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.yu.zehnit"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -26,9 +26,29 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        viewBinding true
+    }
+}
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven{url 'https://jitpack.io'}
+    }
 }
 
 dependencies {
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
+    implementation 'com.shuyu:GSYVideoPlayer:8.1.1'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
+
+
+    implementation 'cn.wandersnail:easyble-x:1.2.6'
+    //implementation 'cn.wandersnail:commons-android:1.2.4'
+    implementation 'cn.wandersnail:common-full:1.1.6'
+    implementation 'cn.wandersnail:widget-generic:1.1.0'
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.material:material:1.1.0'
