@@ -39,7 +39,7 @@ public class SessionActivity extends BaseActivity implements EventObserver {
     private final int[]mDurations={10,11,12,13,14};
     private final int[][] mScores ={{10,0,0},{15,16,17},{18,19,20},{21,22,23},{24,25,26}};
     //Parameter set for the task variants
-    private final float[][]mFrequencies={{0,0,0},{0.3f,0.6f,0.9f},{0.3f,0.6f,0.9f},{0,0,0},{0,0,0}};
+    private final float[][]mFrequencies={{0,0,0},{0.2f,0.4f,0.6f},{0.2f,0.4f,0.6f},{0,0,0},{0,0,0}};
     private final float[][]mGains={{0,0,0},{0,0,0},{0,0,0},{2,2,2},{0.2f,0.5f,1}};
 
     @Override
