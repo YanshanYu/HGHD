@@ -358,7 +358,7 @@ public class ControlFragment extends Fragment {
        // byte[] amplitude;
         switch (pos) {
             case 0:
-                data = new byte[]{(byte) 0xC0, 0x01, 0x11, 0x00, 0x04, 0x00, 0x00, (byte)0x80, (byte)0x3f, (byte) 0xC0};
+                data = new byte[]{(byte) 0xC0, 0x01, 0x11, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, (byte) 0xC0};
                 bluetooth.writeCharacteristic(connection,data);
                 break;
             case 1:
@@ -369,23 +369,31 @@ public class ControlFragment extends Fragment {
                 data[4] = 0x04;
                 data[9] = (byte) 0xC0;
                 float pursuitFrequency = (float) SharedPreferencesUtils.getParam(getContext(), "pursuit_frequency", 0.0f);
-                float pursuitAmplitude = (float) SharedPreferencesUtils.getParam(getContext(), "pursuit_amplitude", 0.0f);
                 temp=getByteArray(pursuitFrequency);
                 // 倒着对应
                 for (int i = 0; i < temp.length; i++) {
                     data[8 - i] = temp[i];
                 }
                 Log.d(TAG, "ctrlTracking: 频率 " + StringUtils.toHex(data));
+                Log.d(TAG, "ctrlTracking: 频率 " + pursuitFrequency);
                 bluetooth.writeCharacteristic(connection,data);
-
                 // 幅度
-                data[2] = 0x13;
+                byte[] data1=new byte[10];
+                data1[0] = (byte) 0xC0;
+                data1[1] = 0x01;
+                data1[2] = 0x13;
+                data1[3] = 0x00;
+                data1[4] = 0x04;
+                data1[9] = (byte) 0xC0;
+
+                float pursuitAmplitude = (float) SharedPreferencesUtils.getParam(getContext(), "pursuit_amplitude", 0.0f);
                 temp=getByteArray(pursuitAmplitude);
                 for (int i = 0; i < temp.length; i++) {
-                    data[8 - i] = temp[i];
+                    data1[8 - i] = temp[i];
                 }
-                Log.d(TAG, "ctrlTracking: 幅度 " + StringUtils.toHex(data));
-                bluetooth.writeCharacteristic(connection,data);
+                Log.d(TAG, "ctrlTracking: 幅度 " + StringUtils.toHex(data1));
+                Log.d(TAG, "ctrlTracking: 幅度 " + pursuitAmplitude);
+                bluetooth.writeCharacteristic(connection,data1);
                 // 模式
                 data = new byte[]{(byte) 0xC0, 0x01, 0x16, 0x00, 0x01, 0x02, (byte) 0xC0};
                 bluetooth.writeCharacteristic(connection,data);
@@ -413,6 +421,11 @@ public class ControlFragment extends Fragment {
                 bluetooth.writeCharacteristic(connection,data);
                 break;
             case 3:
+                data = new byte[]{(byte) 0xC0, 0x01, 0x11, 0x00, 0x04, 0x00, 0x00, 0x00, 0x40, (byte) 0xC0};
+                bluetooth.writeCharacteristic(connection,data);
+
+                break;
+            case 4:
 
                 // 增益
                 data[0] = (byte) 0xC0;
@@ -428,11 +441,7 @@ public class ControlFragment extends Fragment {
                 }
                 bluetooth.writeCharacteristic(connection,data);
                 break;
-            case 4:
-                data = new byte[]{(byte) 0xC0, 0x01, 0x11, 0x00, 0x04, 0x00, 0x00, 0x00, 0x40, (byte) 0xC0};
-                bluetooth.writeCharacteristic(connection,data);
 
-                break;
 
         }
     }

@@ -52,6 +52,7 @@ public class TaskActivity extends BaseActivity implements EventObserver {
     private Connection conn;
     private ImageButton btnRun;
     private ProgressDialog progressDialog;
+    private float pitch,yaw,roll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,7 @@ public class TaskActivity extends BaseActivity implements EventObserver {
         EasyBLE.getInstance().registerObserver(this);
         byte[] GyroDataOpenCommand=new byte[]{(byte) 0xC0, 0x01, 0x18, 0x00, 0x01, 0x01, (byte) 0xC0};
         bluetooth.writeCharacteristic(conn,GyroDataOpenCommand);
-        setNotification();
+        setNotificationEnable();
         mtvRemaining=findViewById(R.id.tvremaining);
         mivHead=findViewById(R.id.ivhead);
         btnRun=findViewById(R.id.btrun);
@@ -156,7 +157,8 @@ public class TaskActivity extends BaseActivity implements EventObserver {
         Log.e("yu","current task"+mTask.getFrequency());
         byte[] laserOnCommand = new byte[]{(byte) 0xC0, 0x01, 0x10, 0x00, 0x01, (byte) 0xff, (byte) 0xC0};
         bluetooth.writeCharacteristic(conn,laserOnCommand);
-        switch (mTask.getTaskNo()) {
+
+            switch (mTask.getTaskNo()) {
             //Focus
             case 0:
                 byte[] focusGainData = new byte[10];
@@ -297,6 +299,7 @@ public class TaskActivity extends BaseActivity implements EventObserver {
         bluetooth.writeCharacteristic(conn,data);
         byte[] GyroDataStopCommand=new byte[]{(byte) 0xC0, 0x01, 0x18, 0x00, 0x01, 0x00, (byte) 0xC0};
         bluetooth.writeCharacteristic(conn,GyroDataStopCommand);
+        setNotificationDisable();
     }
     public static byte[]getByteArray(float f){
         int intbits=Float.floatToIntBits(f);
@@ -310,23 +313,41 @@ public class TaskActivity extends BaseActivity implements EventObserver {
         b[3]=(byte)(i & 0x000000ff);
         return b;
     }
+    public static float getFloat(byte[] b) {
+        int accum = 0;
+        accum = accum|(b[0] & 0xff) << 0;
+        accum = accum|(b[1] & 0xff) << 8;
+        accum = accum|(b[2] & 0xff) << 16;
+        accum = accum|(b[3] & 0xff) << 24;
+        System.out.println(accum);
+        return Float.intBitsToFloat(accum);
+    }
 
 
 
 
     @Override
     public void onCharacteristicRead(@NonNull Request request, @NonNull byte[] value) {
-        byte[] validValue = new byte[24];
-        for (int i = 0; i < validValue.length; i++) {
-            validValue[i] = value[i + 5];
-        }
-        Log.d(TASK, "Gyro data:" + StringUtils.toHex(validValue));
 
     }
 
     @Override
     public void onCharacteristicChanged(@NonNull Device device, @NonNull UUID service, @NonNull UUID characteristic, @NonNull byte[] value) {
-        Log.e(TASK,"call back data");
+        Log.e(TASK, "Gyro data String:" + StringUtils.toHex(value));
+        if(value[2]==0x18){
+            byte[] pitchByte=new byte[4];
+            byte[] yawByte=new byte[4];
+            byte[] rollByte=new byte[4];
+            for(int i=0;i<4;i++){
+                pitchByte[i]=value[i+5];
+                yawByte[i]=value[i+9];
+                rollByte[i]=value[i+13];
+            }
+            pitch=getFloat(pitchByte);
+            yaw=getFloat(yawByte);
+            roll=getFloat(rollByte);
+        }
+        Log.d(TASK, "Gyro data:" + pitch +"    "+yaw+"    "+roll);
     }
 
     @Override
@@ -337,8 +358,12 @@ public class TaskActivity extends BaseActivity implements EventObserver {
             readCharacteristic();
         }
     }
-    private void setNotification(){
-        RequestBuilder<ReadCharacteristicCallback> builder = new RequestBuilderFactory().getReadCharacteristicBuilder(MyApplication.SRVC_UUID, MyApplication.CHAR_UUID);
+    private void setNotificationEnable(){
+        RequestBuilder<NotificationChangeCallback> builder = new RequestBuilderFactory().getSetNotificationBuilder(MyApplication.SRVC_UUID, MyApplication.CHAR_UUID, true);
+        builder.build().execute(conn);
+    }
+    private void setNotificationDisable(){
+        RequestBuilder<NotificationChangeCallback> builder = new RequestBuilderFactory().getSetNotificationBuilder(MyApplication.SRVC_UUID, MyApplication.CHAR_UUID, false);
         builder.build().execute(conn);
     }
 
@@ -351,7 +376,7 @@ public class TaskActivity extends BaseActivity implements EventObserver {
             @Override
             public void onCharacteristicRead(@NonNull Request request, @NonNull byte[] value) {
                 Log.d("EasyBLE", "主线程：" + (Looper.getMainLooper() == Looper.myLooper()) + ", 读取到特征值：" + StringUtils.toHex(value, " "));
-                ToastUtils.showShort("读取到特征值：" + StringUtils.toHex(value, " "));
+              //  ToastUtils.showShort("读取到特征值：" + StringUtils.toHex(value, " "));
             }
 
             @Override
