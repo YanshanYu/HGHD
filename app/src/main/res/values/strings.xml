@@ -34,6 +34,8 @@
     <string name="gaze_holding3">凝视</string>
     <string name="smooth_pursuit">追踪</string>
     <string name="saccades">扫视</string>
+    <string name="control_video">视频</string>
+    <string name="control_settings">设置</string>
 
 
     <!--  InfoFragment -->

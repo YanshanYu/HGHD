@@ -322,7 +322,11 @@ public class TaskActivity extends BaseActivity implements EventObserver {
         System.out.println(accum);
         return Float.intBitsToFloat(accum);
     }
-
+    private void moveHead(float angles){
+        mivHead.setPivotX(mivHead.getWidth()/2);
+        mivHead.setPivotY(mivHead.getHeight()/2);
+        mivHead.setRotation(angles);
+    }
 
 
 
@@ -347,7 +351,8 @@ public class TaskActivity extends BaseActivity implements EventObserver {
             yaw=getFloat(yawByte);
             roll=getFloat(rollByte);
         }
-        Log.d(TASK, "Gyro data:" + pitch +"    "+yaw+"    "+roll);
+       // Log.d(TASK, "Gyro data:" + pitch +"    "+yaw+"    "+roll);
+        moveHead(yaw);
     }
 
     @Override

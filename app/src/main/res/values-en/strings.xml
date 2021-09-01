@@ -29,6 +29,8 @@
     <string name="gaze_holding3">Gaze</string>
     <string name="smooth_pursuit">Pursuit</string>
     <string name="saccades">Jump</string>
+    <string name="control_video">Video</string>
+    <string name="control_settings">Setting</string>
 
 
     <!--  InfoFragment -->

@@ -24,7 +24,6 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -55,8 +54,8 @@ public class MainActivity extends BaseActivity implements EventObserver {
     private ProgressDialog progressDialog;
     public static final String[] TASKCAPTIONS={"Focus","Pursuit","Jump","Shake","Gaze"};
     public static final int[] TASKVIDEOS={R.raw.gaze_holding1,R.raw.smooth_pursuit,R.raw.saccades,R.raw.gaze_holding2,R.raw.gaze_holding3};
-    public static final int[] TASKIMAGES={R.drawable.gaze1,R.drawable.pursuit,R.drawable.saccade,R.drawable.gaze2,R.drawable.gaze3};
-    public static final int[] TASKIMAGESUNCHECK={R.drawable.gaze_holding_uncheck_1,R.drawable.pursuit_uncheck,R.drawable.saccades_uncheck,R.drawable.gaze_holding_uncheck_2,R.drawable.gaze_holding_uncheck_3};
+    public static final int[] TASKIMAGES={R.drawable.icon_focus_uncheck,R.drawable.icon_pursuit_uncheck,R.drawable.icon_saccades_uncheck,R.drawable.icon_shake_uncheck,R.drawable.icon_gaze_uncheck};
+    public static final int[] TASKIMAGESUNCHECK={R.drawable.icon_focus_gray,R.drawable.icon_pursuit_gray,R.drawable.icon_saccades_gray,R.drawable.icon_shake_gray,R.drawable.icon_gaze_gray};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
