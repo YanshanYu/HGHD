@@ -24,14 +24,19 @@
 
     <!--  ControlFragment -->
     <string name="visual_target">Visual Target</string>
-    <string name="gaze_holding1">Focus</string>
-    <string name="gaze_holding2">Shake</string>
-    <string name="gaze_holding3">Gaze</string>
+    <string name="control_focus">Focus</string>
+    <string name="control_shake">Shake</string>
+    <string name="control_gaze">Gaze</string>
     <string name="smooth_pursuit">Pursuit</string>
     <string name="saccades">Jump</string>
     <string name="control_video">Video</string>
     <string name="control_settings">Setting</string>
-
+    <string name="control_current_value">Current Value:</string>
+    <string name="control_alert_cancel">Cancel</string>
+    <string name="control_alert_ok">OK</string>
+    <string name="control_speed">Speed</string>
+    <string name="control_frequency">Frequency</string>
+    <string name="control_gain">Gain</string>
 
     <!--  InfoFragment -->
     <string name="training_target">Training Target</string>

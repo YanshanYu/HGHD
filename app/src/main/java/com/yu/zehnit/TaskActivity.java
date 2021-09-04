@@ -53,6 +53,7 @@ public class TaskActivity extends BaseActivity implements EventObserver {
     private ImageButton btnRun;
     private ProgressDialog progressDialog;
     private float pitch,yaw,roll;
+    private float offset_yaw=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +81,12 @@ public class TaskActivity extends BaseActivity implements EventObserver {
         mDuration= mTask.getDuration()* mTask.getVariants();
         mtvRemaining.setText(mDuration+"s");
         setTitle();
+        mivHead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                offset_yaw=yaw;
+            }
+        });
 
         // 监听返回按钮
      /*   toolbar = findViewById(R.id.toolbar_task);
@@ -89,6 +96,10 @@ public class TaskActivity extends BaseActivity implements EventObserver {
                 finish();
             }
         });*/
+    }
+    protected void onResume() {
+        super.onResume();
+        offset_yaw=yaw;
     }
 
     private void setTitle() {
@@ -337,8 +348,8 @@ public class TaskActivity extends BaseActivity implements EventObserver {
 
     @Override
     public void onCharacteristicChanged(@NonNull Device device, @NonNull UUID service, @NonNull UUID characteristic, @NonNull byte[] value) {
-        Log.e(TASK, "Gyro data String:" + StringUtils.toHex(value));
-        if(value[2]==0x18){
+      //  Log.e(TASK, "Gyro data String:" + StringUtils.toHex(value));
+        if(value[2]==0x18&&value.length==18){
             byte[] pitchByte=new byte[4];
             byte[] yawByte=new byte[4];
             byte[] rollByte=new byte[4];
@@ -350,9 +361,10 @@ public class TaskActivity extends BaseActivity implements EventObserver {
             pitch=getFloat(pitchByte);
             yaw=getFloat(yawByte);
             roll=getFloat(rollByte);
+            Log.d(TASK, "Gyro data:" + pitch +"    "+yaw+"    "+roll);
+            moveHead((yaw-offset_yaw));
         }
-       // Log.d(TASK, "Gyro data:" + pitch +"    "+yaw+"    "+roll);
-        moveHead(yaw);
+
     }
 
     @Override

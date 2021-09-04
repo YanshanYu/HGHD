@@ -33,7 +33,7 @@
             android:layout_gravity="center_vertical"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:text="@string/gaze_holding1"
+            android:text="@string/control_focus"
             android:textColor="@color/colorGray"/>
         <ImageView
             android:id="@+id/img_switch"

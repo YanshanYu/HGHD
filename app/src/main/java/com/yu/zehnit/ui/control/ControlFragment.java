@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -21,6 +22,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.yu.zehnit.ParamSettingActivity;
 import com.yu.zehnit.R;
 import com.yu.zehnit.VideoPlayerActivity;
 import com.yu.zehnit.tools.Bluetooth;
@@ -57,6 +59,8 @@ public class ControlFragment extends Fragment {
     private ImageView btStart;
     private LinearLayout optionLayout;
     private int clickIndex=-1;
+    private static final String FILE_NAME="param_data";
+    private float paramValue;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -266,59 +270,156 @@ public class ControlFragment extends Fragment {
         btSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferencesUtils.setFileName(FILE_NAME);
                 if(!startFlag){
                     switch (clickIndex) {
                         case 0:
                             break;
                         case 1:
-                            final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                            builder.setTitle("Settings");
-                            builder.setMessage("Speed");
-                            final SeekBar seek = new SeekBar(getActivity());
-                            seek.setMax(100);
-                            seek.setKeyProgressIncrement(1);
-                            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            final AlertDialog builder1 = new AlertDialog.Builder(getActivity()).create();
+                            builder1.show();
+                            builder1.getWindow().setContentView(R.layout.alert_dialog_layout);
+                            TextView captionSettings1=builder1.findViewById(R.id.tvsettings_name);
+                            ImageView captionSettingsImg1=builder1.findViewById(R.id.icon_settings);
+                            TextView captionParam1=builder1.findViewById(R.id.tvparam_name);
+                            TextView captionParamValue1=builder1.findViewById(R.id.param_value);
+                            SeekBar seekBar1=builder1.findViewById(R.id.param_seekBar);
+                            Button btnCancel1=builder1.findViewById(R.id.btn_cancel);
+                            Button btnOk1=builder1.findViewById(R.id.btn_ok);
+                            captionSettings1.setText(getResources().getString(R.string.smooth_pursuit));
+                            captionSettingsImg1.setImageResource(R.drawable.frequency);
+                            captionParam1.setText(getResources().getString(R.string.control_speed));
+                            paramValue=(float) SharedPreferencesUtils.getParam(builder1.getContext(), "pursuit_fre", 0.0f);
+                            captionParamValue1.setText(String.valueOf(paramValue)+"Hz");
+                            seekBar1.setProgress((int)(paramValue*100));
+                            seekBar1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                                 @Override
-                                public void onClick(DialogInterface dialog, int which) {
+                                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                                    captionParamValue1.setText((float)progress/100+"Hz");
+                                }
+
+                                @Override
+                                public void onStartTrackingTouch(SeekBar seekBar) {
 
                                 }
+
+                                @Override
+                                public void onStopTrackingTouch(SeekBar seekBar) {
+                                    paramValue=(float)seekBar.getProgress()/100;
+                                }
                             });
-                            builder.setView(seek);
-                            builder.show();
+                            btnCancel1.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    builder1.dismiss();
+                                }
+                            });
+                            btnOk1.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    SharedPreferencesUtils.setParam(builder1.getContext(),"pursuit_fre",paramValue);
+                                    builder1.dismiss();
+                                }
+                            });
                             break;
                         case 2:
-                            final AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
-                            builder1.setTitle("Settings");
-                            builder1.setMessage("Frequency:");
-                            final SeekBar seek1 = new SeekBar(getActivity());
-                            seek1.setMax(100);
-                            seek1.setKeyProgressIncrement(1);
-                            builder1.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            final AlertDialog builder2 = new AlertDialog.Builder(getActivity()).create();
+                            builder2.show();
+                            builder2.getWindow().setContentView(R.layout.alert_dialog_layout);
+                            TextView captionSettings2=builder2.findViewById(R.id.tvsettings_name);
+                            ImageView captionSettingsImg2=builder2.findViewById(R.id.icon_settings);
+                            TextView captionParam2=builder2.findViewById(R.id.tvparam_name);
+                            TextView captionParamValue2=builder2.findViewById(R.id.param_value);
+                            SeekBar seekBar2=builder2.findViewById(R.id.param_seekBar);
+                            Button btnCancel2=builder2.findViewById(R.id.btn_cancel);
+                            Button btnOk2=builder2.findViewById(R.id.btn_ok);
+                            captionSettings2.setText(getResources().getString(R.string.saccades));
+                            captionSettingsImg2.setImageResource(R.drawable.frequency);
+                            captionParam2.setText(getResources().getString(R.string.frequency));
+                            paramValue=(float) SharedPreferencesUtils.getParam(builder2.getContext(), "saccades_fre", 0.0f);
+                            captionParamValue2.setText(String.valueOf(paramValue)+"Hz");
+                            seekBar2.setProgress((int)(paramValue*100));
+                            seekBar2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                                 @Override
-                                public void onClick(DialogInterface dialog, int which) {
+                                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                                    captionParamValue2.setText((float)progress/100+"Hz");
+                                }
+
+                                @Override
+                                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                                }
+
+                                @Override
+                                public void onStopTrackingTouch(SeekBar seekBar) {
+                                    paramValue=(float)seekBar.getProgress()/100;
 
                                 }
                             });
-                            builder1.setView(seek1);
-                            builder1.show();
+                            btnCancel2.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    builder2.dismiss();
+                                }
+                            });
+                            btnOk2.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    SharedPreferencesUtils.setParam(builder2.getContext(),"saccades_fre",paramValue);
+                                    builder2.dismiss();
+                                }
+                            });
                             break;
                         case 3:
-                            final AlertDialog.Builder builder2 = new AlertDialog.Builder(getActivity());
-                            builder2.setTitle("Settings");
-                            builder2.setMessage("Gain");
-                            final SeekBar seek2 = new SeekBar(getActivity());
-                            seek2.setMax(100);
-                            seek2.setKeyProgressIncrement(1);
-                            builder2.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                }
-                            });
-                            builder2.setView(seek2);
-                            builder2.show();
                             break;
                         case 4:
+                            final AlertDialog builder3 = new AlertDialog.Builder(getActivity()).create();
+                            builder3.show();
+                            builder3.getWindow().setContentView(R.layout.alert_dialog_layout);
+                            TextView captionSettings3=builder3.findViewById(R.id.tvsettings_name);
+                            ImageView captionSettingsImg3=builder3.findViewById(R.id.icon_settings);
+                            TextView captionParam3=builder3.findViewById(R.id.tvparam_name);
+                            TextView captionParamValue3=builder3.findViewById(R.id.param_value);
+                            SeekBar seekBar3=builder3.findViewById(R.id.param_seekBar);
+                            Button btnCancel3=builder3.findViewById(R.id.btn_cancel);
+                            Button btnOk3=builder3.findViewById(R.id.btn_ok);
+                            captionSettings3.setText(getResources().getString(R.string.control_gaze));
+                            captionSettingsImg3.setImageResource(R.drawable.frequency);
+                            captionParam3.setText(getResources().getString(R.string.control_gain));
+                            seekBar3.setMax(10);
+                            paramValue=(float) SharedPreferencesUtils.getParam(builder3.getContext(), "gain", 0.0f);
+                            seekBar3.setProgress((int)(paramValue*10));
+                            captionParamValue3.setText(String.valueOf(paramValue));
+                            seekBar3.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                                @Override
+                                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                                    captionParamValue3.setText((float)progress/10+"");
+                                }
+
+                                @Override
+                                public void onStartTrackingTouch(SeekBar seekBar) {
+
+                                }
+
+                                @Override
+                                public void onStopTrackingTouch(SeekBar seekBar) {
+                                    paramValue=(float)seekBar.getProgress()/10;
+                                }
+                            });
+                            btnCancel3.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    builder3.dismiss();
+                                }
+                            });
+                            btnOk3.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    SharedPreferencesUtils.setParam(builder3.getContext(),"gain",paramValue);
+                                    builder3.dismiss();
+                                }
+                            });
+                            break;
                         default:
                             break;
                     }
@@ -328,9 +429,16 @@ public class ControlFragment extends Fragment {
         btStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startFlag=true;
-                // 点击该选项进行的操作
-                PerformCommand(clickIndex);
+
+                if(!startFlag){
+                    // 点击该选项进行的操作
+                    PerformCommand(clickIndex);
+                    btStart.setImageResource(R.drawable.icon_end);
+                }else{
+                    EndCommand(clickIndex);
+                    btStart.setImageResource(R.drawable.play);
+                }
+                startFlag=!startFlag;
             }
         });
 
@@ -380,7 +488,7 @@ public class ControlFragment extends Fragment {
             tvVideoPlay.setTextColor(getResources().getColor(R.color.colorBlueGray));
             ivSettings.setImageResource(R.drawable.control_setting_uncheck);
             tvSettings.setTextColor(getResources().getColor(R.color.colorBlueGray));
-            btStart.setImageResource(R.drawable.play_disable);
+            btStart.setImageResource(R.drawable.icon_end);
         }
     }
 
@@ -462,7 +570,7 @@ public class ControlFragment extends Fragment {
     }
 
     private void PerformCommand(int pos) {
-        SharedPreferencesUtils.setFileName("data");
+        SharedPreferencesUtils.setFileName(FILE_NAME);
         byte[] data = new byte[10];
         byte[] temp;
         //switch on laser
@@ -481,7 +589,7 @@ public class ControlFragment extends Fragment {
                 data[3] = 0x00;
                 data[4] = 0x04;
                 data[9] = (byte) 0xC0;
-                float pursuitFrequency = (float) SharedPreferencesUtils.getParam(getContext(), "pursuit_frequency", 0.0f);
+                float pursuitFrequency = (float) SharedPreferencesUtils.getParam(getContext(), "pursuit_fre", 0.0f);
                 temp=getByteArray(pursuitFrequency);
                 // 倒着对应
                 for (int i = 0; i < temp.length; i++) {
@@ -499,13 +607,12 @@ public class ControlFragment extends Fragment {
                 data1[4] = 0x04;
                 data1[9] = (byte) 0xC0;
 
-                float pursuitAmplitude = (float) SharedPreferencesUtils.getParam(getContext(), "pursuit_amplitude", 0.0f);
+              //  float pursuitAmplitude = (float) SharedPreferencesUtils.getParam(getContext(), "pursuit_amplitude", 0.0f);
+                float pursuitAmplitude=30;
                 temp=getByteArray(pursuitAmplitude);
                 for (int i = 0; i < temp.length; i++) {
                     data1[8 - i] = temp[i];
                 }
-                Log.d(TAG, "ctrlTracking: 幅度 " + StringUtils.toHex(data1));
-                Log.d(TAG, "ctrlTracking: 幅度 " + pursuitAmplitude);
                 bluetooth.writeCharacteristic(connection,data1);
                 // 模式
                 data = new byte[]{(byte) 0xC0, 0x01, 0x16, 0x00, 0x01, 0x02, (byte) 0xC0};
@@ -519,7 +626,7 @@ public class ControlFragment extends Fragment {
                 data[3] = 0x00;
                 data[4] = 0x04;
                 data[9] = (byte) 0xC0;
-                float saccadeFrequency = (float) SharedPreferencesUtils.getParam(getContext(), "saccade_frequency", 0.0f);
+                float saccadeFrequency = (float) SharedPreferencesUtils.getParam(getContext(), "saccades_fre", 0.0f);
                 temp=getByteArray(saccadeFrequency);
                     for (int i = 0; i < temp.length; i++) {
                         data[8 - i] = temp[i];
@@ -559,7 +666,7 @@ public class ControlFragment extends Fragment {
 
 
     private void initCtrl(){
-        MyCtrl ctrlFocus = new MyCtrl(getString(R.string.gaze_holding1),R.color.colorGray,R.drawable.icon_focus_uncheck,R.drawable.switch_off);
+        MyCtrl ctrlFocus = new MyCtrl(getString(R.string.control_focus),R.color.colorGray,R.drawable.icon_focus_uncheck,R.drawable.switch_off);
         ctrlFocus.setTextColor(getResources().getColor(R.color.colorGray));
         ctrlList.add(ctrlFocus);
         MyCtrl ctrlPursuit = new MyCtrl(getString(R.string.smooth_pursuit),R.color.colorGray, R.drawable.icon_pursuit_uncheck,R.drawable.switch_off);
@@ -568,10 +675,10 @@ public class ControlFragment extends Fragment {
         MyCtrl ctrlSaccades = new MyCtrl(getString(R.string.saccades),R.color.colorGray,R.drawable.icon_saccades_uncheck,R.drawable.switch_off);
         ctrlSaccades.setTextColor(getResources().getColor(R.color.colorGray));
         ctrlList.add(ctrlSaccades);
-        MyCtrl ctrlShake = new MyCtrl(getString(R.string.gaze_holding2),R.color.colorGray, R.drawable.icon_shake_uncheck,R.drawable.switch_off);
+        MyCtrl ctrlShake = new MyCtrl(getString(R.string.control_shake),R.color.colorGray, R.drawable.icon_shake_uncheck,R.drawable.switch_off);
         ctrlShake.setTextColor(getResources().getColor(R.color.colorGray));
         ctrlList.add(ctrlShake);
-        MyCtrl ctrlGaze = new MyCtrl(getString(R.string.gaze_holding3),R.color.colorGray, R.drawable.icon_gaze_uncheck,R.drawable.switch_off);
+        MyCtrl ctrlGaze = new MyCtrl(getString(R.string.control_gaze),R.color.colorGray, R.drawable.icon_gaze_uncheck,R.drawable.switch_off);
         ctrlGaze.setTextColor(getResources().getColor(R.color.colorGray));
         ctrlList.add(ctrlGaze);
 

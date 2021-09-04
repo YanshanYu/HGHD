@@ -29,13 +29,19 @@
 
     <!--  ControlFragment -->
     <string name="visual_target">视靶</string>
-    <string name="gaze_holding1">注视</string>
-    <string name="gaze_holding2">反向追踪</string>
-    <string name="gaze_holding3">凝视</string>
+    <string name="control_focus">注视</string>
+    <string name="control_shake">反向追踪</string>
+    <string name="control_gaze">凝视</string>
     <string name="smooth_pursuit">追踪</string>
     <string name="saccades">扫视</string>
     <string name="control_video">视频</string>
     <string name="control_settings">设置</string>
+    <string name="control_current_value">当前值：</string>
+    <string name="control_alert_cancel">取消</string>
+    <string name="control_alert_ok">确定</string>
+    <string name="control_speed">速度</string>
+    <string name="control_frequency">频率</string>
+    <string name="control_gain">增益</string>
 
 
     <!--  InfoFragment -->
