@@ -10,7 +10,9 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -21,6 +23,8 @@ import android.widget.Toolbar;
 import com.yu.zehnit.tools.Bluetooth;
 import com.yu.zehnit.tools.Task;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 
 import cn.wandersnail.ble.Connection;
@@ -47,6 +51,7 @@ public class TaskActivity extends BaseActivity implements EventObserver {
     private TextView mtvTitle;
     private int mDuration;
     private CountDownTimer mTimer;
+    private Timer mHeadMovetimer;
     private Toolbar toolbar;
     private Bluetooth bluetooth;
     private Connection conn;
@@ -54,6 +59,8 @@ public class TaskActivity extends BaseActivity implements EventObserver {
     private ProgressDialog progressDialog;
     private float pitch,yaw,roll;
     private float offset_yaw=0;
+    private boolean setOffsetFlag=false;
+    private int moveHeadCount=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,27 +88,38 @@ public class TaskActivity extends BaseActivity implements EventObserver {
         mDuration= mTask.getDuration()* mTask.getVariants();
         mtvRemaining.setText(mDuration+"s");
         setTitle();
+        mHeadMovetimer=new Timer();
+        mHeadMovetimer.schedule(timerTask,1000,20);
         mivHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 offset_yaw=yaw;
             }
         });
-
-        // 监听返回按钮
-     /*   toolbar = findViewById(R.id.toolbar_task);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });*/
     }
     protected void onResume() {
         super.onResume();
-        offset_yaw=yaw;
+      //  offset_yaw=yaw;
     }
-
+    final Handler handler=new Handler(){
+        public void handleMessage(Message msg){
+            switch (msg.what){
+                case 1:
+                    moveHead(yaw-offset_yaw);
+                    if(Math.abs(yaw-offset_yaw)>5)moveHeadCount++;
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
+    TimerTask timerTask=new TimerTask() {
+        @Override
+        public void run() {
+            Message message=new Message();
+            message.what=1;
+            handler.sendMessage(message);
+        }
+    };
     private void setTitle() {
         mtvTitle.setText(mTask.getCaption()+":  "+this.getString(R.string.variant)+"  "+(mTask.getCurrentVariant()+1));
     }
@@ -143,6 +161,7 @@ public class TaskActivity extends BaseActivity implements EventObserver {
     }
     private void EndTask(){
         if(null!=mTimer) mTimer.cancel();
+        if(null!=mHeadMovetimer) mHeadMovetimer.cancel();
         Intent i=new Intent();
         i.putExtra(TASK,mTask);
         setResult(Activity.RESULT_OK,i);
@@ -151,7 +170,8 @@ public class TaskActivity extends BaseActivity implements EventObserver {
         finish();
     }
     public void setupNextVariant(){
-        mTask.setVariantScore(mTask.getMaxScore());
+        mTask.setVariantScore(mTask.getMaxScore()-moveHeadCount);
+        moveHeadCount=0;
         if(mTask.incVariant()) {
             setTitle();
             PerformTaskCommand();
@@ -362,7 +382,10 @@ public class TaskActivity extends BaseActivity implements EventObserver {
             yaw=getFloat(yawByte);
             roll=getFloat(rollByte);
             Log.d(TASK, "Gyro data:" + pitch +"    "+yaw+"    "+roll);
-            moveHead((yaw-offset_yaw));
+            if(!setOffsetFlag){
+                offset_yaw=yaw;
+                setOffsetFlag=true;
+            }
         }
 
     }
