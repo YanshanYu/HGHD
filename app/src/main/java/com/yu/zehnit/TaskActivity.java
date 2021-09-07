@@ -106,7 +106,7 @@ public class TaskActivity extends BaseActivity implements EventObserver {
             switch (msg.what){
                 case 1:
                     moveHead(yaw-offset_yaw);
-                    if(Math.abs(yaw-offset_yaw)>5)moveHeadCount++;
+                  //  if(Math.abs(yaw-offset_yaw)>5)moveHeadCount++;
                     break;
             }
             super.handleMessage(msg);
@@ -170,8 +170,8 @@ public class TaskActivity extends BaseActivity implements EventObserver {
         finish();
     }
     public void setupNextVariant(){
-        mTask.setVariantScore(mTask.getMaxScore()-moveHeadCount);
-        moveHeadCount=0;
+        mTask.setVariantScore(mTask.getMaxScore());
+      //  moveHeadCount=0;
         if(mTask.incVariant()) {
             setTitle();
             PerformTaskCommand();
