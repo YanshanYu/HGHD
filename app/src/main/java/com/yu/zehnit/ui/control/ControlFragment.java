@@ -276,6 +276,7 @@ public class ControlFragment extends Fragment {
                         case 0:
                             break;
                         case 1:
+
                             final AlertDialog builder1 = new AlertDialog.Builder(getActivity()).create();
                             builder1.show();
                             builder1.getWindow().setContentView(R.layout.alert_dialog_layout);
