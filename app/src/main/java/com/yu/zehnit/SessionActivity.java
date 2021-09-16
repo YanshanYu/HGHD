@@ -2,6 +2,7 @@ package com.yu.zehnit;
 import com.gyf.immersionbar.ImmersionBar;
 import com.yu.zehnit.ui.sessions.Session;
 import com.yu.zehnit.tools.Task;
+import com.yu.zehnit.ui.sessions.SessionDataManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -13,6 +14,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
+
+import java.util.Date;
 
 import cn.wandersnail.ble.EventObserver;
 
@@ -36,11 +39,11 @@ public class SessionActivity extends BaseActivity implements EventObserver {
     // we have 5 tasks, each (but SPN) has 3 variants
     private final int[]mMaxVars={1,3,3,3,3};
     // Duration in seconds for each tasks, all variants of a task have the same duration
-    private final int[]mDurations={10,11,12,13,14};
+    private final int[]mDurations={10,10,10,10,10};
     private final int[][] mScores ={{10,0,0},{15,16,17},{18,19,20},{21,22,23},{24,25,26}};
     //Parameter set for the task variants
     private final float[][]mFrequencies={{0,0,0},{0.2f,0.4f,0.6f},{0.2f,0.4f,0.6f},{0,0,0},{0,0,0}};
-    private final float[][]mGains={{0,0,0},{0,0,0},{0,0,0},{2,2,2},{0.2f,0.5f,1}};
+    private final float[][]mGains={{0,0,0},{0,0,0},{0,0,0},{0.4f,0.7f,1},{0,-0.3f,-0.6f}};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,22 +53,7 @@ public class SessionActivity extends BaseActivity implements EventObserver {
                 .fitsSystemWindows(true).init();
         // requestWindowFeature(Window.FEATURE_NO_TITLE);
         setResult(Activity.RESULT_CANCELED);
-        if(savedInstanceState!=null)
-        {
-            SessionNumber=savedInstanceState.getInt(NUM);
-            mSession=(Session) savedInstanceState.getSerializable(SESSION);
-            mIsPerformed=savedInstanceState.getBooleanArray(PERFORMED);
-        }else{
-            SessionNumber=getIntent().getIntExtra("NO",0);
-            mSession=new Session();
-            mIsPerformed=new boolean[MainActivity.TASKCAPTIONS.length];
-            for(int i=0;i<MainActivity.TASKCAPTIONS.length;i++){
-                mIsPerformed[i]=false;
-            }
-        }
         sessionTitle=this.findViewById(R.id.session_title);
-        sessionTitle.setText(this.getString(R.string.sessions)+(SessionNumber+1));
-      //  setTitle("VertiBand:Session"+(SessionNumber+1));
         mtvCaptions[0]=findViewById(R.id.tvspn);
         mtvCaptions[1]=findViewById(R.id.tvpursuit);
         mtvCaptions[2]=findViewById(R.id.tvsaccades);
@@ -77,6 +65,32 @@ public class SessionActivity extends BaseActivity implements EventObserver {
         mtvScores[3]=findViewById(R.id.tvscorevorsupp);
         mtvScores[4]=findViewById(R.id.tvscorevortrain);
         mtvTotalScore=findViewById(R.id.tvscoretotal);
+        if(savedInstanceState!=null)
+        {
+            SessionNumber=savedInstanceState.getInt(NUM);
+            mSession=(Session) savedInstanceState.getSerializable(SESSION);
+            mIsPerformed=savedInstanceState.getBooleanArray(PERFORMED);
+        }else{
+            SessionNumber=getIntent().getIntExtra("NO",0);
+            if(SessionNumber< SessionDataManager.getSize()){
+                mSession=SessionDataManager.getSession(SessionNumber);
+                sessionTitle.setText(this.getString(R.string.sessions)+(SessionNumber));
+                for(int i=0;i<5;i++){
+                    mtvScores[i].setText(Integer.toString(mSession.getTaskScore(i)));
+                }
+                mtvTotalScore.setText(Integer.toString(mSession.getTotalScore()));
+
+            }else{
+                mSession=new Session();
+                mIsPerformed=new boolean[MainActivity.TASKCAPTIONS.length];
+                for(int i=0;i<MainActivity.TASKCAPTIONS.length;i++){
+                    mIsPerformed[i]=false;
+                }
+                sessionTitle.setText(this.getString(R.string.sessions)+(SessionNumber+1));
+            }
+        }
+
+
        // for(int i=0;i<AMOUNTTASKS;i++){
             //mtvCaptions[i].setText(MainActivity.TASKCAPTIONS[i]);
         //    captionString[i]=mtvCaptions[i].getText().toString();
@@ -152,9 +166,10 @@ public class SessionActivity extends BaseActivity implements EventObserver {
         if(requestCode==REQUEST_TASK){
             Task t= (Task)data.getSerializableExtra(TaskActivity.TASK);
             mSession.setTaskScore(t.getTaskNo(),t.getTotalScore());
+            mSession.setDate(new Date());
             mtvScores[t.getTaskNo()].setText(Integer.toString(t.getTotalScore()));
             mtvTotalScore.setText(Integer.toString(mSession.getTotalScore()));
-            if(!mIsPerformed[t.getTaskNo()])mIsPerformed[t.getTaskNo()]=t.getTotalScore()>0;
+           // if(!mIsPerformed[t.getTaskNo()])mIsPerformed[t.getTaskNo()]=t.getTotalScore()>0;
         }
     }
 

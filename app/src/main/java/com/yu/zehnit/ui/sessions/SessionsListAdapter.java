@@ -15,23 +15,27 @@ import com.yu.zehnit.R;
 import org.w3c.dom.Text;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 class SessionsListAdapter extends BaseAdapter {
     private final int mColSelected;
     private final Context mContext;
-    SessionsListAdapter(Context context){
+    private final ArrayList<Session> mSessions;
+    SessionsListAdapter(Context context, ArrayList<Session> sessions){
         super();
-        mContext=context;
+        this.mContext=context;
+        this.mSessions=sessions;
         mColSelected= ContextCompat.getColor(mContext, R.color.colorPrimary);
     }
     @Override
     public int getCount() {
-        return SessionDataManager.getSize();
+        return mSessions!=null? mSessions.size():0 ;
     }
 
     @Override
     public Object getItem(int position) {
-        return SessionDataManager.getSession(position);
+        return mSessions.get(position);
     }
 
     @Override
@@ -58,12 +62,13 @@ class SessionsListAdapter extends BaseAdapter {
         else{
             holder=(ViewHolder) convertView.getTag();
         }
-        Session p=SessionDataManager.getSession(position);
-        if(null==p)return null;
+        //Session p=SessionDataManager.getSession(position);
+        //if(null==p)return null;
         holder.mtvNo.setText(Integer.toString(position+1));
-        DateFormat df= android.text.format.DateFormat.getDateFormat(mContext);
-        holder.mtvDate.setText(df.format(p.getDate()));
-        holder.mtvScore.setText(Integer.toString(p.getTotalScore()));
+      //  DateFormat df= android.text.format.DateFormat.getDateFormat(mContext);
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        holder.mtvDate.setText(sdf.format(mSessions.get(position).getDate()));
+        holder.mtvScore.setText(Integer.toString(mSessions.get(position).getTotalScore()));
         convertView.setBackgroundColor(position==SessionDataManager.getSelectedSessionIndex()?mColSelected: Color.TRANSPARENT);
 
         return convertView;

@@ -199,7 +199,7 @@ public class MainActivity extends BaseActivity implements EventObserver {
         progressDialog.show();
     }
 
-    private void connectEqp() {
+    public void connectEqp() {
         if (bluetoothIsOn()) {
             ConnectionConfiguration config = new ConnectionConfiguration();
             config.setConnectTimeoutMillis(10000);
@@ -239,8 +239,8 @@ public class MainActivity extends BaseActivity implements EventObserver {
                 equipment.setText(getString(R.string.online));
                 adapter.notifyDataSetChanged();
                 // 发送指令检查视靶是否打开
-                byte[] data = new byte[]{(byte) 0xC0, 0x01, 0x17, 0x00, 0x00, (byte) 0xC0};
-                writeCharacteristic(data);
+               // byte[] data = new byte[]{(byte) 0xC0, 0x01, 0x17, 0x00, 0x00, (byte) 0xC0};
+               // writeCharacteristic(data);
                 break;
         }
     }

@@ -84,7 +84,6 @@ public class ControlFragment extends Fragment {
         tvSettings=root.findViewById(R.id.tvsettings);
         btStart=root.findViewById(R.id.btn_start);
 
-
         optionLayout.setVisibility(View.INVISIBLE);
         RecyclerView recyclerView = root.findViewById(R.id.recycle_view_ctrl);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -131,7 +130,7 @@ public class ControlFragment extends Fragment {
 
                 } else {
                     // 其他item处于点击状态
-                    Toast.makeText(getContext(), "请关闭之前的控制开关，再进行新的操作", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(R.string.control_alert_click), Toast.LENGTH_SHORT).show();
                 }
                 // 监听数据改变
                 adapter.notifyDataSetChanged();

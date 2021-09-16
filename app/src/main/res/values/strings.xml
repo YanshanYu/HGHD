@@ -42,6 +42,7 @@
     <string name="control_speed">速度</string>
     <string name="control_frequency">频率</string>
     <string name="control_gain">增益</string>
+    <string name="control_alert_click">请关闭当前的控制开关，再进行新的操作</string>
 
 
     <!--  InfoFragment -->
@@ -106,11 +107,13 @@
     <string name="score">得分</string>
     <string name="delete">删除</string>
     <string name="chart">图表</string>
+    <string name="reperform">重做</string>
     <string name="alert_add_data">请添加自定义方案</string>
 
     <!--    Task Activity   -->
     <string name="task">任务</string>
     <string name="total_score">总分:</string>
+    <string name="task_toast_alert">设备正在运行中，请在动作停止后观看视频</string>
 
     <!--    Task Activity   -->
     <string name="remaining_time">剩余时间:</string>

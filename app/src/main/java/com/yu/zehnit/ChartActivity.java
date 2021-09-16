@@ -27,6 +27,7 @@ import com.yu.zehnit.ui.sessions.Session;
 import com.yu.zehnit.ui.sessions.SessionDataManager;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,6 +88,7 @@ public class ChartActivity extends BaseActivity {
         int amount_columns= SessionDataManager.getSize();
         mColCcaptions = new String[amount_columns];
         DateFormat df = android.text.format.DateFormat.getDateFormat(this);
+       // SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd HH:mm");
         for(int i=0;i<amount_columns;i++){
             Session session= SessionDataManager.getSession(i);
             assert session != null;
@@ -149,8 +151,7 @@ public class ChartActivity extends BaseActivity {
     public BarData getBarData(){
         ArrayList<BarEntry> values = new ArrayList<>();
         int amount_columns= SessionDataManager.getSize();
-        DateFormat df = android.text.format.DateFormat.getDateFormat(this);
-        for (int s = 0; s < amount_columns; s++) {
+        for (int s = 0; s <amount_columns; s++) {
             float[] taskscores= new float[Session.AMOUNT_TASKS];
             Session session= SessionDataManager.getSession(s);
             assert session != null;
