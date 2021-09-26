@@ -2,15 +2,12 @@ package com.yu.zehnit;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.media.AudioAttributes;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
@@ -24,21 +21,17 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
-import com.yu.zehnit.tools.AudioTrackManger;
 import com.yu.zehnit.tools.Bluetooth;
 import com.yu.zehnit.tools.MovingAverage;
 import com.yu.zehnit.tools.SharedPreferencesUtils;
 import com.yu.zehnit.tools.Task;
 
-import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
 
 import cn.wandersnail.ble.Connection;
-import cn.wandersnail.ble.ConnectionConfiguration;
 import cn.wandersnail.ble.Device;
 import cn.wandersnail.ble.EasyBLE;
 import cn.wandersnail.ble.EventObserver;
@@ -47,10 +40,7 @@ import cn.wandersnail.ble.RequestBuilder;
 import cn.wandersnail.ble.RequestBuilderFactory;
 import cn.wandersnail.ble.callback.NotificationChangeCallback;
 import cn.wandersnail.ble.callback.ReadCharacteristicCallback;
-import cn.wandersnail.commons.poster.RunOn;
-import cn.wandersnail.commons.poster.ThreadMode;
 import cn.wandersnail.commons.util.StringUtils;
-import cn.wandersnail.commons.util.ToastUtils;
 import cn.wandersnail.widget.dialog.DefaultAlertDialog;
 
 public class TaskActivity extends BaseActivity implements EventObserver {
@@ -80,7 +70,9 @@ public class TaskActivity extends BaseActivity implements EventObserver {
     private MovingAverage movingAverage;
     MediaPlayer mMediaPlayer;
     MediaPlayer mplayerBeforeStart;
-    private boolean voicePlaying=false;
+    private boolean voicePlaying=true;
+    private boolean beepVoice=false;
+    private String language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +97,7 @@ public class TaskActivity extends BaseActivity implements EventObserver {
         beepId=mSoundPool.load(this,R.raw.beep,1);
         //noMoveHeadId=mSoundPool.load(this,R.raw.alert_no_move_head,1);
         SharedPreferencesUtils.setFileName("info");
-        String language=(String) SharedPreferencesUtils.getParam(this, "language", "");
+        language=(String) SharedPreferencesUtils.getParam(this, "language", "");
         if("zh".equals(language)){
             mMediaPlayer=MediaPlayer.create(this,R.raw.alert_no_move_head_zh);
         }else{
@@ -115,9 +107,11 @@ public class TaskActivity extends BaseActivity implements EventObserver {
         mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                voicePlaying=false;
+                voicePlaying=true;
             }
         });
+
+        SwitchOnLaserCommand();
         movingAverage=new MovingAverage(25);
         mtvRemaining=findViewById(R.id.tvremaining);
         mivHead=findViewById(R.id.ivhead);
@@ -129,7 +123,7 @@ public class TaskActivity extends BaseActivity implements EventObserver {
             mTask=(Task) getIntent().getSerializableExtra(TASK);
         }
         mtvTitle=findViewById(R.id.tvtaskcaption);
-        mDuration= mTask.getDuration()* mTask.getVariants();
+        mDuration= mTask.getDuration()* mTask.getVariants()+8;
         mtvRemaining.setText(mDuration+"s");
         setTitle();
         mHeadMovetimer=new Timer();
@@ -157,13 +151,14 @@ public class TaskActivity extends BaseActivity implements EventObserver {
                         mMediaPlayer.start();
                         voicePlaying=true;
                     }*/
-                    Log.e(TASK,String.valueOf(movingAverage.Average((int)(yaw-offset_yaw))));
+                   // Log.e(TASK,String.valueOf(movingAverage.Average((int)(yaw-offset_yaw))));
                     if(!voicePlaying&&(movingAverage.Average((int)(yaw-offset_yaw))>10)){
                         mMediaPlayer.start();
-                        voicePlaying=true;
+
                     }
                   //  if(Math.abs(yaw-offset_yaw)>5)moveHeadCount++;
                     break;
+
             }
             super.handleMessage(msg);
         }
@@ -179,7 +174,7 @@ public class TaskActivity extends BaseActivity implements EventObserver {
             }
             if(currentFre!=0) {
                 int k=(int)(50/currentFre);
-                if (movementStart && (count %k == 0)) mSoundPool.play(beepId, 1, 1, 1, 0, 1);
+                if (beepVoice && (count %k == 0)) mSoundPool.play(beepId, 1, 1, 1, 0, 1);
             }
         }
     };
@@ -204,19 +199,31 @@ public class TaskActivity extends BaseActivity implements EventObserver {
 
     public void onRunClick(View view){
         btnRun.setEnabled(false);
-        SwitchOnLaserCommand();
+        movementStart=true;
 
         switch (mTask.getTaskNo()){
             case 0:
-                mplayerBeforeStart=MediaPlayer.create(this,R.raw.alert_focus);
+                if("zh".equals(language)) {
+                    mplayerBeforeStart = MediaPlayer.create(this, R.raw.alert_focus_zh);
+                } else{
+                    mplayerBeforeStart=MediaPlayer.create(this,R.raw.alert_focus_en);
+                }
                 break;
             case 1:
             case 2:
-                mplayerBeforeStart=MediaPlayer.create(this,R.raw.alert_pursuit_saccades);
+                if("zh".equals(language)) {
+                    mplayerBeforeStart = MediaPlayer.create(this, R.raw.alert_pursuit_saccades_zh);
+                }else{
+                    mplayerBeforeStart=MediaPlayer.create(this,R.raw.alert_pursuit_saccades_en);
+                }
                 break;
             case 3:
             case 4:
-                mplayerBeforeStart=MediaPlayer.create(this,R.raw.alert_shake_gaze);
+                if("zh".equals(language)) {
+                    mplayerBeforeStart = MediaPlayer.create(this, R.raw.alert_shake_gaze_zh);
+                }else{
+                    mplayerBeforeStart=MediaPlayer.create(this,R.raw.alert_shake_gaze_en);
+                }
                 break;
         }
         mplayerBeforeStart.start();
@@ -225,10 +232,9 @@ public class TaskActivity extends BaseActivity implements EventObserver {
                 @Override
                 public void onCompletion(MediaPlayer mp) {
                     PerformTaskCommand();
-                    movementStart=true;
                     mplayerBeforeStart.release();
                     mplayerBeforeStart=null;
-                    mTimer.start();
+
                 }
             });
         }
@@ -240,7 +246,16 @@ public class TaskActivity extends BaseActivity implements EventObserver {
 
                 int elapsed=mTask.getDuration()*mTask.getVariants()-rest;
                 if(elapsed%mTask.getDuration()==0&&elapsed!=0) {
-                    setupNextVariant();
+                    EndTaskCommand();
+                    mTask.setVariantScore(mTask.getMaxScore());
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            setupNextVariant();
+                        }
+                    },1000);
+
+
                 }
                 runOnUiThread(()->mtvRemaining.setText(rest+"s"));
             }
@@ -250,7 +265,7 @@ public class TaskActivity extends BaseActivity implements EventObserver {
                 EndTask();
             }
         };
-
+        mTimer.start();
 
     }
     public void onEndClick(View view){
@@ -273,12 +288,9 @@ public class TaskActivity extends BaseActivity implements EventObserver {
         finish();
     }
     public void setupNextVariant(){
-        mTask.setVariantScore(mTask.getMaxScore());
-        EndTaskCommand();
-      //  moveHeadCount=0;
+
         if(mTask.incVariant()) {
             setTitle();
-            SwitchOnLaserCommand();
             PerformTaskCommand();
             Log.e("setupNextVariant","current task"+mTask.getFrequency());
         }
@@ -298,7 +310,6 @@ public class TaskActivity extends BaseActivity implements EventObserver {
         byte[]data;
         currentFre=mTask.getFrequency();
         float gain=mTask.getGain();
-        Log.e("yu","current task"+mTask.getFrequency());
 
             switch (mTask.getTaskNo()) {
             //Focus
@@ -383,6 +394,7 @@ public class TaskActivity extends BaseActivity implements EventObserver {
             //Shake
             case 3:
                 voicePlaying=true;
+                beepVoice=true;
                 byte[] shakeGainData=new byte[10];
                 shakeGainData[0] = (byte) 0xC0;
                 shakeGainData[1] = 0x01;
@@ -396,11 +408,11 @@ public class TaskActivity extends BaseActivity implements EventObserver {
                     shakeGainData[8 - i] = temp[i];
                 }
                 bluetooth.writeCharacteristic(conn,shakeGainData);
-
-
-                //Gaze
+                break;
+            //Gaze
             case 4:
                 voicePlaying=true;
+                beepVoice=true;
                 byte[] gazeGainData=new byte[10];
                 gazeGainData[0] = (byte) 0xC0;
                 gazeGainData[1] = 0x01;
@@ -414,6 +426,7 @@ public class TaskActivity extends BaseActivity implements EventObserver {
                     gazeGainData[8 - i] = temp[i];
                 }
                 bluetooth.writeCharacteristic(conn,gazeGainData);
+                break;
         }
     }
     public void EndTaskCommand(){
@@ -466,7 +479,6 @@ public class TaskActivity extends BaseActivity implements EventObserver {
         accum = accum|(b[1] & 0xff) << 8;
         accum = accum|(b[2] & 0xff) << 16;
         accum = accum|(b[3] & 0xff) << 24;
-        System.out.println(accum);
         return Float.intBitsToFloat(accum);
     }
     private void moveHead(float angles){

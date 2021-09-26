@@ -39,10 +39,10 @@ public class SessionActivity extends BaseActivity implements EventObserver {
     // we have 5 tasks, each (but SPN) has 3 variants
     private final int[]mMaxVars={1,3,3,3,3};
     // Duration in seconds for each tasks, all variants of a task have the same duration
-    private final int[]mDurations={10,10,10,10,10};
+    private final int[]mDurations={30,40,40,40,40};
     private final int[][] mScores ={{10,0,0},{15,16,17},{18,19,20},{21,22,23},{24,25,26}};
     //Parameter set for the task variants
-    private final float[][]mFrequencies={{0,0,0},{0.2f,0.4f,0.6f},{0.2f,0.4f,0.6f},{0,0,0},{0,0,0}};
+    private final float[][]mFrequencies={{0,0,0},{0.2f,0.4f,0.6f},{0.2f,0.4f,0.6f},{0.2f,0.3f,0.4f},{0.2f,0.3f,0.4f}};
     private final float[][]mGains={{0,0,0},{0,0,0},{0,0,0},{0.4f,0.7f,1},{0,-0.3f,-0.6f}};
 
     @Override
@@ -72,11 +72,13 @@ public class SessionActivity extends BaseActivity implements EventObserver {
             mIsPerformed=savedInstanceState.getBooleanArray(PERFORMED);
         }else{
             SessionNumber=getIntent().getIntExtra("NO",0);
+            mIsPerformed=new boolean[MainActivity.TASKCAPTIONS.length];
             if(SessionNumber< SessionDataManager.getSize()){
                 mSession=SessionDataManager.getSession(SessionNumber);
                 sessionTitle.setText(this.getString(R.string.sessions)+(SessionNumber));
                 for(int i=0;i<5;i++){
                     mtvScores[i].setText(Integer.toString(mSession.getTaskScore(i)));
+                    mIsPerformed[i]=false;
                 }
                 mtvTotalScore.setText(Integer.toString(mSession.getTotalScore()));
 
@@ -86,8 +88,9 @@ public class SessionActivity extends BaseActivity implements EventObserver {
                 for(int i=0;i<MainActivity.TASKCAPTIONS.length;i++){
                     mIsPerformed[i]=false;
                 }
-                sessionTitle.setText(this.getString(R.string.sessions)+(SessionNumber+1));
+
             }
+            sessionTitle.setText(this.getString(R.string.sessions)+(SessionNumber+1));
         }
 
 
