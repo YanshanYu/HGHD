@@ -11,31 +11,32 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.yu.zehnit.ChartActivity;
 import com.yu.zehnit.R;
 import com.yu.zehnit.SessionActivity;
-import com.yu.zehnit.SettingActivity;
-import com.yu.zehnit.tools.OnRecycleViewItemClickListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 
 public class SessionsFragment extends Fragment {
     private SessionsViewModel sessionsViewModel;
     private SessionsListAdapter mlaSessionListAdapter;
     private LinearLayout mbtDelete;
     private LinearLayout mbtNew;
-    private LinearLayout mbtChart;
-    private ImageView ivDelete;
-    private TextView tvDelete;
+    private LinearLayout mbtReperform;
+    private ImageButton mbtChart;
+    private ImageView ivDelete,ivReperform;
+    private TextView tvDelete,tvReperform;
     private ArrayList<Session> sessionList = new ArrayList<>();
+    private Boolean mReperform=false;
 
     public SessionsFragment() {
         // Required empty public constructor
@@ -47,75 +48,20 @@ public class SessionsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_sessions, container, false);
-
-      /*  sessionsViewModel =
-                new ViewModelProvider(this).get(SessionsViewModel.class);
-        RecyclerView recyclerView = root.findViewById(R.id.recycle_view_sessions);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        mlaSessionAdapter=new SessionsAdapter(sessionList);
-        sessionDataManager=new SessionDataManager();
-        mlaSessionAdapter.setListener(new OnRecycleViewItemClickListener(){
-            @Override
-            public void onClick(int pos) {
-                SessionDataManager.setSelectedSessionIndex(pos);
-                mlaSessionAdapter.notifyDataSetChanged();
-                setButtonEnable();
-            }
-        });
-        recyclerView.setAdapter(mlaSessionAdapter);
-
-        deleteBtn=root.findViewById(R.id.btdelete);
-        deleteBtn.setBackgroundResource(R.drawable.icon_delete);
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SessionDataManager.removeSelectedPatient();
-                mlaSessionAdapter.notifyDataSetChanged();
-            }
-        });
-        chartBtn=root.findViewById(R.id.btchart);
-        chartBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i=new Intent(getActivity(),ChartActivity.class);
-                startActivity(i);
-            }
-        });
-
-        addBtn=root.findViewById(R.id.btadd);
-        addBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), SessionActivity.class);
-                intent.putExtra("NO",sessionDataManager.getSize());
-                startActivityForResult(intent,15);
-            }
-        });
-
-
-        return root;
-    }
-    private void setButtonEnable(){
-        boolean selected=(SessionDataManager.getSelectedSessionIndex()>=0);
-        mbtDelete.setEnabled(selected);
-    }
-    @Override
-    public void onActivityResult(int requestCode,int resultCode,Intent data){
-        if(Activity.RESULT_OK!=resultCode)return;
-        if(15==requestCode){
-            Session session=(Session) data.getSerializableExtra(SessionActivity.SESSION);
-            if(session.getTotalScore()>0){
-                SessionDataManager.addSession(session);
-                mlaSessionAdapter.notifyDataSetChanged();
-            }
-        }
-    }
-}*/
-
         ListView lvsessions = root.findViewById(R.id.lvsessions);
-        mlaSessionListAdapter = new SessionsListAdapter(getActivity());
+        mlaSessionListAdapter = new SessionsListAdapter(getActivity(),SessionDataManager.getSessions());
+        Collections.sort(SessionDataManager.getSessions(), new Comparator<Session>() {
+            @Override
+            public int compare(Session s1, Session s2) {
+                Date date1=s1.getDate();
+                Date date2=s2.getDate();
+                if(date1.before(date2)) return 1;
+                return -1;
+            }
+        });
         lvsessions.setAdapter(mlaSessionListAdapter);
+        lvsessions.setSelection(-1);
+        SessionDataManager.setSelectedSessionIndex(-1);
         lvsessions.setOnItemClickListener((adapterView, view, i, l) -> {
             SessionDataManager.setSelectedSessionIndex(i);
             mlaSessionListAdapter.notifyDataSetChanged();
@@ -123,9 +69,12 @@ public class SessionsFragment extends Fragment {
         });
         mbtNew = root.findViewById(R.id.btn_add);
         mbtDelete = root.findViewById(R.id.btn_delete);
-        mbtChart = root.findViewById(R.id.btn_chart);
+        mbtReperform = root.findViewById(R.id.btn_reperform);
+        mbtChart=root.findViewById(R.id.btn_chart);
         ivDelete=root.findViewById(R.id.ivdelete);
         tvDelete=root.findViewById(R.id.tvdelete);
+        ivReperform=root.findViewById(R.id.ivreperform);
+        tvReperform=root.findViewById(R.id.tvreperform);
 
         mbtNew.setOnClickListener(view -> {
             Intent i = new Intent(getActivity(), SessionActivity.class);
@@ -134,21 +83,51 @@ public class SessionsFragment extends Fragment {
         });
         mbtDelete.setOnClickListener(view -> {
             SessionDataManager.removeSelectedPatient();
+            setButtonsEnable();
             mlaSessionListAdapter.notifyDataSetChanged();
         });
 
         mbtChart.setOnClickListener(view -> {
-            Intent i = new Intent(getActivity(), ChartActivity.class);
-            startActivity(i);
+            int amount= SessionDataManager.getSize();
+            if(amount==0){
+                Toast.makeText(getContext(), getResources().getString(R.string.alert_add_data), Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Intent i = new Intent(getActivity(), ChartActivity.class);
+                startActivity(i);
+            }
+
         });
+        mbtReperform.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mReperform=true;
+                Intent i = new Intent(getActivity(), SessionActivity.class);
+                i.putExtra("NO", SessionDataManager.getSelectedSessionIndex());
+                startActivityForResult(i, 15);
+            }
+        });
+
         return root;
     }
 
     private void setButtonsEnable() {
         boolean selected = (SessionDataManager.getSelectedSessionIndex() >= 0);
-        mbtDelete.setEnabled(selected);
-        ivDelete.setImageResource(R.drawable.icon_delete_click);
-        tvDelete.setTextColor(getResources().getColor(R.color.colorDarkGray));
+        if(selected) {
+            mbtDelete.setEnabled(true);
+            mbtReperform.setEnabled(true);
+            ivDelete.setImageResource(R.drawable.icon_delete_click);
+            tvDelete.setTextColor(getResources().getColor(R.color.colorDarkGray));
+            ivReperform.setImageResource(R.drawable.icon_reperform_checked);
+            tvReperform.setTextColor(getResources().getColor(R.color.colorDarkGray));
+        }else{
+            mbtDelete.setEnabled(false);
+            mbtReperform.setEnabled(false);
+            ivDelete.setImageResource(R.drawable.icon_delete);
+            tvDelete.setTextColor(getResources().getColor(R.color.colorBlueGray));
+            ivReperform.setImageResource(R.drawable.icon_reperform_uncheck);
+            tvReperform.setTextColor(getResources().getColor(R.color.colorBlueGray));
+        }
 
     }
 
@@ -157,9 +136,14 @@ public class SessionsFragment extends Fragment {
         if (Activity.RESULT_OK != resultCode) return;
         if (15 == requestCode) {
             Session session = (Session) data.getSerializableExtra(SessionActivity.SESSION);
-            if (session.getTotalScore() > 0) {
-                SessionDataManager.addSession(session);
-                mlaSessionListAdapter.notifyDataSetChanged();
+            if(session.getTotalScore()>0){
+                if(mReperform) {
+                    SessionDataManager.updateSession(SessionDataManager.getSelectedSessionIndex(), session);
+                    mlaSessionListAdapter.notifyDataSetChanged();
+                }else{
+                    SessionDataManager.addSession(session);
+                    mlaSessionListAdapter.notifyDataSetChanged();
+                }
             }
         }
     }

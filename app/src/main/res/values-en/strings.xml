@@ -24,12 +24,20 @@
 
     <!--  ControlFragment -->
     <string name="visual_target">Visual Target</string>
-    <string name="gaze_holding1">Focus</string>
-    <string name="gaze_holding2">Shake</string>
-    <string name="gaze_holding3">Gaze</string>
+    <string name="control_focus">Focus</string>
+    <string name="control_shake">Shake</string>
+    <string name="control_gaze">Gaze</string>
     <string name="smooth_pursuit">Pursuit</string>
     <string name="saccades">Jump</string>
-
+    <string name="control_video">Video</string>
+    <string name="control_settings">Setting</string>
+    <string name="control_current_value">Current Value:</string>
+    <string name="control_alert_cancel">Cancel</string>
+    <string name="control_alert_ok">OK</string>
+    <string name="control_speed">Speed</string>
+    <string name="control_frequency">Frequency</string>
+    <string name="control_gain">Gain</string>
+    <string name="control_alert_click">Please switch off the current item and then select a new item</string>
 
     <!--  InfoFragment -->
     <string name="training_target">Training Target</string>
@@ -99,6 +107,8 @@
     <string name="score">Score</string>
     <string name="delete">Delete</string>
     <string name="chart">Chart</string>
+    <string name="reperform">Reperform</string>
+    <string name="alert_add_data">No data!</string>
 
     <!--    Sessions Activity   -->
     <string name="task">Tasks</string>
@@ -107,6 +117,7 @@
     <!--    Task Activity   -->
     <string name="remaining_time">Remaining time:</string>
     <string name="variant">Variant</string>
+    <string name="task_toast_alert">The device is running, please play the demonstration video after the device stopped.</string>
     <!--    Chart Activity  -->
     <string name="title_chart">Chart</string>
 

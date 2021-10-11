@@ -14,7 +14,11 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.StreamCorruptedException;
 import java.util.ArrayList;
- public class SessionDataManager {
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+
+public class SessionDataManager {
     private static final String SESSIONSFILE="Session_v2.srl";
     private static String mSessionFilePath;
     private static ArrayList<Session> mSessions;
@@ -44,6 +48,7 @@ import java.util.ArrayList;
         }
     }
     static void storeSessions(){
+
         try{
             ObjectOutput output=new ObjectOutputStream(new FileOutputStream(mSessionFilePath));
             output.writeObject(mSessions);
@@ -56,14 +61,21 @@ import java.util.ArrayList;
     }
     static void addSession(Session s){
         if(null==s)return;
-        mSessions.add(s);
-        mSelectedSessionIndex=mSessions.size()-1;
+        mSessions.add(0,s);
+      //  mSelectedSessionIndex=mSessions.size()-1;
         storeSessions();
+    }
+    static void updateSession(int index,Session s){
+        if(null==s)return;
+        if(index>mSessions.size())return;
+        mSessions.set(index,s);
+        storeSessions();
+
     }
     static void removeSession(int index){
         if(index<0||index>=mSessions.size())return;
         mSessions.remove(index);
-        mSelectedSessionIndex=-1;
+     //   mSelectedSessionIndex=-1;
         storeSessions();
     }
     static void removeSelectedPatient(){
@@ -81,5 +93,8 @@ import java.util.ArrayList;
     static void setSelectedSessionIndex(int index){
         if(index>=mSessions.size())return;
         mSelectedSessionIndex=index;
+    }
+    static public ArrayList<Session>getSessions(){
+        return mSessions;
     }
 }

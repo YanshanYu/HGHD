@@ -43,9 +43,10 @@ dependencies {
     implementation 'com.shuyu:GSYVideoPlayer:8.1.1'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
-
-
+   // implementation 'cn.com.superLei:blelibrary:latestVersion'
+    implementation 'cn.com.superLei:aop-arms:1.0.4'
     implementation 'cn.wandersnail:easyble-x:1.2.6'
+    //implementation 'cn.wandersnail:commons-android:1.2.4'
     implementation 'cn.wandersnail:common-full:1.1.6'
     implementation 'cn.wandersnail:widget-generic:1.1.0'
 

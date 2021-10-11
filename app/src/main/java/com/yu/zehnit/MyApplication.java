@@ -2,7 +2,7 @@ package com.yu.zehnit;
 
 import android.app.Application;
 import android.bluetooth.le.ScanSettings;
-
+import android.util.Log;
 import com.yu.zehnit.tools.EqpAdapter;
 import com.yu.zehnit.tools.Equipment;
 
@@ -15,6 +15,8 @@ import cn.wandersnail.ble.ScanConfiguration;
 import cn.wandersnail.ble.ScannerType;
 import cn.wandersnail.commons.base.AppHolder;
 import cn.wandersnail.commons.poster.ThreadMode;
+
+
 
 /**
  * 在这里定义一些全局变量，比如：设备列表和设备适配器
@@ -68,6 +70,8 @@ public class MyApplication extends Application {
 
         instance = this;
         AppHolder.initialize(this);
+       // initBleManager();
+
 
         //构建自定义实例，需要在EasyBLE.getInstance()之前
         ScanConfiguration scanConfig = new ScanConfiguration()
@@ -89,4 +93,5 @@ public class MyApplication extends Application {
     public static MyApplication getInstance() {
         return instance;
     }
+
 }

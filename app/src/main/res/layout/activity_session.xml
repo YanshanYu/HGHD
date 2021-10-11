@@ -98,7 +98,7 @@
                     android:layout_marginLeft="20dp"
                     android:textSize="16sp"
                     android:layout_weight="1"
-                    android:text="@string/gaze_holding1" />
+                    android:text="@string/control_focus" />
 
                 <TextView
                     android:id="@+id/tvscorespn"
@@ -223,7 +223,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:textSize="16sp"
-                    android:text="@string/gaze_holding2" />
+                    android:text="@string/control_shake" />
 
                 <TextView
                     android:id="@+id/tvscorevorsupp"
@@ -265,7 +265,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:textSize="16sp"
-                    android:text="@string/gaze_holding3" />
+                    android:text="@string/control_gaze" />
 
                 <TextView
                     android:id="@+id/tvscorevortrain"
