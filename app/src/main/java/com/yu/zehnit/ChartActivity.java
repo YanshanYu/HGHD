@@ -27,6 +27,7 @@ import com.yu.zehnit.ui.sessions.Session;
 import com.yu.zehnit.ui.sessions.SessionDataManager;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +59,10 @@ public class ChartActivity extends BaseActivity {
         dataChart.setDrawGridBackground(false);
         dataChart.setDrawBarShadow(false);
         dataChart.setHighlightFullBarEnabled(false);
+        dataChart.setPinchZoom(false);
+        dataChart.setScaleXEnabled(false);
+        dataChart.setScaleYEnabled(false);
+
        // dataChart.setTouchEnabled(false);
         dataChart.setDrawValueAboveBar(false);
         dataChart.setDrawOrder(new CombinedChart.DrawOrder[]{
@@ -69,7 +74,7 @@ public class ChartActivity extends BaseActivity {
         legend.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
         showDataOnChart();
         Matrix m=new Matrix();
-        m.postScale(1.5f,1f);
+        m.postScale(2.5f,1f);
         dataChart.moveViewToX(amount_columns-1);
         dataChart.getViewPortHandler().refresh(m,dataChart,false);
         dataChart.animateX(500);
@@ -83,6 +88,7 @@ public class ChartActivity extends BaseActivity {
         int amount_columns= SessionDataManager.getSize();
         mColCcaptions = new String[amount_columns];
         DateFormat df = android.text.format.DateFormat.getDateFormat(this);
+       // SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd HH:mm");
         for(int i=0;i<amount_columns;i++){
             Session session= SessionDataManager.getSession(i);
             assert session != null;
@@ -92,6 +98,8 @@ public class ChartActivity extends BaseActivity {
         xAxis.setGranularity(1f);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setLabelCount(amount_columns+1);
+        xAxis.setDrawAxisLine(false);
+        xAxis.setDrawGridLines(false);
         xAxis.setValueFormatter(new IAxisValueFormatter(){
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
@@ -102,10 +110,13 @@ public class ChartActivity extends BaseActivity {
         // set Y axis
         YAxis yAxisLeft=dataChart.getAxisLeft();
         yAxisLeft.setAxisMinimum(0f);
+        yAxisLeft.enableGridDashedLine(10f,10f,0f);
         yAxisLeft.setDrawGridLines(true);
-        YAxis rightAxis=dataChart.getAxisRight();
-        rightAxis.setDrawGridLines(false);
 
+        YAxis yAxisRight=dataChart.getAxisRight();
+        yAxisRight.setDrawGridLines(false);
+        yAxisRight.setDrawAxisLine(false);
+        yAxisRight.setDrawLabels(false);
         dataChart.setData(data);
         xAxis.setAxisMinimum(dataChart.getCombinedData().getXMin()-0.5f);
         xAxis.setAxisMaximum(dataChart.getCombinedData().getXMax()+0.5f);
@@ -126,6 +137,8 @@ public class ChartActivity extends BaseActivity {
         lineDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         lineDataSet.setColor(getResources().getColor(R.color.colorLineChart));
         lineDataSet.setCircleColor(getResources().getColor(R.color.colorLineChart));
+        lineDataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+        lineDataSet.setCubicIntensity(0.5f);
         lineDataSet.setCircleRadius(5);
         lineDataSet.setLineWidth(3);
         lineDataSet.setValueTextColor(getResources().getColor(R.color.colorLineChart));
@@ -138,8 +151,7 @@ public class ChartActivity extends BaseActivity {
     public BarData getBarData(){
         ArrayList<BarEntry> values = new ArrayList<>();
         int amount_columns= SessionDataManager.getSize();
-        DateFormat df = android.text.format.DateFormat.getDateFormat(this);
-        for (int s = 0; s < amount_columns; s++) {
+        for (int s = 0; s <amount_columns; s++) {
             float[] taskscores= new float[Session.AMOUNT_TASKS];
             Session session= SessionDataManager.getSession(s);
             assert session != null;
@@ -158,6 +170,7 @@ public class ChartActivity extends BaseActivity {
         BarData barData=new BarData(bardataset);
         barData.setValueTextSize(16f);
         barData.setBarWidth(0.5f);
+
         barData.setValueFormatter(new ValueFormatter());
         return barData;
 

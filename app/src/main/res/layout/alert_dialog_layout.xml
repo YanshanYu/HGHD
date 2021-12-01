@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/param_linearLayout"
+        android:layout_width="310dp"
+        android:layout_height="230dp"
+        android:background="@animator/shadow_item"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/tvsettings_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="视追踪实验"
+            android:textSize="18sp"
+            android:textColor="@color/colorAccent"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp">
+            <ImageView
+                android:id="@+id/icon_settings"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/frequency"
+                android:layout_marginStart="16dp"/>
+            <TextView
+                android:id="@+id/tvparam_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="频率"
+                android:textSize="16sp"
+                android:textColor="@color/colorDarkGray"
+                android:layout_marginStart="47dp" />
+            <TextView
+                android:id="@+id/param_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="16dp"
+                android:text="0Hz"
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp"/>
+
+            <SeekBar
+                android:id="@+id/param_seekBar"
+                android:layout_width="match_parent"
+                android:layout_height="37dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginTop="40dp"
+                android:background="@null"
+                android:max="100"
+                android:maxHeight="16dp"
+                android:minHeight="16dp"
+                android:progress="0"
+                android:progressDrawable="@drawable/seekbar_progress_drawable"
+                android:splitTrack="false"
+                android:thumb="@drawable/ic_sb_24dp" />
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:text="@string/control_alert_cancel"
+                android:layout_marginTop="100dp"
+                android:layout_marginStart="30dp"/>
+
+            <Button
+                android:id="@+id/btn_ok"
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="100dp"
+                android:layout_marginEnd="30dp"
+                android:layout_gravity="end"
+                android:text="@string/control_alert_ok" />
+
+        </FrameLayout>
+    </LinearLayout>
+</LinearLayout>

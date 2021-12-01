@@ -4,27 +4,33 @@
         android:layout_width="match_parent"
          android:layout_height="match_parent"
          android:orientation="vertical">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            android:background="@color/white">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        android:background="@color/white">
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:singleLine="true"
+                android:textColor="@color/colorDarkGray"
+                android:textSize="20sp"
+                android:text="@string/title_sessions"/>
+            <ImageButton
+                android:id="@+id/btn_chart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/icon_chart_click"
+                android:layout_gravity="end"
+                android:layout_marginRight="20dp"/>
 
-        <TextView
-            android:id="@+id/toolbar_title"
-            android:layout_width="wrap_content"
-            android:layout_height="44dp"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:singleLine="true"
-            android:textColor="@color/colorDarkGray"
-            android:textSize="20sp"
-            android:text="@string/title_sessions"/>
-
-    </androidx.appcompat.widget.Toolbar>
+        </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:id="@+id/linear_layout"
@@ -147,24 +153,25 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/btn_chart"
+            android:id="@+id/btn_reperform"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
             <ImageView
-                android:id="@+id/btchart"
+                android:id="@+id/ivreperform"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/icon_chart_click" />
+                android:src="@drawable/icon_reperform_uncheck" />
 
             <TextView
+                android:id="@+id/tvreperform"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="@color/colorDarkGray"
-                android:text="@string/chart"
+                android:textColor="@color/colorBlueGray"
+                android:text="@string/reperform"
                 android:textSize="17sp" />
         </LinearLayout>
 

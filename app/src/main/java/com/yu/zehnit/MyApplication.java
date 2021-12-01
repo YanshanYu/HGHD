@@ -3,8 +3,6 @@ package com.yu.zehnit;
 import android.app.Application;
 import android.bluetooth.le.ScanSettings;
 import android.util.Log;
-
-import com.ficat.easyble.BleManager;
 import com.yu.zehnit.tools.EqpAdapter;
 import com.yu.zehnit.tools.Equipment;
 
@@ -94,31 +92,6 @@ public class MyApplication extends Application {
 
     public static MyApplication getInstance() {
         return instance;
-    }
-
-    private void initBleManager() {
-        //check if this android device supports ble
-        if (!BleManager.supportBle(this)) {
-            return;
-        }
-        //open bluetooth without a request dialog
-        BleManager.toggleBluetooth(true);
-
-        BleManager.ScanOptions scanOptions = BleManager.ScanOptions
-                .newInstance()
-                .scanPeriod(8000)
-                .scanDeviceName(null);
-
-        BleManager.ConnectOptions connectOptions = BleManager.ConnectOptions
-                .newInstance()
-                .connectTimeout(12000);
-
-        BleManager manager = BleManager
-                .getInstance()
-                .setScanOptions(scanOptions)
-                .setConnectionOptions(connectOptions)
-                .setLog(true, "EasyBle")
-                .init(this);
     }
 
 }

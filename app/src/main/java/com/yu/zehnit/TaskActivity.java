@@ -2,25 +2,33 @@ package com.yu.zehnit;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
+import android.media.AudioAttributes;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toolbar;
+import android.widget.Toast;
 
 import com.yu.zehnit.tools.Bluetooth;
+import com.yu.zehnit.tools.MovingAverage;
+import com.yu.zehnit.tools.SharedPreferencesUtils;
 import com.yu.zehnit.tools.Task;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 
 import cn.wandersnail.ble.Connection;
@@ -32,14 +40,12 @@ import cn.wandersnail.ble.RequestBuilder;
 import cn.wandersnail.ble.RequestBuilderFactory;
 import cn.wandersnail.ble.callback.NotificationChangeCallback;
 import cn.wandersnail.ble.callback.ReadCharacteristicCallback;
-import cn.wandersnail.commons.poster.RunOn;
-import cn.wandersnail.commons.poster.ThreadMode;
 import cn.wandersnail.commons.util.StringUtils;
-import cn.wandersnail.commons.util.ToastUtils;
 import cn.wandersnail.widget.dialog.DefaultAlertDialog;
 
 public class TaskActivity extends BaseActivity implements EventObserver {
     public static final String TASK="Task";
+    private final static int REQUEST_ENABLE_BT = 1;
 
     private Task mTask;
     private TextView mtvRemaining;
@@ -47,12 +53,26 @@ public class TaskActivity extends BaseActivity implements EventObserver {
     private TextView mtvTitle;
     private int mDuration;
     private CountDownTimer mTimer;
-    private Toolbar toolbar;
+    private Timer mHeadMovetimer;
     private Bluetooth bluetooth;
     private Connection conn;
     private ImageButton btnRun;
     private ProgressDialog progressDialog;
     private float pitch,yaw,roll;
+    private float offset_yaw=0;
+    private boolean setOffsetFlag=false;
+    private int moveHeadCount=0;
+    private SoundPool mSoundPool;
+    private int beepId;
+    private long count=0;
+    private boolean movementStart=false;
+    private float currentFre;
+    private MovingAverage movingAverage;
+    MediaPlayer mMediaPlayer;
+    MediaPlayer mplayerBeforeStart;
+    private boolean voicePlaying=true;
+    private boolean beepVoice=false;
+    private String language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +87,32 @@ public class TaskActivity extends BaseActivity implements EventObserver {
         byte[] GyroDataOpenCommand=new byte[]{(byte) 0xC0, 0x01, 0x18, 0x00, 0x01, 0x01, (byte) 0xC0};
         bluetooth.writeCharacteristic(conn,GyroDataOpenCommand);
         setNotificationEnable();
+        AudioAttributes abs=new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_MEDIA)
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .build();
+        mSoundPool=new SoundPool.Builder().setMaxStreams(100)
+        .setAudioAttributes(abs)
+        .build();
+        beepId=mSoundPool.load(this,R.raw.beep,1);
+        //noMoveHeadId=mSoundPool.load(this,R.raw.alert_no_move_head,1);
+        SharedPreferencesUtils.setFileName("info");
+        language=(String) SharedPreferencesUtils.getParam(this, "language", "");
+        if("zh".equals(language)){
+            mMediaPlayer=MediaPlayer.create(this,R.raw.alert_no_move_head_zh);
+        }else{
+            mMediaPlayer=MediaPlayer.create(this,R.raw.alert_no_move_head_en);
+        }
+
+        mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                voicePlaying=true;
+            }
+        });
+
+        SwitchOnLaserCommand();
+        movingAverage=new MovingAverage(25);
         mtvRemaining=findViewById(R.id.tvremaining);
         mivHead=findViewById(R.id.ivhead);
         btnRun=findViewById(R.id.btrun);
@@ -77,20 +123,61 @@ public class TaskActivity extends BaseActivity implements EventObserver {
             mTask=(Task) getIntent().getSerializableExtra(TASK);
         }
         mtvTitle=findViewById(R.id.tvtaskcaption);
-        mDuration= mTask.getDuration()* mTask.getVariants();
+        mDuration= mTask.getDuration()* mTask.getVariants()+8;
         mtvRemaining.setText(mDuration+"s");
         setTitle();
-
-        // 监听返回按钮
-     /*   toolbar = findViewById(R.id.toolbar_task);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        mHeadMovetimer=new Timer();
+        mHeadMovetimer.schedule(timerTask,1000,10);
+        mivHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                offset_yaw=yaw;
             }
-        });*/
+        });
     }
 
+
+    protected void onResume() {
+        super.onResume();
+      //  offset_yaw=yaw;
+    }
+    final Handler handler=new Handler(){
+        public void handleMessage(Message msg){
+            switch (msg.what){
+                case 1:
+                    moveHead(yaw-offset_yaw);
+                   /* Log.e(TASK,String.valueOf(movingAverage.Average((int)(yaw-offset_yaw))));
+                    if(!voicePlaying&&(Math.abs(movingAverage.Average((int)(yaw-offset_yaw)))>10)){
+                        mMediaPlayer.start();
+                        voicePlaying=true;
+                    }*/
+                   // Log.e(TASK,String.valueOf(movingAverage.Average((int)(yaw-offset_yaw))));
+                    if(!voicePlaying&&(movingAverage.Average((int)(yaw-offset_yaw))>10)){
+                        mMediaPlayer.start();
+
+                    }
+                  //  if(Math.abs(yaw-offset_yaw)>5)moveHeadCount++;
+                    break;
+
+            }
+            super.handleMessage(msg);
+        }
+    };
+    TimerTask timerTask=new TimerTask() {
+        @Override
+        public void run() {
+            count++;
+            if(count%4==0) {
+                Message message = new Message();
+                message.what = 1;
+                handler.sendMessage(message);
+            }
+            if(currentFre!=0) {
+                int k=(int)(50/currentFre);
+                if (beepVoice && (count %k == 0)) mSoundPool.play(beepId, 1, 1, 1, 0, 1);
+            }
+        }
+    };
     private void setTitle() {
         mtvTitle.setText(mTask.getCaption()+":  "+this.getString(R.string.variant)+"  "+(mTask.getCurrentVariant()+1));
     }
@@ -100,21 +187,75 @@ public class TaskActivity extends BaseActivity implements EventObserver {
         super.onSaveInstanceState(savedInstanceState);
     }
     public void onVideoClick(View view) {
-        Intent intent=new Intent(this,VideoPlayerActivity.class);
-        intent.putExtra("ID",mTask.getTaskNo());
-        startActivity(intent);
+        if(!movementStart) {
+            Intent intent = new Intent(this, VideoPlayerActivity.class);
+            intent.putExtra("ID", mTask.getTaskNo());
+            startActivity(intent);
+        }else{
+            Toast.makeText(this, getString(R.string.task_toast_alert), Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     public void onRunClick(View view){
         btnRun.setEnabled(false);
-        PerformTaskCommand();
+        movementStart=true;
+
+        switch (mTask.getTaskNo()){
+            case 0:
+                if("zh".equals(language)) {
+                    mplayerBeforeStart = MediaPlayer.create(this, R.raw.alert_focus_zh);
+                } else{
+                    mplayerBeforeStart=MediaPlayer.create(this,R.raw.alert_focus_en);
+                }
+                break;
+            case 1:
+            case 2:
+                if("zh".equals(language)) {
+                    mplayerBeforeStart = MediaPlayer.create(this, R.raw.alert_pursuit_saccades_zh);
+                }else{
+                    mplayerBeforeStart=MediaPlayer.create(this,R.raw.alert_pursuit_saccades_en);
+                }
+                break;
+            case 3:
+            case 4:
+                if("zh".equals(language)) {
+                    mplayerBeforeStart = MediaPlayer.create(this, R.raw.alert_shake_gaze_zh);
+                }else{
+                    mplayerBeforeStart=MediaPlayer.create(this,R.raw.alert_shake_gaze_en);
+                }
+                break;
+        }
+        mplayerBeforeStart.start();
+        if(null!=mplayerBeforeStart){
+            mplayerBeforeStart.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    PerformTaskCommand();
+                    mplayerBeforeStart.release();
+                    mplayerBeforeStart=null;
+
+                }
+            });
+        }
+
         mTimer=new CountDownTimer(mDuration*1000,1000) {
             @Override
             public void onTick(long l) {
                 int rest=(int)l/1000;
+
                 int elapsed=mTask.getDuration()*mTask.getVariants()-rest;
                 if(elapsed%mTask.getDuration()==0&&elapsed!=0) {
-                    setupNextVariant();
+                    EndTaskCommand();
+                    mTask.setVariantScore(mTask.getMaxScore());
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            setupNextVariant();
+                        }
+                    },1000);
+
+
                 }
                 runOnUiThread(()->mtvRemaining.setText(rest+"s"));
             }
@@ -125,6 +266,7 @@ public class TaskActivity extends BaseActivity implements EventObserver {
             }
         };
         mTimer.start();
+
     }
     public void onEndClick(View view){
         EndTask();
@@ -132,15 +274,21 @@ public class TaskActivity extends BaseActivity implements EventObserver {
     }
     private void EndTask(){
         if(null!=mTimer) mTimer.cancel();
+        if(null!=mHeadMovetimer) mHeadMovetimer.cancel();
+
         Intent i=new Intent();
         i.putExtra(TASK,mTask);
         setResult(Activity.RESULT_OK,i);
         EndTaskCommand();
-        EasyBLE.getInstance().unregisterObserver(this);
+      //  EasyBLE.getInstance().unregisterObserver(this);
+        movementStart=false;
+        mSoundPool.unload(beepId);
+        mMediaPlayer.release();
+        SwitchOffLaserCommand();
         finish();
     }
     public void setupNextVariant(){
-        mTask.setVariantScore(mTask.getMaxScore());
+
         if(mTask.incVariant()) {
             setTitle();
             PerformTaskCommand();
@@ -148,19 +296,25 @@ public class TaskActivity extends BaseActivity implements EventObserver {
         }
       //  Log.e("yu","current task"+mTask.getFrequency());
     }
+    public void SwitchOnLaserCommand(){
+        byte[] laserOnCommand = new byte[]{(byte) 0xC0, 0x01, 0x10, 0x00, 0x01, (byte) 0xff, (byte) 0xC0};
+        bluetooth.writeCharacteristic(conn,laserOnCommand);
+    }
+    public void SwitchOffLaserCommand(){
+        byte[] laserOffCommand = new byte[]{(byte) 0xC0, 0x01, 0x10, 0x00, 0x01, 0x00, (byte) 0xC0};
+        bluetooth.writeCharacteristic(conn,laserOffCommand);
+    }
     public void PerformTaskCommand(){
         byte[] temp;
         int index=0;
         byte[]data;
-        float fre=mTask.getFrequency();
+        currentFre=mTask.getFrequency();
         float gain=mTask.getGain();
-        Log.e("yu","current task"+mTask.getFrequency());
-        byte[] laserOnCommand = new byte[]{(byte) 0xC0, 0x01, 0x10, 0x00, 0x01, (byte) 0xff, (byte) 0xC0};
-        bluetooth.writeCharacteristic(conn,laserOnCommand);
 
             switch (mTask.getTaskNo()) {
             //Focus
             case 0:
+                voicePlaying=false;
                 byte[] focusGainData = new byte[10];
                 focusGainData[0] = (byte) 0xC0;
                 focusGainData[1] = 0x01;
@@ -179,6 +333,7 @@ public class TaskActivity extends BaseActivity implements EventObserver {
 
             // Pursuit
             case 1:
+                voicePlaying=false;
                 byte[] purFreData = new byte[10];
                 purFreData[0] = (byte) 0xC0;
                 purFreData[1] = 0x01;
@@ -186,7 +341,7 @@ public class TaskActivity extends BaseActivity implements EventObserver {
                 purFreData[3] = 0x00;
                 purFreData[4] = 0x04;
                 purFreData[9] = (byte) 0xC0;
-                temp=getByteArray(fre);
+                temp=getByteArray(currentFre);
                 // 倒着对应
                 for (int i = 0; i < temp.length; i++) {
                     purFreData[8 - i] = temp[i];
@@ -214,6 +369,7 @@ public class TaskActivity extends BaseActivity implements EventObserver {
 
             //Jump
             case 2:
+                voicePlaying=false;
                 byte[]jumpFreData=new byte[10];
                 jumpFreData[0] = (byte) 0xC0;
                 jumpFreData[1] = 0x01;
@@ -221,7 +377,7 @@ public class TaskActivity extends BaseActivity implements EventObserver {
                 jumpFreData[3] = 0x00;
                 jumpFreData[4] = 0x04;
                 jumpFreData[9] = (byte) 0xC0;
-                temp=getByteArray(fre);
+                temp=getByteArray(currentFre);
                 // 倒着对应
                 for (int i = 0; i < temp.length; i++) {
                     jumpFreData[8 - i] = temp[i];
@@ -237,6 +393,8 @@ public class TaskActivity extends BaseActivity implements EventObserver {
 
             //Shake
             case 3:
+                voicePlaying=true;
+                beepVoice=true;
                 byte[] shakeGainData=new byte[10];
                 shakeGainData[0] = (byte) 0xC0;
                 shakeGainData[1] = 0x01;
@@ -250,9 +408,11 @@ public class TaskActivity extends BaseActivity implements EventObserver {
                     shakeGainData[8 - i] = temp[i];
                 }
                 bluetooth.writeCharacteristic(conn,shakeGainData);
-
-                //Gaze
+                break;
+            //Gaze
             case 4:
+                voicePlaying=true;
+                beepVoice=true;
                 byte[] gazeGainData=new byte[10];
                 gazeGainData[0] = (byte) 0xC0;
                 gazeGainData[1] = 0x01;
@@ -266,12 +426,12 @@ public class TaskActivity extends BaseActivity implements EventObserver {
                     gazeGainData[8 - i] = temp[i];
                 }
                 bluetooth.writeCharacteristic(conn,gazeGainData);
+                break;
         }
     }
     public void EndTaskCommand(){
         byte[] data;
-        byte[] laserOffCommand = new byte[]{(byte) 0xC0, 0x01, 0x10, 0x00, 0x01, 0x00, (byte) 0xC0};
-        bluetooth.writeCharacteristic(conn,laserOffCommand);
+
         switch(mTask.getTaskNo()){
             case 0:
                 data = new byte[]{(byte) 0xC0, 0x01, 0x11, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, (byte) 0xC0};
@@ -319,10 +479,13 @@ public class TaskActivity extends BaseActivity implements EventObserver {
         accum = accum|(b[1] & 0xff) << 8;
         accum = accum|(b[2] & 0xff) << 16;
         accum = accum|(b[3] & 0xff) << 24;
-        System.out.println(accum);
         return Float.intBitsToFloat(accum);
     }
-
+    private void moveHead(float angles){
+        mivHead.setPivotX(mivHead.getWidth()/2);
+        mivHead.setPivotY(mivHead.getHeight()/2);
+        mivHead.setRotation(angles);
+    }
 
 
 
@@ -333,8 +496,8 @@ public class TaskActivity extends BaseActivity implements EventObserver {
 
     @Override
     public void onCharacteristicChanged(@NonNull Device device, @NonNull UUID service, @NonNull UUID characteristic, @NonNull byte[] value) {
-        Log.e(TASK, "Gyro data String:" + StringUtils.toHex(value));
-        if(value[2]==0x18){
+      //  Log.e(TASK, "Gyro data String:" + StringUtils.toHex(value));
+        if(value[2]==0x18&&value.length==18){
             byte[] pitchByte=new byte[4];
             byte[] yawByte=new byte[4];
             byte[] rollByte=new byte[4];
@@ -346,8 +509,13 @@ public class TaskActivity extends BaseActivity implements EventObserver {
             pitch=getFloat(pitchByte);
             yaw=getFloat(yawByte);
             roll=getFloat(rollByte);
+          //  Log.d(TASK, "Gyro data:" + pitch +"    "+yaw+"    "+roll);
+            if(!setOffsetFlag){
+                offset_yaw=yaw;
+                setOffsetFlag=true;
+            }
         }
-        Log.d(TASK, "Gyro data:" + pitch +"    "+yaw+"    "+roll);
+
     }
 
     @Override
@@ -406,6 +574,7 @@ public class TaskActivity extends BaseActivity implements EventObserver {
                 progressDialog.setMessage(getString(R.string.connect_device));
                 break;
             case DISCONNECTED:
+                tipDialog(getString(R.string.connection_failed));
                 break;
 
         }
@@ -427,18 +596,27 @@ public class TaskActivity extends BaseActivity implements EventObserver {
             dialog.setPositiveButton(getString(R.string.try_again), new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    progressDialog.show();
+                  //  progressDialog.show();
+
                 }
             });
         } else {
             dialog.setPositiveButton(getString(R.string.ok), new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    progressDialog.dismiss();
+                   // progressDialog.dismiss();
                    // requestBluetoothEnable();
                 }
             });
         }
         dialog.show();
     }
+
+    private void requestBluetoothEnable() {
+        if (!EasyBLE.getInstance().isBluetoothOn()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        }
+    }
+
 }
