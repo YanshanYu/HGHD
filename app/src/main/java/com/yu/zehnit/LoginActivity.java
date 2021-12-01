@@ -3,9 +3,9 @@ package com.yu.zehnit;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -16,12 +16,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.gyf.immersionbar.ImmersionBar;
-import com.yu.zehnit.tools.SMS;
+import com.yu.zehnit.tools.DBUtil;
 import com.yu.zehnit.tools.SharedPreferencesUtils;
+import com.yu.zehnit.tools.User;
+import com.yu.zehnit.tools.SMS;
+
+import java.sql.SQLException;
 
 public class LoginActivity extends BaseActivity {
 
     public static final String REGEX_MOBILE = "^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\\d{8}$";
+    private static final String TAG="DBUtils";
 
     private EditText editPhoneNumber;
     private EditText editCode;
@@ -35,6 +40,9 @@ public class LoginActivity extends BaseActivity {
 
     private String telPhone;
     private String code;
+    private String num;
+    private String password;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +64,6 @@ public class LoginActivity extends BaseActivity {
         checkBox = findViewById(R.id.checkBox_textpolicy);
 
         ImmersionBar.with(this).init();
-
 
         editPhoneNumber.addTextChangedListener(new TextWatcher() {
             @Override
@@ -135,10 +142,34 @@ public class LoginActivity extends BaseActivity {
                 if (checkBox.isChecked()) {
                     try {
                         if (code.equals("123456")) {
-                        //if (SMS.checkCode(code)) {
-                            SharedPreferencesUtils.setFileName("info");
-                            SharedPreferencesUtils.setParam(LoginActivity.this, "isLogin", true);
-                            startActivity(intent);
+                            //if (SMS.checkCode(code))
+                                SharedPreferencesUtils.setFileName("info");
+                                SharedPreferencesUtils.getParam(LoginActivity.this,"islogin",true);
+                                startActivity(intent);
+                            /*
+                            //num = editPhoneNumber.getText().toString();
+                            Thread thread=new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    DBUtil.getConnection("db_veriband");
+                                    try {
+                                        num=editPhoneNumber.getText().toString();
+                                        //password=editCode.getText().toString();
+                                        User user=new User(num);
+                                        DBUtil.insert("db_veriband",user);
+                                        startActivity(intent);
+                                        //List<HashMap<String,Object>>list1=new ArrayList<HashMap<String,Object>>();
+                                        //list1=DBUtil.getinfo("db_veriband");
+                                        //Log.d(TAG,list1.toString());
+                                        //startActivity(intent);
+                                    }catch (SQLException e){
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+                            thread.start();
+
+                             */
                         } else {
                             Toast.makeText(LoginActivity.this, "验证码输入错误，请重试", Toast.LENGTH_SHORT).show();
                         }
@@ -149,8 +180,9 @@ public class LoginActivity extends BaseActivity {
                     Toast.makeText(LoginActivity.this, "请阅读并勾选隐私协议后再登录", Toast.LENGTH_SHORT).show();
                 }
             }
-        });
 
+
+        });
     }
 
     class TimeCount extends CountDownTimer {

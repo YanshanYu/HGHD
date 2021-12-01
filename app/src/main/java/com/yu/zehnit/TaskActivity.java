@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
@@ -23,10 +24,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yu.zehnit.tools.Bluetooth;
+import com.yu.zehnit.tools.DBUtil;
 import com.yu.zehnit.tools.MovingAverage;
+import com.yu.zehnit.tools.SharedHelper;
 import com.yu.zehnit.tools.SharedPreferencesUtils;
 import com.yu.zehnit.tools.Task;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
@@ -73,6 +78,8 @@ public class TaskActivity extends BaseActivity implements EventObserver {
     private boolean voicePlaying=true;
     private boolean beepVoice=false;
     private String language;
+    private Context mcontext;
+    private SharedHelper sh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,12 +101,12 @@ public class TaskActivity extends BaseActivity implements EventObserver {
         mSoundPool=new SoundPool.Builder().setMaxStreams(100)
         .setAudioAttributes(abs)
         .build();
-        beepId=mSoundPool.load(this,R.raw.beep,1);
+        beepId=mSoundPool.load(this,R.raw.alert_focus_en,1);
         //noMoveHeadId=mSoundPool.load(this,R.raw.alert_no_move_head,1);
         SharedPreferencesUtils.setFileName("info");
         language=(String) SharedPreferencesUtils.getParam(this, "language", "");
         if("zh".equals(language)){
-            mMediaPlayer=MediaPlayer.create(this,R.raw.alert_no_move_head_zh);
+            mMediaPlayer=MediaPlayer.create(this,R.raw.alert_no_move_head_en);
         }else{
             mMediaPlayer=MediaPlayer.create(this,R.raw.alert_no_move_head_en);
         }
@@ -488,7 +495,6 @@ public class TaskActivity extends BaseActivity implements EventObserver {
     }
 
 
-
     @Override
     public void onCharacteristicRead(@NonNull Request request, @NonNull byte[] value) {
 
@@ -509,7 +515,29 @@ public class TaskActivity extends BaseActivity implements EventObserver {
             pitch=getFloat(pitchByte);
             yaw=getFloat(yawByte);
             roll=getFloat(rollByte);
-          //  Log.d(TASK, "Gyro data:" + pitch +"    "+yaw+"    "+roll);
+            sh = new SharedHelper(mcontext);
+            sh.save(pitch,yaw,roll);
+
+            /*
+            java.sql.Connection conn1= DBUtil.getConnection("db_veriband");
+            String sqlDt="insert into t_user(user_pitch,user_yaw,user_roll) values(?,?,?)";
+            try {
+                PreparedStatement ps=conn1.prepareStatement(sqlDt);
+                ps.setFloat(1,pitch);
+                ps.setFloat(2,yaw);
+                ps.setFloat(3,roll);
+                //ps.setFloat(1,Float.valueOf(pitch));
+                //ps.setFloat(2,Float.valueOf(yaw));
+                //ps.setFloat(3,Float.valueOf(roll));
+                ps.execute();
+                System.out.println("successful");
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+
+             */
+
+            //  Log.d(TASK, "Gyro data:" + pitch +"    "+yaw+"    "+roll);
             if(!setOffsetFlag){
                 offset_yaw=yaw;
                 setOffsetFlag=true;

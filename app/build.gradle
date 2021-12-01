@@ -39,6 +39,8 @@ allprojects {
 }
 
 dependencies {
+    //implementation files('libs\\mysql-connector-java-5.1.40-bin.jar')
+    implementation files('libs\\mysql-connector-java-5.1.30-bin.jar')
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
     implementation 'com.shuyu:GSYVideoPlayer:8.1.1'
     implementation 'androidx.cardview:cardview:1.0.0'

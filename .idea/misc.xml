@@ -3,37 +3,42 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/AndroidProject/HGHD/app/src/main/res/drawable/cell_shape.xml" value="0.1962962962962963" />
-        <entry key="..\:/AndroidProject/HGHD/app/src/main/res/drawable/custom_label_background.xml" value="0.22135416666666666" />
-        <entry key="..\:/AndroidProject/HGHD/app/src/main/res/drawable/custom_label_background_uncheck.xml" value="0.2128205128205128" />
-        <entry key="..\:/AndroidProject/HGHD/app/src/main/res/drawable/custom_textview.xml" value="0.22135416666666666" />
-        <entry key="..\:/AndroidProject/HGHD/app/src/main/res/layout/activity_about.xml" value="0.20520833333333333" />
-        <entry key="..\:/AndroidProject/HGHD/app/src/main/res/layout/activity_add_equipment.xml" value="0.18704710144927536" />
-        <entry key="..\:/AndroidProject/HGHD/app/src/main/res/layout/activity_chart.xml" value="0.18958333333333333" />
-        <entry key="..\:/AndroidProject/HGHD/app/src/main/res/layout/activity_login.xml" value="0.18704710144927536" />
-        <entry key="..\:/AndroidProject/HGHD/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/AndroidProject/HGHD/app/src/main/res/layout/activity_param_setting.xml" value="0.1" />
-        <entry key="..\:/AndroidProject/HGHD/app/src/main/res/layout/activity_session.xml" value="0.18704710144927536" />
-        <entry key="..\:/AndroidProject/HGHD/app/src/main/res/layout/activity_setting.xml" value="0.19635416666666666" />
-        <entry key="..\:/AndroidProject/HGHD/app/src/main/res/layout/activity_task.xml" value="0.176" />
-        <entry key="..\:/AndroidProject/HGHD/app/src/main/res/layout/activity_video_player.xml" value="0.10005065856129686" />
-        <entry key="..\:/AndroidProject/HGHD/app/src/main/res/layout/alert_dialog_layout.xml" value="0.21467391304347827" />
-        <entry key="..\:/AndroidProject/HGHD/app/src/main/res/layout/content_task.xml" value="0.16927083333333334" />
-        <entry key="..\:/AndroidProject/HGHD/app/src/main/res/layout/control_item.xml" value="0.20520833333333333" />
-        <entry key="..\:/AndroidProject/HGHD/app/src/main/res/layout/fragment_control.xml" value="0.1" />
-        <entry key="..\:/AndroidProject/HGHD/app/src/main/res/layout/fragment_first.xml" value="0.16927083333333334" />
-        <entry key="..\:/AndroidProject/HGHD/app/src/main/res/layout/fragment_home.xml" value="0.1" />
-        <entry key="..\:/AndroidProject/HGHD/app/src/main/res/layout/fragment_info.xml" value="0.1" />
-        <entry key="..\:/AndroidProject/HGHD/app/src/main/res/layout/fragment_rehabilitation.xml" value="0.1" />
-        <entry key="..\:/AndroidProject/HGHD/app/src/main/res/layout/fragment_sessions.xml" value="0.1947463768115942" />
-        <entry key="..\:/AndroidProject/HGHD/app/src/main/res/layout/info_item.xml" value="0.18704710144927536" />
-        <entry key="..\:/AndroidProject/HGHD/app/src/main/res/layout/param_item.xml" value="0.13496376811594202" />
-        <entry key="..\:/AndroidProject/HGHD/app/src/main/res/layout/session_row.xml" value="0.18958333333333333" />
-        <entry key="..\:/AndroidProject/HGHD/app/src/main/res/menu/bottom_nav_menu.xml" value="0.15833333333333333" />
+        <entry key="..\:/HGHD/app/src/main/res/drawable/custom_label_background.xml" value="0.39814814814814814" />
+        <entry key="..\:/HGHD/app/src/main/res/layout/activity_about.xml" value="0.25" />
+        <entry key="..\:/HGHD/app/src/main/res/layout/activity_add_equipment.xml" value="0.25" />
+        <entry key="..\:/HGHD/app/src/main/res/layout/activity_chart.xml" value="0.3296875" />
+        <entry key="..\:/HGHD/app/src/main/res/layout/activity_delete_data.xml" value="0.3234375" />
+        <entry key="..\:/HGHD/app/src/main/res/layout/activity_generate_data.xml" value="0.33" />
+        <entry key="..\:/HGHD/app/src/main/res/layout/activity_login.xml" value="0.20364583333333333" />
+        <entry key="..\:/HGHD/app/src/main/res/layout/activity_main.xml" value="0.20364583333333333" />
+        <entry key="..\:/HGHD/app/src/main/res/layout/activity_param_setting.xml" value="0.14114583333333333" />
+        <entry key="..\:/HGHD/app/src/main/res/layout/activity_session.xml" value="0.28854166666666664" />
+        <entry key="..\:/HGHD/app/src/main/res/layout/activity_setting.xml" value="0.14114583333333333" />
+        <entry key="..\:/HGHD/app/src/main/res/layout/activity_task.xml" value="0.3359375" />
+        <entry key="..\:/HGHD/app/src/main/res/layout/activity_video_player.xml" value="0.14114583333333333" />
+        <entry key="..\:/HGHD/app/src/main/res/layout/activity_welcome.xml" value="0.4036458333333333" />
+        <entry key="..\:/HGHD/app/src/main/res/layout/beep.xml" value="0.27708333333333335" />
+        <entry key="..\:/HGHD/app/src/main/res/layout/control_item.xml" value="0.4036458333333333" />
+        <entry key="..\:/HGHD/app/src/main/res/layout/eqp_item.xml" value="0.4036458333333333" />
+        <entry key="..\:/HGHD/app/src/main/res/layout/fragment_control.xml" value="0.25" />
+        <entry key="..\:/HGHD/app/src/main/res/layout/fragment_home.xml" value="0.4036458333333333" />
+        <entry key="..\:/HGHD/app/src/main/res/layout/fragment_info.xml" value="0.4036458333333333" />
+        <entry key="..\:/HGHD/app/src/main/res/layout/fragment_rehabilitation.xml" value="0.25" />
+        <entry key="..\:/HGHD/app/src/main/res/layout/fragment_sessions.xml" value="0.3671875" />
+        <entry key="..\:/HGHD/app/src/main/res/layout/info_item.xml" value="0.4036458333333333" />
+        <entry key="..\:/HGHD/app/src/main/res/layout/param_item.xml" value="0.20364583333333333" />
+        <entry key="..\:/HGHD/app/src/main/res/layout/session_row.xml" value="0.2546875" />
+        <entry key="..\:/HGHD/app/src/main/res/layout/setting_item.xml" value="0.20364583333333333" />
+        <entry key="..\:/HGHD/app/src/main/res/layout/speed.xml" value="0.3484375" />
+        <entry key="..\:/HGHD/app/src/main/res/layout/test.xml" value="0.33" />
+        <entry key="..\:/HGHD/app/src/main/res/layout/video_item.xml" value="0.20364583333333333" />
+        <entry key="..\:/HGHD/app/src/main/res/menu/bottom_nav_menu.xml" value="0.19895833333333332" />
+        <entry key="..\:/HGHD/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.21510416666666668" />
+        <entry key="..\:/HGHD/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.4197916666666667" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

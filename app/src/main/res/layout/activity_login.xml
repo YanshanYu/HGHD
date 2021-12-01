@@ -41,9 +41,9 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/zehnit_logo"
+            android:layout_marginStart="22.5dp"
             android:layout_marginTop="37dp"
-            android:layout_marginStart="22.5dp"/>
+            android:src="@drawable/zehnit_logo" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -102,10 +102,10 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="290dp"
 
-            android:background="@animator/round_button"
+            android:background="@color/colorAccent"
             android:text="@string/login"
-            android:textSize="16sp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
         <CheckBox
             android:id="@+id/checkBox_textpolicy"
