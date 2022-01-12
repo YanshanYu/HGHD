@@ -36,6 +36,8 @@ public class SessionActivity extends BaseActivity implements EventObserver {
     private TextView sessionTitle;
     private Toolbar toolbar;
 
+
+
     // we have 5 tasks, each (but SPN) has 3 variants
     private final int[]mMaxVars={1,3,3,3,3};
     // Duration in seconds for each tasks, all variants of a task have the same duration

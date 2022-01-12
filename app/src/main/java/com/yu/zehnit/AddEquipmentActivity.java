@@ -107,7 +107,6 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
 
         // 注册观察者
         EasyBLE.getInstance().registerObserver(this);
-
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -220,7 +219,7 @@ public class AddEquipmentActivity extends BaseActivity implements EventObserver 
     private void tipDialog(String msg, String btnText) {
         DefaultAlertDialog dialog = new DefaultAlertDialog(AddEquipmentActivity.this);
         dialog.setTitle(getString(R.string.tip));
-        dialog.setMessage(msg);
+       dialog.setMessage(msg);
         dialog.setTitleBackgroundColor(-1);
         // 点击对话框以外的区域是否让对话框消失
         dialog.setCancelable(false);

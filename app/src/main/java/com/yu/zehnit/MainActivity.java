@@ -1,11 +1,13 @@
 package com.yu.zehnit;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,17 +18,19 @@ import com.gyf.immersionbar.ImmersionBar;
 import com.yu.zehnit.tools.EqpAdapter;
 import com.yu.zehnit.tools.Equipment;
 import com.yu.zehnit.tools.SharedPreferencesUtils;
+import com.yu.zehnit.tools.writeData;
 import com.yu.zehnit.ui.sessions.SessionDataManager;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-
-import java.util.List;
-import java.util.UUID;
-
 import cn.wandersnail.ble.Connection;
 import cn.wandersnail.ble.ConnectionConfiguration;
 import cn.wandersnail.ble.Device;
@@ -52,23 +56,24 @@ public class MainActivity extends BaseActivity implements EventObserver {
     private Connection connection;
 
     private ProgressDialog progressDialog;
-    public static final String[] TASKCAPTIONS={"Focus","Pursuit","Jump","Shake","Gaze"};
-    public static final int[] TASKVIDEOS={R.raw.gaze_holding1,R.raw.smooth_pursuit,R.raw.saccades,R.raw.gaze_holding2,R.raw.gaze_holding3};
-    public static final int[] TASKIMAGES={R.drawable.icon_focus_uncheck,R.drawable.icon_pursuit_uncheck,R.drawable.icon_saccades_uncheck,R.drawable.icon_shake_uncheck,R.drawable.icon_gaze_uncheck};
-    public static final int[] TASKIMAGESUNCHECK={R.drawable.icon_focus_gray,R.drawable.icon_pursuit_gray,R.drawable.icon_saccades_gray,R.drawable.icon_shake_gray,R.drawable.icon_gaze_gray};
+    public static final String[] TASKCAPTIONS = {"Focus", "Pursuit", "Jump", "Shake", "Gaze"};
+    public static final int[] TASKVIDEOS = {R.raw.gaze_holding1, R.raw.smooth_pursuit, R.raw.saccades, R.raw.gaze_holding2, R.raw.gaze_holding3};
+    public static final int[] TASKIMAGES = {R.drawable.icon_focus_uncheck, R.drawable.icon_pursuit_uncheck, R.drawable.icon_saccades_uncheck, R.drawable.icon_shake_uncheck, R.drawable.icon_gaze_uncheck};
+    public static final int[] TASKIMAGESUNCHECK = {R.drawable.icon_focus_gray, R.drawable.icon_pursuit_gray, R.drawable.icon_saccades_gray, R.drawable.icon_shake_gray, R.drawable.icon_gaze_gray};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_control, R.id.navigation_sessions,R.id.navigation_info)
+                R.id.navigation_home, R.id.navigation_control, R.id.navigation_sessions, R.id.navigation_info)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         // 切换fragment
         NavigationUI.setupWithNavController(navView, navController);
-        if(null==savedInstanceState){
+        if (null == savedInstanceState) {
             SessionDataManager.readSessions(this);
         }
 
@@ -88,6 +93,8 @@ public class MainActivity extends BaseActivity implements EventObserver {
         // Ensures Bluetooth is available on the device and it is enabled. If not,
         // displays a dialog requesting user permission to enable Bluetooth.
         requestBluetoothEnable();
+
+        initPermission();
 
     }
 
@@ -138,7 +145,7 @@ public class MainActivity extends BaseActivity implements EventObserver {
 
     }
 
-    private boolean bluetoothIsOn () {
+    private boolean bluetoothIsOn() {
         return EasyBLE.getInstance().isBluetoothOn();
     }
 
@@ -171,6 +178,7 @@ public class MainActivity extends BaseActivity implements EventObserver {
                     if (connection == null) {
                         eqp = new Equipment(0, name, address, R.mipmap.ic_launcher_round, getString(R.string.offline));
                         // 进行连接，并显示UI
+                        //设备变更后注释下面两行代码再更新即可
                         showProgressDialog();
                         connectEqp();
                     } else {
@@ -192,7 +200,7 @@ public class MainActivity extends BaseActivity implements EventObserver {
         }
     }
 
-    private void showProgressDialog(){
+    private void showProgressDialog() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getString(R.string.connect_device));
         progressDialog.setCancelable(false);
@@ -214,7 +222,7 @@ public class MainActivity extends BaseActivity implements EventObserver {
 
     @Override
     public void onConnectionStateChanged(@NonNull Device device) {
-        Log.d(TAG, "MainActivity onConnectionStateChanged: " +device.getConnectionState());
+        Log.d(TAG, "MainActivity onConnectionStateChanged: " + device.getConnectionState());
         // 获取最后一个设备以便更新状态
         Equipment equipment = MyApplication.getInstance().getEqpList().get(0);
         // 获取设备适配器监听数据变化
@@ -239,13 +247,13 @@ public class MainActivity extends BaseActivity implements EventObserver {
                 equipment.setText(getString(R.string.online));
                 adapter.notifyDataSetChanged();
                 // 发送指令检查视靶是否打开
-               // byte[] data = new byte[]{(byte) 0xC0, 0x01, 0x17, 0x00, 0x00, (byte) 0xC0};
-               // writeCharacteristic(data);
+                // byte[] data = new byte[]{(byte) 0xC0, 0x01, 0x17, 0x00, 0x00, (byte) 0xC0};
+                // writeCharacteristic(data);
                 break;
         }
     }
 
-    private void tipDialog(String msg){
+    private void tipDialog(String msg) {
         DefaultAlertDialog dialog = new DefaultAlertDialog(MainActivity.this);
         dialog.setTitle(getString(R.string.tip));
         dialog.setMessage(msg);
@@ -256,7 +264,7 @@ public class MainActivity extends BaseActivity implements EventObserver {
         if (msg.equals(getString(R.string.connection_succeeded))) {
             dialog.setAutoDismiss(true);
             dialog.setAutoDismissDelayMillis(800);
-        } else if (msg.equals(getString(R.string.connection_failed))){
+        } else if (msg.equals(getString(R.string.connection_failed))) {
             dialog.setPositiveButton(getString(R.string.try_again), new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -284,7 +292,7 @@ public class MainActivity extends BaseActivity implements EventObserver {
         }
     }
 
-    private void readCharacteristic(){
+    private void readCharacteristic() {
         RequestBuilder<ReadCharacteristicCallback> builder = new RequestBuilderFactory().getReadCharacteristicBuilder(MyApplication.SRVC_UUID, MyApplication.CHAR_UUID);
         builder.setTag(UUID.randomUUID().toString());
         builder.setPriority(Integer.MAX_VALUE);//设置请求优先级
@@ -328,5 +336,56 @@ public class MainActivity extends BaseActivity implements EventObserver {
         MyApplication.getInstance().setTargetIsOn(value[5] == 0x01);
 
     }
+
+    /**
+     * 获取权限
+     */
+    private void initPermission() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            testWrite();
+            return;
+        }
+        ActivityCompat.requestPermissions(MainActivity.this,
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO},
+                PERMISSON_REQUESTCODE);
+    }
+
+    private static final int PERMISSON_REQUESTCODE = 1;
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSON_REQUESTCODE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    testWrite();
+                } else {
+                    Toast.makeText(this, "必须同意所有权限才能使用APP", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+                break;
+            default:
+        }
+    }
+
+    private void testWrite() {
+        /*
+
+        List<String> data = new ArrayList<>();
+        data.add("99999999");
+        data.add("99999999");
+        data.add("99999999");
+
+        List<List<String>> datas = new ArrayList<>();
+        datas.add(data);
+        datas.add(data);
+        datas.add(data);
+        datas.add(data);
+        datas.add(data);
+
+        writeData.writelsPursuits(datas, this);
+
+         */
+    }
+
 
 }

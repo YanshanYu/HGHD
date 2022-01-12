@@ -1,5 +1,8 @@
 package com.yu.zehnit;
 
+//import static com.yu.zehnit.tools.writeData.isGrantExternalRW;
+import  static com.yu.zehnit.tools.writeData.writelsFocus;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -13,10 +16,12 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -29,9 +34,20 @@ import com.yu.zehnit.tools.MovingAverage;
 import com.yu.zehnit.tools.SharedHelper;
 import com.yu.zehnit.tools.SharedPreferencesUtils;
 import com.yu.zehnit.tools.Task;
+import com.yu.zehnit.tools.writeData;
+import com.yu.zehnit.ui.sessions.Session;
+import com.yu.zehnit.ui.sessions.SessionDataManager;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
@@ -80,6 +96,13 @@ public class TaskActivity extends BaseActivity implements EventObserver {
     private String language;
     private Context mcontext;
     private SharedHelper sh;
+    private Session mSession;
+    private int SessionNumber;
+    private static SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+    private static final String NUM="num";
+    public static final String SESSION="Session";
+    private SessionDataManager sessionDataManager;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +133,7 @@ public class TaskActivity extends BaseActivity implements EventObserver {
         }else{
             mMediaPlayer=MediaPlayer.create(this,R.raw.alert_no_move_head_en);
         }
+
 
         mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -503,20 +527,101 @@ public class TaskActivity extends BaseActivity implements EventObserver {
     @Override
     public void onCharacteristicChanged(@NonNull Device device, @NonNull UUID service, @NonNull UUID characteristic, @NonNull byte[] value) {
       //  Log.e(TASK, "Gyro data String:" + StringUtils.toHex(value));
-        if(value[2]==0x18&&value.length==18){
-            byte[] pitchByte=new byte[4];
-            byte[] yawByte=new byte[4];
-            byte[] rollByte=new byte[4];
-            for(int i=0;i<4;i++){
-                pitchByte[i]=value[i+5];
-                yawByte[i]=value[i+9];
-                rollByte[i]=value[i+13];
+        if(value[2]==0x18&&value.length==18) {
+            byte[] pitchByte = new byte[4];
+            byte[] yawByte = new byte[4];
+            byte[] rollByte = new byte[4];
+            for (int i = 0; i < 4; i++) {
+                pitchByte[i] = value[i + 5];
+                yawByte[i] = value[i + 9];
+                rollByte[i] = value[i + 13];
             }
-            pitch=getFloat(pitchByte);
-            yaw=getFloat(yawByte);
-            roll=getFloat(rollByte);
-            sh = new SharedHelper(mcontext);
-            sh.save(pitch,yaw,roll);
+            pitch = getFloat(pitchByte);
+            yaw = getFloat(yawByte);
+            roll = getFloat(rollByte);
+
+            ArrayList<Session> date = sessionDataManager.getSessions();
+
+                switch (mTask.getTaskNo()) {
+                    case 0:
+                        if (SessionDataManager.getSize() == 0) {
+                            break;
+                        } else
+                            {
+                            ArrayList<String> data0 = new ArrayList<String>();
+                            String s0 = "";
+                            s0 = Float.toString(pitch) + " " + "," + Float.toString(yaw) + " " + "," + Float.toString(roll);
+                            data0.add(s0);
+                            writeData.writelsFocus(data0, this, date.get(0).getDate());
+                            break;
+                        }
+
+                    case 1:
+                        if (SessionDataManager.getSize() == 0) {
+                            break;
+                        }
+                        else
+                            {
+
+                        ArrayList<String> data1 = new ArrayList<String>();
+                        String s1 = "";
+                        s1 = Float.toString(pitch) + " " + "," + Float.toString(yaw) + " " + "," + Float.toString(roll);
+                        data1.add(s1);
+                        writeData.writelsPursuit(data1, this, date.get(0).getDate());
+                        break;
+                       }
+                    case 2:
+                        if (SessionDataManager.getSize()==0){
+                            break;
+                        }
+                        else
+                            {
+                        ArrayList<String> data2 = new ArrayList<String>();
+                        String s2 = "";
+                        s2 = Float.toString(pitch) + " " + "," + Float.toString(yaw) + " " + "," + Float.toString(roll);
+                        data2.add(s2);
+                        writeData.writelsSaccades(data2, this,date.get(0).getDate());
+                        break;
+                        }
+                    case 3:
+                        if (SessionDataManager.getSize()==0){
+                            break;
+                        }
+                        else{
+                        ArrayList<String> data3 = new ArrayList<String>();
+                        String s3 = "";
+                        s3 = Float.toString(pitch) + " " + "," + Float.toString(yaw) + " " + "," + Float.toString(roll);
+                        data3.add(s3);
+                        writeData.writelsVorsupp(data3, this,date.get(0).getDate());
+                        break;
+                        }
+                    case 4:
+                        if (SessionDataManager.getSize()==0){
+                            break;
+                        }else {
+
+                        ArrayList<String> data4 = new ArrayList<String>();
+                        String s4 = "";
+                        s4 = Float.toString(pitch) + " " + "," + Float.toString(yaw) + " " + "," + Float.toString(roll);
+                        data4.add(s4);
+                        writeData.writelsVortrain(data4, this,date.get(0).getDate());
+                        break;
+                        }
+                }
+        }
+/*
+            ArrayList <String>data=new ArrayList<String>();
+            String s="";
+            s=Float.toString(pitch)+" " +","+Float.toString(yaw)+" "+","+Float.toString(roll)+";";
+            data.add(s);
+            writeData.writels(data,this);
+
+ */
+
+
+
+            //sh = new SharedHelper(mcontext);
+            //sh.save(pitch,yaw,roll);
 
             /*
             java.sql.Connection conn1= DBUtil.getConnection("db_veriband");
@@ -544,7 +649,6 @@ public class TaskActivity extends BaseActivity implements EventObserver {
             }
         }
 
-    }
 
     @Override
     public void onCharacteristicWrite(@NonNull Request request, @NonNull byte[] value) {

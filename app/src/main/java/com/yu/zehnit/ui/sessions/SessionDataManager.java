@@ -24,6 +24,7 @@ public class SessionDataManager {
     private static ArrayList<Session> mSessions;
     private static int mSelectedSessionIndex;
     static public void readSessions(Context context){
+
         File directory=new File(context.getFilesDir().getAbsolutePath());
         mSelectedSessionIndex=-1;
         mSessionFilePath=directory+File.separator+SESSIONSFILE;
