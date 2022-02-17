@@ -88,23 +88,48 @@
         android:layout_marginTop="8dp"
         android:text="10s"
         android:textColor="#ff0984e3"
-        android:textSize="40sp"
+        android:textSize="35sp"
+        android:layout_marginLeft="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView7"
+        app:layout_constraintTop_toBottomOf="@+id/btinstructions" />
+    <TextView
+        android:id="@+id/tvhead_angle"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="0°"
+        android:textColor="#666666"
+        android:textSize="35sp"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <ImageView
         android:id="@+id/ivhead"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvremaining"
+        app:srcCompat="@drawable/head_top" />
+
+    <ImageView
+        android:id="@+id/ivhead_background"
         android:layout_width="256dp"
         android:layout_height="256dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvremaining"
-        app:srcCompat="@drawable/headtop" />
+        app:srcCompat="@drawable/area_both_black" />
 
     <ImageButton
         android:id="@+id/btend"

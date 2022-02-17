@@ -69,11 +69,15 @@
 
 
     <!--  SettingActivity -->
-    <string name="param_setting">Param Setting</string>
+    <string name="param_setting">Mode Settings</string>
+    <string name="tv_setting">TV Settings</string>
     <string name="unbind_device">Unbind Device</string>
     <string name="switch_lang">Switch Language</string>
     <string name="about_us">About</string>
     <string name="logout">logout</string>
+    <string name="mode_select">Mode</string>
+    <string name="laser_mode">Laser target</string>
+    <string name="tv_mode">TV target</string>
 
     <!--  提示框  -->
     <string name="sure_to_logout">Are you sure to log out?</string>
@@ -120,5 +124,19 @@
     <string name="task_toast_alert">The device is running, please play the demonstration video after the device stopped.</string>
     <!--    Chart Activity  -->
     <string name="title_chart">Chart</string>
+
+    <!-- TVMode Activity  -->
+    <string name="title_activity_tvmode">TVModeActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <!-- TVSettings Activity  -->
+    <string name="tv_width">TV Width：</string>
+    <string name="tv_height">TV Height：</string>
+    <string name="distance">Head-TV Distance：</string>
+    <string name="unit">(cm)</string>
+    <string name="save">Save</string>
+    <string name="toast_text">Save successfully!</string>
+
 
 </resources>

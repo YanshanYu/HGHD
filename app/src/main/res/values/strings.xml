@@ -28,7 +28,7 @@
     <string name="add_new_device">添加新的设备</string>
 
     <!--  ControlFragment -->
-    <string name="visual_target">视靶</string>
+    <string name="visual_target">投屏</string>
     <string name="control_focus">注视</string>
     <string name="control_shake">反向追踪</string>
     <string name="control_gaze">凝视</string>
@@ -53,11 +53,15 @@
 
 
     <!--  SettingActivity -->
-    <string name="param_setting">控制设置</string>
+    <string name="param_setting">模式设置</string>
+    <string name="tv_setting">视靶设置</string>
     <string name="unbind_device">解绑设备</string>
     <string name="switch_lang">切换语言</string>
     <string name="about_us">关于我们</string>
     <string name="logout">退出登录</string>
+    <string name="mode_select">模式选择</string>
+    <string name="laser_mode">激光靶点</string>
+    <string name="tv_mode">电视投靶</string>
 
     <!--  提示框  -->
     <string name="sure_to_logout">您确定要退出登录吗？</string>
@@ -121,6 +125,19 @@
 
     <!--    Chart Activity  -->
     <string name="title_chart">图表</string>
+
+    <string name="title_activity_tvmode">TVModeActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <!-- TVSettings Activity  -->
+    <string name="tv_width">屏幕宽度：</string>
+    <string name="tv_height">屏幕高度：</string>
+    <string name="distance">与屏幕之间的距离：</string>
+    <string name="unit">(cm)</string>
+    <string name="save">保 存</string>
+    <string name="toast_text">保存成功</string>
+
 
 
 </resources>

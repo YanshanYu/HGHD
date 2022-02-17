@@ -48,8 +48,9 @@ public class TaskActivity extends BaseActivity implements EventObserver {
     private final static int REQUEST_ENABLE_BT = 1;
 
     private Task mTask;
-    private TextView mtvRemaining;
+    private TextView mtvRemaining, mtvHeadAngle;
     private ImageView mivHead;
+    private ImageView mivHeadBackground;
     private TextView mtvTitle;
     private int mDuration;
     private CountDownTimer mTimer;
@@ -67,12 +68,19 @@ public class TaskActivity extends BaseActivity implements EventObserver {
     private long count=0;
     private boolean movementStart=false;
     private float currentFre;
+    private float currentGain;
     private MovingAverage movingAverage;
-    MediaPlayer mMediaPlayer;
+    private boolean stopPlayAlert=false;
+    private boolean TVMode=false;
+
     MediaPlayer mplayerBeforeStart;
+    MediaPlayer[] mMediaPlayer=new MediaPlayer[2];
+
     private boolean voicePlaying=true;
     private boolean beepVoice=false;
     private String language;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,37 +92,16 @@ public class TaskActivity extends BaseActivity implements EventObserver {
         }
         // 注册观察者
         EasyBLE.getInstance().registerObserver(this);
-        byte[] GyroDataOpenCommand=new byte[]{(byte) 0xC0, 0x01, 0x18, 0x00, 0x01, 0x01, (byte) 0xC0};
-        bluetooth.writeCharacteristic(conn,GyroDataOpenCommand);
-        setNotificationEnable();
-        AudioAttributes abs=new AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_MEDIA)
-                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                .build();
-        mSoundPool=new SoundPool.Builder().setMaxStreams(100)
-        .setAudioAttributes(abs)
-        .build();
-        beepId=mSoundPool.load(this,R.raw.beep,1);
-        //noMoveHeadId=mSoundPool.load(this,R.raw.alert_no_move_head,1);
         SharedPreferencesUtils.setFileName("info");
-        language=(String) SharedPreferencesUtils.getParam(this, "language", "");
-        if("zh".equals(language)){
-            mMediaPlayer=MediaPlayer.create(this,R.raw.alert_no_move_head_zh);
-        }else{
-            mMediaPlayer=MediaPlayer.create(this,R.raw.alert_no_move_head_en);
-        }
+        int m=(int) SharedPreferencesUtils.getParam(TaskActivity.this, "mode", -1);
+        if(m==1) TVMode=true;
+        else TVMode=false;
 
-        mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                voicePlaying=true;
-            }
-        });
-
-        SwitchOnLaserCommand();
         movingAverage=new MovingAverage(25);
         mtvRemaining=findViewById(R.id.tvremaining);
+        mtvHeadAngle=findViewById(R.id.tvhead_angle);
         mivHead=findViewById(R.id.ivhead);
+        mivHeadBackground=findViewById(R.id.ivhead_background);
         btnRun=findViewById(R.id.btrun);
         if(savedInstanceState!=null)
         {
@@ -123,19 +110,25 @@ public class TaskActivity extends BaseActivity implements EventObserver {
             mTask=(Task) getIntent().getSerializableExtra(TASK);
         }
         mtvTitle=findViewById(R.id.tvtaskcaption);
-        mDuration= mTask.getDuration()* mTask.getVariants()+8;
+        mDuration= mTask.getDuration()* mTask.getVariants();
         mtvRemaining.setText(mDuration+"s");
         setTitle();
-        mHeadMovetimer=new Timer();
-        mHeadMovetimer.schedule(timerTask,1000,10);
-        mivHead.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                offset_yaw=yaw;
-            }
-        });
+        if(!TVMode){
+            StartOutputGyroData();
+            setNotificationEnable();
+            initVoice();
+            SwitchOnLaserCommand();
+            mHeadMovetimer=new Timer();
+            mHeadMovetimer.schedule(timerTask,1000,10);
+            mivHead.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    offset_yaw=yaw;
+                    ResetOffset(offset_yaw);
+                }
+            });
+        }
     }
-
 
     protected void onResume() {
         super.onResume();
@@ -146,16 +139,19 @@ public class TaskActivity extends BaseActivity implements EventObserver {
             switch (msg.what){
                 case 1:
                     moveHead(yaw-offset_yaw);
+                    mtvHeadAngle.setText(String.format("%.1f", (yaw-offset_yaw))+"°");
                    /* Log.e(TASK,String.valueOf(movingAverage.Average((int)(yaw-offset_yaw))));
                     if(!voicePlaying&&(Math.abs(movingAverage.Average((int)(yaw-offset_yaw)))>10)){
                         mMediaPlayer.start();
                         voicePlaying=true;
                     }*/
                    // Log.e(TASK,String.valueOf(movingAverage.Average((int)(yaw-offset_yaw))));
-                    if(!voicePlaying&&(movingAverage.Average((int)(yaw-offset_yaw))>10)){
-                        mMediaPlayer.start();
-
+                    if(!stopPlayAlert&&!voicePlaying&&(movingAverage.Average((int)(yaw-offset_yaw))>10)){
+                        mMediaPlayer[0].start();
                     }
+                    if(yaw-offset_yaw>30)mivHeadBackground.setImageResource(R.drawable.area_right_red);
+                    if(yaw-offset_yaw<-30)mivHeadBackground.setImageResource(R.drawable.area_left_red);
+                    if((yaw-offset_yaw<30)&&(yaw-offset_yaw>-30))mivHeadBackground.setImageResource(R.drawable.area_both_black);
                   //  if(Math.abs(yaw-offset_yaw)>5)moveHeadCount++;
                     break;
 
@@ -174,7 +170,12 @@ public class TaskActivity extends BaseActivity implements EventObserver {
             }
             if(currentFre!=0) {
                 int k=(int)(50/currentFre);
-                if (beepVoice && (count %k == 0)) mSoundPool.play(beepId, 1, 1, 1, 0, 1);
+                if (beepVoice && (count %k == 0)) {
+                    mSoundPool.play(beepId, 1, 1, 1, 0, 1);
+                    if(!stopPlayAlert&&voicePlaying && (Math.abs(yaw-offset_yaw)<5)){
+                        mMediaPlayer[1].start();
+                    }
+                }
             }
         }
     };
@@ -198,101 +199,136 @@ public class TaskActivity extends BaseActivity implements EventObserver {
     }
 
     public void onRunClick(View view){
-        btnRun.setEnabled(false);
-        movementStart=true;
+        if(!TVMode) {
+            btnRun.setEnabled(false);
+            movementStart = true;
+            switch (mTask.getTaskNo()) {
+                case 0:
+                    if ("zh".equals(language)) {
+                        mplayerBeforeStart = MediaPlayer.create(this, R.raw.alert_focus_zh);
+                    } else {
+                        mplayerBeforeStart = MediaPlayer.create(this, R.raw.alert_focus_en);
+                    }
+                    break;
+                case 1:
+                case 2:
+                    if ("zh".equals(language)) {
+                        mplayerBeforeStart = MediaPlayer.create(this, R.raw.alert_pursuit_saccades_zh);
+                    } else {
+                        mplayerBeforeStart = MediaPlayer.create(this, R.raw.alert_pursuit_saccades_en);
+                    }
+                    break;
+                case 3:
+                case 4:
+                    if ("zh".equals(language)) {
+                        mplayerBeforeStart = MediaPlayer.create(this, R.raw.alert_shake_gaze_zh);
+                    } else {
+                        mplayerBeforeStart = MediaPlayer.create(this, R.raw.alert_shake_gaze_en);
+                    }
+                    break;
+            }
+            mplayerBeforeStart.start();
+            if (null != mplayerBeforeStart) {
+                mplayerBeforeStart.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        PerformTaskCommand();
+                        mplayerBeforeStart.release();
+                        mplayerBeforeStart = null;
+                        mTimer.start();
+                    }
+                });
+            }
 
-        switch (mTask.getTaskNo()){
-            case 0:
-                if("zh".equals(language)) {
-                    mplayerBeforeStart = MediaPlayer.create(this, R.raw.alert_focus_zh);
-                } else{
-                    mplayerBeforeStart=MediaPlayer.create(this,R.raw.alert_focus_en);
-                }
-                break;
-            case 1:
-            case 2:
-                if("zh".equals(language)) {
-                    mplayerBeforeStart = MediaPlayer.create(this, R.raw.alert_pursuit_saccades_zh);
-                }else{
-                    mplayerBeforeStart=MediaPlayer.create(this,R.raw.alert_pursuit_saccades_en);
-                }
-                break;
-            case 3:
-            case 4:
-                if("zh".equals(language)) {
-                    mplayerBeforeStart = MediaPlayer.create(this, R.raw.alert_shake_gaze_zh);
-                }else{
-                    mplayerBeforeStart=MediaPlayer.create(this,R.raw.alert_shake_gaze_en);
-                }
-                break;
-        }
-        mplayerBeforeStart.start();
-        if(null!=mplayerBeforeStart){
-            mplayerBeforeStart.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            mTimer = new CountDownTimer(mDuration * 1000, 1000) {
                 @Override
-                public void onCompletion(MediaPlayer mp) {
-                    PerformTaskCommand();
-                    mplayerBeforeStart.release();
-                    mplayerBeforeStart=null;
+                public void onTick(long l) {
+                    int rest = (int) l / 1000;
 
+                    int elapsed = mTask.getDuration() * mTask.getVariants() - rest;
+                    if (elapsed % mTask.getDuration() == 0 && elapsed != 0) {
+                        EndTaskCommand();
+                        mTask.setVariantScore(mTask.getMaxScore());
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                setupNextVariant();
+                            }
+                        }, 2000);
+
+                    }
+                    runOnUiThread(() -> mtvRemaining.setText(rest + "s"));
                 }
-            });
+
+                @Override
+                public void onFinish() {
+                    EndTask();
+                }
+            };
+
         }
+        else {
+            StartTVScreen(mTask.getTaskNo());
 
-        mTimer=new CountDownTimer(mDuration*1000,1000) {
-            @Override
-            public void onTick(long l) {
-                int rest=(int)l/1000;
+            mTimer = new CountDownTimer(mDuration * 1000, 1000) {
+                @Override
+                public void onTick(long l) {
+                    int rest = (int) l / 1000;
 
-                int elapsed=mTask.getDuration()*mTask.getVariants()-rest;
-                if(elapsed%mTask.getDuration()==0&&elapsed!=0) {
-                    EndTaskCommand();
-                    mTask.setVariantScore(mTask.getMaxScore());
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            setupNextVariant();
-                        }
-                    },1000);
+                    int elapsed = mTask.getDuration() * mTask.getVariants() - rest;
+                    if (elapsed % mTask.getDuration() == 0 && elapsed != 0) {
+                        finishActivity(mTask.getTaskNo());
 
+                        mTask.setVariantScore(mTask.getMaxScore());
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                setupNextVariant();
+                            }
+                        }, 1000);
 
+                    }
+                    runOnUiThread(() -> mtvRemaining.setText(rest + "s"));
                 }
-                runOnUiThread(()->mtvRemaining.setText(rest+"s"));
-            }
 
-            @Override
-            public void onFinish() {
-                EndTask();
-            }
-        };
-        mTimer.start();
-
+                @Override
+                public void onFinish() {
+                    EndTask();
+                }
+            };
+            mTimer.start();
+        }
     }
     public void onEndClick(View view){
         EndTask();
         btnRun.setEnabled(true);
     }
     private void EndTask(){
-        if(null!=mTimer) mTimer.cancel();
-        if(null!=mHeadMovetimer) mHeadMovetimer.cancel();
+        if(!TVMode) {
+            if (null != mTimer) mTimer.cancel();
+            if (null != mHeadMovetimer) mHeadMovetimer.cancel();
+            setNotificationDisable();
 
-        Intent i=new Intent();
-        i.putExtra(TASK,mTask);
-        setResult(Activity.RESULT_OK,i);
-        EndTaskCommand();
-      //  EasyBLE.getInstance().unregisterObserver(this);
-        movementStart=false;
-        mSoundPool.unload(beepId);
-        mMediaPlayer.release();
-        SwitchOffLaserCommand();
+            EndTaskCommand();
+            //  EasyBLE.getInstance().unregisterObserver(this);
+            movementStart = false;
+            mSoundPool.unload(beepId);
+            mMediaPlayer[0].release();
+            SwitchOffLaserCommand();
+            StopOutputGyroData();
+        }
+        Intent i = new Intent();
+        i.putExtra(TASK, mTask);
+        setResult(Activity.RESULT_OK, i);
         finish();
     }
     public void setupNextVariant(){
 
         if(mTask.incVariant()) {
             setTitle();
-            PerformTaskCommand();
-            Log.e("setupNextVariant","current task"+mTask.getFrequency());
+           if(!TVMode) PerformTaskCommand();
+           else StartTVScreen(mTask.getTaskNo());
+           // Log.e("setupNextVariant","current task"+mTask.getFrequency());
         }
       //  Log.e("yu","current task"+mTask.getFrequency());
     }
@@ -304,13 +340,37 @@ public class TaskActivity extends BaseActivity implements EventObserver {
         byte[] laserOffCommand = new byte[]{(byte) 0xC0, 0x01, 0x10, 0x00, 0x01, 0x00, (byte) 0xC0};
         bluetooth.writeCharacteristic(conn,laserOffCommand);
     }
+    public void StartOutputGyroData(){
+        byte[] GyroDataStartCommand=new byte[]{(byte) 0xC0, 0x01, 0x18, 0x00, 0x01, 0x01, (byte) 0xC0};
+        bluetooth.writeCharacteristic(conn,GyroDataStartCommand);
+    }
+    public void StopOutputGyroData(){
+        byte[] GyroDataStopCommand=new byte[]{(byte) 0xC0, 0x01, 0x18, 0x00, 0x01, 0x00, (byte) 0xC0};
+        bluetooth.writeCharacteristic(conn,GyroDataStopCommand);
+    }
+    public void ResetOffset(float offset){
+        byte[] offsetYawData = new byte[10];
+        byte[] temp;
+        offsetYawData[0] = (byte) 0xC0;
+        offsetYawData[1] = 0x01;
+        offsetYawData[2] = 0x14;
+        offsetYawData[3] = 0x00;
+        offsetYawData[4] = 0x04;
+        offsetYawData[9] = (byte) 0xC0;
+        temp=getByteArray(offset);
+        // 倒着对应
+        for (int i = 0; i < temp.length; i++) {
+            offsetYawData[8 - i] = temp[i];
+        }
+        bluetooth.writeCharacteristic(conn,offsetYawData);
+    }
     public void PerformTaskCommand(){
         byte[] temp;
         int index=0;
         byte[]data;
         currentFre=mTask.getFrequency();
-        float gain=mTask.getGain();
-
+        currentGain=mTask.getGain();
+        stopPlayAlert=false;
             switch (mTask.getTaskNo()) {
             //Focus
             case 0:
@@ -322,7 +382,7 @@ public class TaskActivity extends BaseActivity implements EventObserver {
                 focusGainData[3] = 0x00;
                 focusGainData[4] = 0x04;
                 focusGainData[9] = (byte) 0xC0;
-                temp=getByteArray(gain);
+                temp=getByteArray(currentGain);
 
                 // 倒着对应
                 for (int i = 0; i < temp.length; i++) {
@@ -402,7 +462,7 @@ public class TaskActivity extends BaseActivity implements EventObserver {
                 shakeGainData[3] = 0x00;
                 shakeGainData[4] = 0x04;
                 shakeGainData[9] = (byte) 0xC0;
-                temp=getByteArray(gain);
+                temp=getByteArray(currentGain);
                 // 倒着对应
                 for (int i = 0; i < temp.length; i++) {
                     shakeGainData[8 - i] = temp[i];
@@ -420,7 +480,7 @@ public class TaskActivity extends BaseActivity implements EventObserver {
                 gazeGainData[3] = 0x00;
                 gazeGainData[4] = 0x04;
                 gazeGainData[9] = (byte) 0xC0;
-                temp=getByteArray(gain);
+                temp=getByteArray(currentGain);
                 // 倒着对应
                 for (int i = 0; i < temp.length; i++) {
                     gazeGainData[8 - i] = temp[i];
@@ -457,9 +517,8 @@ public class TaskActivity extends BaseActivity implements EventObserver {
         }
         data = new byte[]{(byte) 0xC0, 0x01, 0x12, 0x00, 0x00, (byte) 0xC0};
         bluetooth.writeCharacteristic(conn,data);
-        byte[] GyroDataStopCommand=new byte[]{(byte) 0xC0, 0x01, 0x18, 0x00, 0x01, 0x00, (byte) 0xC0};
-        bluetooth.writeCharacteristic(conn,GyroDataStopCommand);
-        setNotificationDisable();
+
+
     }
     public static byte[]getByteArray(float f){
         int intbits=Float.floatToIntBits(f);
@@ -616,6 +675,98 @@ public class TaskActivity extends BaseActivity implements EventObserver {
         if (!EasyBLE.getInstance().isBluetoothOn()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        }
+    }
+    private void initVoice(){
+        AudioAttributes abs=new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_MEDIA)
+                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                .build();
+        mSoundPool=new SoundPool.Builder().setMaxStreams(100)
+                .setAudioAttributes(abs)
+                .build();
+        beepId=mSoundPool.load(this,R.raw.beep,1);
+        //noMoveHeadId=mSoundPool.load(this,R.raw.alert_no_move_head,1);
+        SharedPreferencesUtils.setFileName("info");
+        language=(String) SharedPreferencesUtils.getParam(this, "language", "");
+        if("zh".equals(language)){
+            mMediaPlayer[0]=MediaPlayer.create(this,R.raw.alert_no_move_head_zh);
+            mMediaPlayer[1]=MediaPlayer.create(this,R.raw.alert_move_head_zh);
+        }else{
+            mMediaPlayer[0]=MediaPlayer.create(this,R.raw.alert_no_move_head_en);
+            mMediaPlayer[1]=MediaPlayer.create(this,R.raw.alert_move_head_en);
+        }
+
+        mMediaPlayer[0].setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                stopPlayAlert=true;
+            }
+        });
+        mMediaPlayer[1].setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                stopPlayAlert=true;
+            }
+        });
+    }
+    private void StartTVScreen(int index){
+        Intent intent;
+        Bundle bundle;
+        currentFre=mTask.getFrequency();
+        currentGain=mTask.getGain();
+        switch (index){
+            case 0:   //focus
+                intent=new Intent(TaskActivity.this,TVModeActivity.class);
+                bundle=new Bundle();
+                bundle.putInt("No",0);
+                bundle.putFloat("frequency",0);
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 0);
+                break;
+            case 1: // pursuit
+                intent=new Intent(TaskActivity.this,TVModeActivity.class);
+                bundle=new Bundle();
+                bundle.putInt("No",1);
+                bundle.putFloat("frequency",currentFre);
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 1);
+                break;
+            case 2:
+                intent=new Intent(TaskActivity.this,TVModeActivity.class);
+                bundle=new Bundle();
+                bundle.putInt("No",2);
+                bundle.putFloat("frequency",currentFre);
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 2);
+                break;
+            case 3:
+                intent=new Intent(TaskActivity.this, TVModeActivity.class);
+                bundle=new Bundle();
+                bundle.putInt("No",3);
+                bundle.putFloat("gain",currentGain);
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 3);
+                break;
+            case 4:
+                intent=new Intent(TaskActivity.this,TVModeActivity.class);
+                bundle=new Bundle();
+                bundle.putInt("No",4);
+                bundle.putFloat("gain",currentGain);
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 4);
+                break;
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode!=Activity.RESULT_OK) return;
+        if(requestCode==mTask.getTaskNo()){
+          int t=data.getIntExtra("tv_break",-1);
+          if(t==0) mTimer.cancel();
         }
     }
 

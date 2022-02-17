@@ -4,6 +4,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -30,6 +32,8 @@ public class SettingActivity extends BaseActivity {
     private List<Setting> settingList = new ArrayList<>();
     private Toolbar toolbar;
     private int eqpNum;
+    private int mode;
+    private String modeString=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +71,35 @@ public class SettingActivity extends BaseActivity {
                 Intent intent;
                 switch (pos) {
                     case 0:
-                        intent = new Intent(SettingActivity.this, ParamSettingActivity.class);
+                        intent = new Intent(SettingActivity.this, TVSettingsActivity.class);
                         startActivity(intent);
                         break;
                     case 1:
+                        SharedPreferencesUtils.setFileName("info");
+                        mode=(int) SharedPreferencesUtils.getParam(SettingActivity.this, "mode", -1);
+                        final AlertDialog.Builder builder = new AlertDialog.Builder(SettingActivity.this);
+                        builder.setTitle(getString(R.string.mode_select));
+                        builder.setSingleChoiceItems(new String[]{getString(R.string.laser_mode), getString(R.string.tv_mode)}, mode, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                switch(which){
+                                    case 0:
+                                        SharedPreferencesUtils.setParam(SettingActivity.this, "mode", 0);
+                                        modeString=getString(R.string.laser_mode);
+                                        break;
+                                    case 1:
+                                        SharedPreferencesUtils.setParam(SettingActivity.this, "mode", 1);
+                                        modeString=getString(R.string.tv_mode);
+                                        break;
+                                }
+                            }
+                        });
+                        builder.setPositiveButton("OK",null);
+                        builder.create().show();
+
+                        break;
+                    case 2:
                         SharedPreferencesUtils.setFileName("info");
                         eqpNum = (int) SharedPreferencesUtils.getParam(SettingActivity.this, "eqpNum", 0);
 //                        SharedPreferences pref = getSharedPreferences("eqpNum", Context.MODE_PRIVATE);
@@ -80,13 +109,11 @@ public class SettingActivity extends BaseActivity {
                             tipDialog(getString(R.string.sure_to_unbind));
                         }
                         break;
-                    case 2:
+                    case 3:
                         Setting swLang = settingList.get(pos);
                         SharedPreferencesUtils.setFileName("info");
                         if (swLang.getName().equals("切换语言")) {
                             SharedPreferencesUtils.setParam(SettingActivity.this, "language", "en");
-
-
 
                         } else {
                             SharedPreferencesUtils.setParam(SettingActivity.this, "language", "zh");
@@ -102,7 +129,7 @@ public class SettingActivity extends BaseActivity {
                         startActivity(intent1);
 
                         break;
-                    case 3:
+                    case 4:
                         intent = new Intent(SettingActivity.this, AboutActivity.class);
                         startActivity(intent);
                         break;
@@ -116,8 +143,12 @@ public class SettingActivity extends BaseActivity {
     }
 
     private void initSetting() {
-        Setting param = new Setting(getString(R.string.param_setting), R.drawable.param_setting);
-        settingList.add(param);
+       // Setting param = new Setting(getString(R.string.param_setting), R.drawable.param_setting);
+       // settingList.add(param);
+        Setting tvSetting=new Setting(getString(R.string.tv_setting),R.drawable.param_setting);
+        settingList.add(tvSetting);
+        Setting mode=new Setting(getString(R.string.param_setting),R.drawable.param_setting);
+        settingList.add(mode);
         Setting unbind = new Setting(getString(R.string.unbind_device), R.drawable.unbind);
         settingList.add(unbind);
         Setting switchLang = new Setting(getString(R.string.switch_lang), R.drawable.us);

@@ -39,11 +39,11 @@ public class SessionActivity extends BaseActivity implements EventObserver {
     // we have 5 tasks, each (but SPN) has 3 variants
     private final int[]mMaxVars={1,3,3,3,3};
     // Duration in seconds for each tasks, all variants of a task have the same duration
-    private final int[]mDurations={30,40,40,40,40};
+    private final int[]mDurations={20,20,20,20,20};
     private final int[][] mScores ={{10,0,0},{15,16,17},{18,19,20},{21,22,23},{24,25,26}};
     //Parameter set for the task variants
     private final float[][]mFrequencies={{0,0,0},{0.2f,0.4f,0.6f},{0.2f,0.4f,0.6f},{0.2f,0.3f,0.4f},{0.2f,0.3f,0.4f}};
-    private final float[][]mGains={{0,0,0},{0,0,0},{0,0,0},{0.4f,0.7f,1},{0,-0.3f,-0.6f}};
+    private final float[][]mGains={{0,0,0},{0,0,0},{0,0,0},{1.3f,1.6f,2},{0.7f,0.4f,0f}};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,7 +172,7 @@ public class SessionActivity extends BaseActivity implements EventObserver {
             mSession.setDate(new Date());
             mtvScores[t.getTaskNo()].setText(Integer.toString(t.getTotalScore()));
             mtvTotalScore.setText(Integer.toString(mSession.getTotalScore()));
-           // if(!mIsPerformed[t.getTaskNo()])mIsPerformed[t.getTaskNo()]=t.getTotalScore()>0;
+            if(!mIsPerformed[t.getTaskNo()])mIsPerformed[t.getTaskNo()]=t.getTotalScore()>0;
         }
     }
 

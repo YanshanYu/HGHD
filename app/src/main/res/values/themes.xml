@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.HGHD" parent="Theme.MaterialComponents.Light.DarkActionBar.Bridge">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/black</item>
         <item name="colorPrimaryVariant">@color/colorAccent</item>
         <item name="colorOnPrimary">@color/colorGray</item>
         <item name="colorAccent">@color/colorPrimary</item>
@@ -10,14 +10,28 @@
         <item name="colorSecondary">@color/colorGray</item>
         <item name="colorSecondaryVariant">@color/colorGray</item>
         <item name="colorOnSecondary">@color/colorGray</item>
-<!--         Status bar color. -->
+        <!--         Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
     <style name="Theme.HGHD.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
     <style name="Theme.HGHD.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     <style name="Theme.HGHD.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Theme.HGHD.Fullscreen" parent="Theme.HGHD">
+        <item name="android:actionBarStyle">@style/Widget.Theme.HGHD.ActionBar.Fullscreen</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+    </style>
+
+    <style name="ThemeOverlay.HGHD.FullscreenContainer" parent="">
+        <item name="fullscreenBackgroundColor">@color/light_blue_600</item>
+        <item name="fullscreenTextColor">@color/light_blue_A200</item>
+    </style>
 </resources>

@@ -3,6 +3,12 @@
     <item android:state_pressed="true">
         <shape>
             <solid android:color="#33999999"/>
+            <corners android:topLeftRadius="8px"
+                android:topRightRadius="8px"
+                android:bottomLeftRadius="8px"
+                android:bottomRightRadius="8px"
+                />
         </shape>
     </item>
+
 </selector>

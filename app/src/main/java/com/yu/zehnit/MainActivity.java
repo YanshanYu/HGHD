@@ -50,6 +50,7 @@ public class MainActivity extends BaseActivity implements EventObserver {
     private int eqpNum;
     private String address;
     private Connection connection;
+    private Equipment equipment;
 
     private ProgressDialog progressDialog;
     public static final String[] TASKCAPTIONS={"Focus","Pursuit","Jump","Shake","Gaze"};
@@ -216,7 +217,7 @@ public class MainActivity extends BaseActivity implements EventObserver {
     public void onConnectionStateChanged(@NonNull Device device) {
         Log.d(TAG, "MainActivity onConnectionStateChanged: " +device.getConnectionState());
         // 获取最后一个设备以便更新状态
-        Equipment equipment = MyApplication.getInstance().getEqpList().get(0);
+        equipment = MyApplication.getInstance().getEqpList().get(0);
         // 获取设备适配器监听数据变化
         EqpAdapter adapter = MyApplication.getInstance().getAdapter();
         switch (device.getConnectionState()) {
@@ -262,6 +263,14 @@ public class MainActivity extends BaseActivity implements EventObserver {
                 public void onClick(View v) {
                     progressDialog.show();
                     connectEqp();
+                }
+            });
+            dialog.setNegativeButton(getString(R.string.cancel), new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.setAutoDismiss(true);
+                    equipment.setText(getString(R.string.offline));
+
                 }
             });
         } else {

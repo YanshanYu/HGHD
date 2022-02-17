@@ -3,6 +3,7 @@
     package="com.yu.zehnit">
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -29,9 +30,16 @@
         android:theme="@style/Theme.HGHD"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".TVSettingsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".TVModeActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="true"
+            android:screenOrientation="landscape" />
+        <activity
             android:name=".ChartActivity"
             android:exported="true" />
-
         <activity
             android:name=".TaskActivity"
             android:exported="true" />
@@ -50,8 +58,7 @@
         <activity android:name=".AboutActivity" />
         <activity
             android:name=".SessionActivity"
-            android:exported="true"
-             />
+            android:exported="true" />
         <activity
             android:name=".VideoPlayerActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"

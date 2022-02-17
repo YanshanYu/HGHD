@@ -63,6 +63,7 @@ public class ChartActivity extends BaseActivity {
         dataChart.setScaleXEnabled(false);
         dataChart.setScaleYEnabled(false);
 
+
        // dataChart.setTouchEnabled(false);
         dataChart.setDrawValueAboveBar(false);
         dataChart.setDrawOrder(new CombinedChart.DrawOrder[]{
@@ -78,6 +79,8 @@ public class ChartActivity extends BaseActivity {
         dataChart.moveViewToX(amount_columns-1);
         dataChart.getViewPortHandler().refresh(m,dataChart,false);
         dataChart.animateX(500);
+        dataChart.setVisibleXRangeMaximum(6);
+        dataChart.setVisibleXRangeMinimum(6);
 
     }
     private void showDataOnChart(){
@@ -169,7 +172,7 @@ public class ChartActivity extends BaseActivity {
         bardataset.setStackLabels(MainActivity.TASKCAPTIONS);
         BarData barData=new BarData(bardataset);
         barData.setValueTextSize(16f);
-        barData.setBarWidth(0.5f);
+     //   barData.setBarWidth(0.5f);
 
         barData.setValueFormatter(new ValueFormatter());
         return barData;

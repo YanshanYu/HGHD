@@ -4,11 +4,13 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
@@ -16,7 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,13 +28,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.yu.zehnit.ParamSettingActivity;
 import com.yu.zehnit.R;
+import com.yu.zehnit.SettingActivity;
+import com.yu.zehnit.TVModeActivity;
 import com.yu.zehnit.VideoPlayerActivity;
 import com.yu.zehnit.tools.Bluetooth;
 import com.yu.zehnit.tools.CtrlAdapter;
 import com.yu.zehnit.tools.MyCtrl;
 import com.yu.zehnit.tools.OnRecycleViewItemClickListener;
 import com.yu.zehnit.tools.SharedPreferencesUtils;
+import com.yu.zehnit.tools.TargetView;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +57,7 @@ public class ControlFragment extends Fragment {
     private boolean[] clickedStatus = new boolean[5]; // 记录点击状态
     private SwitchButton sbTarget;
     private boolean startFlag=false;
+    private boolean TVMode=false;
     private Bluetooth bluetooth;
     private Connection connection;
     private LinearLayout btVideoPlay;
@@ -58,9 +68,12 @@ public class ControlFragment extends Fragment {
     private TextView tvSettings;
     private ImageView btStart;
     private LinearLayout optionLayout;
+    private CardView bottomCardView;
     private int clickIndex=-1;
     private static final String FILE_NAME="param_data";
     private float paramValue;
+    private CtrlAdapter adapter;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -83,12 +96,28 @@ public class ControlFragment extends Fragment {
         ivSettings=root.findViewById(R.id.ivsettings);
         tvSettings=root.findViewById(R.id.tvsettings);
         btStart=root.findViewById(R.id.btn_start);
-
+      /*  sbTarget = root.findViewById(R.id.switch_target);
+        sbTarget.setBackColor(SwitchButton.generateBackColor(ContextCompat.getColor(getContext(), R.color.colorGreen)));
+        sbTarget.setThumbColor(SwitchButton.getDefaultThumbColor());
+        sbTarget.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    TVMode=true;
+                } else {
+                    TVMode=false;
+                }
+            }
+        });*/
+        SharedPreferencesUtils.setFileName("info");
+        int m=(int) SharedPreferencesUtils.getParam(getActivity(), "mode", -1);
+        if(m==1) TVMode=true;
+        else TVMode=false;
         optionLayout.setVisibility(View.INVISIBLE);
         RecyclerView recyclerView = root.findViewById(R.id.recycle_view_ctrl);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        CtrlAdapter adapter = new CtrlAdapter(ctrlList);
+        adapter = new CtrlAdapter(ctrlList);
         recyclerView.setAdapter(adapter);
         adapter.setListener(new OnRecycleViewItemClickListener() {
             @Override
@@ -115,18 +144,19 @@ public class ControlFragment extends Fragment {
                     // 更新点击状态
                     clickedStatus[pos] = false;
                     initcardView(false);
-                    EndCommand(pos);
+                   if(!TVMode) EndCommand(pos);
                 } else if (index == -1){
                     // 没有item处于点击状态
                     // 记录点击状态
                     clickedStatus[pos] = true;
+                    initcardView(true);
                     // 设置选中状态的图片
                     ctrlOn(ctrl, pos);
                     clickIndex=pos;
                     // 设置选中状态的cardView颜色和字体颜色
                     cardView.setCardBackgroundColor(getResources().getColor(R.color.colorPrimary));
                     //textView.setTextColor(getResources().getColor(R.color.white));
-                    initcardView(true);
+
 
                 } else {
                     // 其他item处于点击状态
@@ -169,7 +199,7 @@ public class ControlFragment extends Fragment {
                             captionSettings1.setText(getResources().getString(R.string.smooth_pursuit));
                             captionSettingsImg1.setImageResource(R.drawable.frequency);
                             captionParam1.setText(getResources().getString(R.string.control_speed));
-                            paramValue=(float) SharedPreferencesUtils.getParam(builder1.getContext(), "pursuit_fre", 0.0f);
+                            paramValue=(float) SharedPreferencesUtils.getParam(builder1.getContext(), "pursuit_fre", 0.01f);
                             captionParamValue1.setText(String.valueOf(paramValue)+"Hz");
                             seekBar1.setProgress((int)(paramValue*100));
                             seekBar1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -216,7 +246,7 @@ public class ControlFragment extends Fragment {
                             captionSettings2.setText(getResources().getString(R.string.saccades));
                             captionSettingsImg2.setImageResource(R.drawable.frequency);
                             captionParam2.setText(getResources().getString(R.string.frequency));
-                            paramValue=(float) SharedPreferencesUtils.getParam(builder2.getContext(), "saccades_fre", 0.0f);
+                            paramValue=(float) SharedPreferencesUtils.getParam(builder2.getContext(), "saccades_fre", 0.01f);
                             captionParamValue2.setText(String.valueOf(paramValue)+"Hz");
                             seekBar2.setProgress((int)(paramValue*100));
                             seekBar2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -251,6 +281,7 @@ public class ControlFragment extends Fragment {
                             });
                             break;
                         case 3:
+
                             break;
                         case 4:
                             final AlertDialog builder3 = new AlertDialog.Builder(getActivity()).create();
@@ -312,10 +343,16 @@ public class ControlFragment extends Fragment {
 
                 if(!startFlag){
                     // 点击该选项进行的操作
-                    PerformCommand(clickIndex);
+                    if(!TVMode) {
+                        PerformCommand(clickIndex);
+                    } else {
+                        StartTVScreen(clickIndex);
+                    }
                     btStart.setImageResource(R.drawable.icon_end);
                 }else{
-                    EndCommand(clickIndex);
+                    if(!TVMode) {
+                        EndCommand(clickIndex);
+                    }
                     btStart.setImageResource(R.drawable.play);
                 }
                 startFlag=!startFlag;
@@ -409,6 +446,8 @@ public class ControlFragment extends Fragment {
                 break;
             case 3:
                 ctrl.setImgId(R.drawable.icon_shake_checked);
+                ivSettings.setImageResource(R.drawable.control_setting_uncheck);
+                tvSettings.setTextColor(getResources().getColor(R.color.colorBlueGray));
                 break;
             case 4:
                 ctrl.setImgId(R.drawable.icon_gaze_checked);
@@ -543,7 +582,57 @@ public class ControlFragment extends Fragment {
                 break;
         }
     }
+    private void StartTVScreen(int index){
+        Intent intent;
+        Bundle bundle;
+        SharedPreferencesUtils.setFileName(FILE_NAME);
+        switch (index){
+            case 0:   //focus
+                intent=new Intent(getActivity(),TVModeActivity.class);
+                bundle=new Bundle();
+                bundle.putInt("No",0);
+                bundle.putFloat("frequency",0);
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 0);
+                break;
+            case 1: // pursuit
+                intent=new Intent(getActivity(),TVModeActivity.class);
+                bundle=new Bundle();
+                bundle.putInt("No",1);
+                float pursuitFrequency = (float) SharedPreferencesUtils.getParam(getContext(), "pursuit_fre", 0.0f);
+                bundle.putFloat("frequency",pursuitFrequency);
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 1);
+                break;
+            case 2:
+                intent=new Intent(getActivity(),TVModeActivity.class);
+                bundle=new Bundle();
+                bundle.putInt("No",2);
+                float saccadeFrequency = (float) SharedPreferencesUtils.getParam(getContext(), "saccades_fre", 0.0f);
+                bundle.putFloat("frequency",saccadeFrequency);
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 2);
+                break;
+            case 3:
+                intent=new Intent(getContext(), TVModeActivity.class);
+                bundle=new Bundle();
+                bundle.putInt("No",3);
+                bundle.putFloat("gain",2.0f);
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 3);
+                break;
+            case 4:
+                intent=new Intent(getContext(),TVModeActivity.class);
+                bundle=new Bundle();
+                bundle.putInt("No",4);
+                float gainValue = (float) SharedPreferencesUtils.getParam(getContext(), "gain", 0.0f);
+                bundle.putFloat("gain",gainValue);
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 4);
+                break;
+        }
 
+    }
 
     private void initCtrl(){
         MyCtrl ctrlFocus = new MyCtrl(getString(R.string.control_focus),R.color.colorGray,R.drawable.icon_focus_uncheck,R.drawable.switch_off);
@@ -575,6 +664,17 @@ public class ControlFragment extends Fragment {
         b[2]=(byte)((i & 0x0000ff00)>>8);
         b[3]=(byte)(i & 0x000000ff);
         return b;
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==0||resultCode==1||resultCode==2||resultCode==3||resultCode==4){
+           // initcardView(false);
+            // 监听数据改变
+           // adapter.notifyDataSetChanged();
+            startFlag=!startFlag;
+            btStart.setImageResource(R.drawable.play);
+        }
     }
 
 }
